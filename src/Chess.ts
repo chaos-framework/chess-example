@@ -1,7 +1,7 @@
 import { Game, CONNECTION, CONNECTION_RESPONSE, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
-import { buildPawn } from './Entities/Pieces/Pawn';
+import buildPawn from './Entities/Pieces/Pawn';
 
 export default class Chess extends Game {
   name = 'Chess';
@@ -19,8 +19,7 @@ export default class Chess extends Game {
 
   resetBoard() {
     // TODO remove old pieces
-    
-    buildPawn('white').publish({ world: this.board, position: new Vector(0, 0) }).execute();
+    buildPawn('WHITE').publish({ world: this.board, position: new Vector(0, 0) }).execute();
   }
 
   onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {

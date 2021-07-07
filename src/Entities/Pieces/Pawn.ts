@@ -3,10 +3,13 @@ import Move from '../../Abilities/Move';
 
 import Piece from '../../Enums/Piece';
 
-export const buildPawn = (team: 'white' | 'black'): Entity => {
-  const name = `${team === 'white' ? "White" : "Black"} Pawn`;
+const buildPawn = (team: 'WHITE' | 'BLACK'): Entity => {
+  const name = `${team === 'WHITE' ? "White" : "Black"} Pawn`;
   const pawn = new Entity({name});
   pawn.tag(Piece.PAWN);
+  pawn.tag(team);
   pawn._learn(new Move());
   return pawn;
 }
+
+export default buildPawn;

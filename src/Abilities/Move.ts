@@ -14,50 +14,6 @@ function isMoveParams(o: any): o is MoveParams {
   return o.to instanceof Vector;
 }
 
-// function getPieceType(entity: Entity): Piece {
-//   if(entity.tagged(Piece.PAWN)) {
-//     return Piece.PAWN;
-//   } else if (entity.tagged(Piece.BISHOP)) {
-//     return Piece.BISHOP;
-//   } else if (entity.tagged(Piece.ROOK)) {
-//     return Piece.ROOK;
-//   } else if (entity.tagged(Piece.KNIGHT)) {
-//     return Piece.KNIGHT;
-//   } else if (entity.tagged(Piece.QUEEN)) {
-//     return Piece.QUEEN;
-//   } else {
-//     return Piece.KING;
-//   }
-// }
-
-// function getForwardDirection(team: 'white' | 'black') {
-//   return 'white' ? -1 : 1;
-// }
-
-// function isValidMoveLocation(entity: Entity, to: Vector): boolean {
-//   const type: Piece = getPieceType(entity);
-//   const forwardDirection = getForwardDirection(entity.tagged('white') ? 'white' : 'black');
-//   const { position } = entity;
-//   switch(type) {
-//     case Piece.PAWN:
-//       if(to.y === position.y + forwardDirection) {
-//         if(to.x >= position.x - 1 && to.x <= position.x + 1) {
-//           return true;
-//         }
-//       }
-//       break;
-//     case Piece.BISHOP:
-//       break;
-//     case Piece.ROOK:
-//       break;
-//     case Piece.KNIGHT:
-//       break;
-//     case Piece.BISHOP:
-//       break;
-//   }
-//   return false;
-// }
-
 export default class Move extends Ability {
   name = "Move";
 
@@ -75,7 +31,7 @@ export default class Move extends Ability {
       return "Move would be out of bounds!";
     }
     return new SimpleEvent([
-      target.move({ to, tags: ['MOVE'] })
+      target.move({ to, tags: ['PLAYER_MOVEMENT'] })
     ]);
   }
 
