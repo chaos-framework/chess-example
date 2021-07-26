@@ -1,36 +1,43 @@
-import { Game, CONNECTION, CONNECTION_RESPONSE, Player, Team, Vector } from '@chaos/core';
+import { Chaos, CONNECTION, CONNECTION_RESPONSE, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
 import buildPawn from './Entities/Pieces/Pawn';
 
-export default class Chess extends Game {
-  name = 'Chess';
+Chaos.id = 'Chess';
 
-  board = new ChessBoard();
-  whiteTeam = new Team({ name: 'White' });
-  blackTeam = new Team({ name: 'Black' });
+export const board = new ChessBoard();
+export const whiteTeam = new Team({ name: 'White' });
+export const blackTeam = new Team({ name: 'Black' });
 
-  constructor(options?: any) {
-    super(options);
-    this.teams.set('White', this.whiteTeam);
-    this.teams.set('Black', this.blackTeam);
-    this.resetBoard();
-  };
-
-  resetBoard() {
-    // TODO remove old pieces
-    buildPawn('WHITE').publish({ world: this.board, position: new Vector(0, 0) }).execute();
-  }
-
-  onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {
-    const player = new Player({ username: msg.desiredUsername });
-    player.publish().execute();
-    return {
-      connectedPlayerId: player.id,
-      gameState: this.serializeForScope(player)
-    }
-  }
-
-  onPlayerDisconnect() {}
-
+export const totalCaptures = {
+  'WHITE': 0,
+  'BLACK': 0
 }
+
+export function initialize(options?: any) {
+  Chaos.teams.set('White', whiteTeam);
+  Chaos.teams.set('Black', blackTeam);
+  resetBoard();
+};
+
+export function reset() {
+  totalCaptures.BLACK = 0;
+  totalCaptures.WHITE = 0;
+  resetBoard();
+}
+
+function resetBoard() {
+  // TODO remove old pieces
+  buildPawn('WHITE').publish({ world: board, position: new Vector(0, 0) }).execute();
+}
+
+export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {
+  const player = new Player({ username: msg.desiredUsername });
+  player.publish().execute();
+  return {
+    connectedPlayerId: player.id,
+    gameState: Chaos.serializeForScope(player)
+  }
+}
+
+export function onPlayerDisconnect() {}

@@ -28,16 +28,16 @@ describe('Chessboard', () => {
   });
 
   it('Gives capture slots correctly', () => {
-    expect(Chessboard.getCaptureSlot('white', 0).equals(new Vector(9, 0))).to.be.true;
-    expect(Chessboard.getCaptureSlot('white', 1).equals(new Vector(9, 1))).to.be.true;
-    expect(Chessboard.getCaptureSlot('white', 7).equals(new Vector(9, 7))).to.be.true;
-    expect(Chessboard.getCaptureSlot('white', 8).equals(new Vector(10, 0))).to.be.true;
-    expect(Chessboard.getCaptureSlot('white', 15).equals(new Vector(10, 7))).to.be.true;
-    expect(Chessboard.getCaptureSlot('black', 0).equals(new Vector(11, 0))).to.be.true;
-    expect(Chessboard.getCaptureSlot('black', 1).equals(new Vector(11, 1))).to.be.true;
-    expect(Chessboard.getCaptureSlot('black', 7).equals(new Vector(11, 7))).to.be.true;
-    expect(Chessboard.getCaptureSlot('black', 8).equals(new Vector(12, 0))).to.be.true;
-    expect(Chessboard.getCaptureSlot('black', 15).equals(new Vector(12, 7))).to.be.true;
+    expect(Chessboard.getCaptureSlot('WHITE', 0).equals(new Vector(9, 0))).to.be.true;
+    expect(Chessboard.getCaptureSlot('WHITE', 1).equals(new Vector(9, 1))).to.be.true;
+    expect(Chessboard.getCaptureSlot('WHITE', 7).equals(new Vector(9, 7))).to.be.true;
+    expect(Chessboard.getCaptureSlot('WHITE', 8).equals(new Vector(10, 0))).to.be.true;
+    expect(Chessboard.getCaptureSlot('WHITE', 15).equals(new Vector(10, 7))).to.be.true;
+    expect(Chessboard.getCaptureSlot('BLACK', 0).equals(new Vector(11, 0))).to.be.true;
+    expect(Chessboard.getCaptureSlot('BLACK', 1).equals(new Vector(11, 1))).to.be.true;
+    expect(Chessboard.getCaptureSlot('BLACK', 7).equals(new Vector(11, 7))).to.be.true;
+    expect(Chessboard.getCaptureSlot('BLACK', 8).equals(new Vector(12, 0))).to.be.true;
+    expect(Chessboard.getCaptureSlot('BLACK', 15).equals(new Vector(12, 7))).to.be.true;
   });
 
   describe('Algebraic notation', () => {

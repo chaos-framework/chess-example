@@ -2,19 +2,13 @@ import { expect } from 'chai';
 import 'mocha';
 
 import { Entity, Vector } from '@chaos/core';
-
-import Chess from '../../../src/Chess';
 import Chessboard from '../../../src/Worlds/Chessboard';
 import PawnMovementOnly from '../../../src/Components/Movement/PawnMovementOnly';
 
 describe('Pawn Movement', () => {
-  let game: Chess;
   let board: Chessboard
   let pawn: Entity;
   let movementComponent: PawnMovementOnly;
-  before(() => {
-    game = new Chess();
-  })
   beforeEach(() => {
     board = new Chessboard();
     pawn = new Entity({ tags: ['PAWN', 'WHITE'] });

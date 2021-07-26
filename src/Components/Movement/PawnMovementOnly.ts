@@ -1,4 +1,4 @@
-import { Action, Component, Game, Modifier, MoveAction } from '@chaos/core';
+import { Action, Component, Modifier, MoveAction } from '@chaos/core';
 
 import { getForwardDirection } from '../../Util/Movement';
 import { getTeamFromTag } from '../../Util/Peices';

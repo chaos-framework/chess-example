@@ -1,4 +1,4 @@
-import { Action, Component, Game, Modifier, MoveAction } from '@chaos/core';
+import { Action, Component, Modifier, MoveAction } from '@chaos/core';
 
 // Disallows movements that a pawn shouldn't be able to make
 export default class OrthogonalMovementOnly extends Component implements Modifier {

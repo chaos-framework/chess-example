@@ -1,3 +1,3 @@
-import Chess from './Chess';
+import * as Chess from './Chess';
 
 export default Chess;

@@ -5,9 +5,10 @@ import Piece from '../../Enums/Piece';
 
 const buildPawn = (team: 'WHITE' | 'BLACK'): Entity => {
   const name = `${team === 'WHITE' ? "White" : "Black"} Pawn`;
-  const pawn = new Entity({name});
-  pawn.tag(Piece.PAWN);
-  pawn.tag(team);
+  const pawn = new Entity({name, metadata: { 
+    type: Piece.PAWN,
+    color: team
+  }});
   pawn._learn(new Move());
   return pawn;
 }

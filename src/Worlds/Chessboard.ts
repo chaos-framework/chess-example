@@ -62,8 +62,8 @@ export default class Chessboard extends World {
     }
   }
 
-  static getCaptureSlot(team: 'white' | 'black', previouslyCaptured: number): Vector {
-    const startingVector = team === 'white' ? Chessboard.whiteCaptureStart : Chessboard.blackCaptureStart;
+  static getCaptureSlot(team: 'WHITE' | 'BLACK', previouslyCaptured: number): Vector {
+    const startingVector = team === 'WHITE' ? Chessboard.whiteCaptureStart : Chessboard.blackCaptureStart;
     return startingVector.add(new Vector(
       Math.floor(previouslyCaptured / 8),
       previouslyCaptured % 8

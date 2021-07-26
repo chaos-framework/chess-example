@@ -3,18 +3,13 @@ import 'mocha';
 
 import { Entity, Vector } from '@chaos/core';
 
-import Chess from '../../../src/Chess';
 import Chessboard from '../../../src/Worlds/Chessboard';
 import Collides from '../../../src/Components/Movement/Collides';
 
 describe('Colliding with other pieces', () => {
-  let game: Chess;
   let board: Chessboard
   let piece: Entity;
   let movementComponent: Collides;
-  before(() => {
-    game = new Chess();
-  })
   beforeEach(() => {
     board = new Chessboard();
     piece = new Entity({ tags: ['QUEEN', 'WHITE'] });

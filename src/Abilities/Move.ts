@@ -1,9 +1,6 @@
-import { Game, Entity, Ability, Event, OptionalCastParameters, Vector, MoveAction } from '@chaos/core';
+import { Entity, Ability, Event, OptionalCastParameters, Vector, MoveAction } from '@chaos/core';
 
 import Chessboard from '../Worlds/Chessboard';
-import Piece from '../Enums/Piece';
-import Tile from '../Enums/Tile';
-import Chess from '..';
 import { SimpleEvent } from '../Events/SimpleEvent';
 
 export interface MoveParams {

@@ -3,21 +3,16 @@ import 'mocha';
 
 import { Entity, Vector } from '@chaos/core';
 
-import Chess from '../../../src/Chess';
 import Chessboard from '../../../src/Worlds/Chessboard';
 import QueenMovementOnly from '../../../src/Components/Movement/QueenMovementOnly';
 
 describe('Queen Movement', () => {
-  let game: Chess;
   let board: Chessboard
   let piece: Entity;
   let movementComponent: QueenMovementOnly;
-  before(() => {
-    game = new Chess();
-  })
   beforeEach(() => {
     board = new Chessboard();
-    piece = new Entity({ tags: ['PAWN', 'WHITE'] });
+    piece = new Entity({ tags: ['QUEEN', 'WHITE'] });
     movementComponent = new QueenMovementOnly();
     piece._attach(movementComponent);
     piece._publish(board, (Chessboard.fromAlgebraic('b2') as Vector));

@@ -1,6 +1,6 @@
-import { Action, Component, Game, Modifier, MoveAction } from '@chaos/core';
+import { Action, Component, Modifier, MoveAction } from '@chaos/core';
 
-// Disallows movement if a piece is BETWEEN the target and it's destination 
+// Disallows movement if a piece is BETWEEN the target and its destination
 export default class Collides extends Component implements Modifier {
   name = "Collides";
 
