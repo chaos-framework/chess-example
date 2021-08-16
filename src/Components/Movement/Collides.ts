@@ -5,7 +5,7 @@ export default class Collides extends Component implements Modifier {
   name = "Collides";
 
   modify(action: Action) {
-    if (action instanceof MoveAction && action.target === this.parent && action.tagged('PLAYER_MOVEMENT')) {
+    if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
       if (target.world === undefined) {
         action.deny({ message: 'Target not on the board.' });

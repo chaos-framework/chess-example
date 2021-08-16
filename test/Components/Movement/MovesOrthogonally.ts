@@ -4,45 +4,45 @@ import 'mocha';
 import { Entity, Vector } from '@chaos/core';
 
 import Chessboard from '../../../src/Worlds/Chessboard';
-import OrthogonalMovementOnly from '../../../src/Components/Movement/OrthogonalMovementOnly';
+import MovesOrthogonally from '../../../src/Components/Movement/MovesOrthogonally';
 
 describe('Orthogonal Movement', () => {
   let board: Chessboard
   let piece: Entity;
-  let movementComponent: OrthogonalMovementOnly;
+  let movementComponent: MovesOrthogonally;
   beforeEach(() => {
     board = new Chessboard();
-    piece = new Entity({ tags: ['ROOK', 'WHITE'] });
-    movementComponent = new OrthogonalMovementOnly();
+    piece = new Entity({ metadata: { team: 'WHITE' } });
+    movementComponent = new MovesOrthogonally();
     piece._attach(movementComponent);
     piece._publish(board, (Chessboard.fromAlgebraic('b2') as Vector));
   });
 
   it('Allows orthogonal movement', () => {
-    let orthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('b8') as Vector), tags: ['PLAYER_MOVEMENT'] });
+    let orthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('b8') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
     movementComponent.modify(orthogonalMovement);
     orthogonalMovement.decidePermission();
     expect(orthogonalMovement.permitted).to.be.true;
-    orthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('b1') as Vector), tags: ['PLAYER_MOVEMENT'] });
+    orthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('b1') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
     movementComponent.modify(orthogonalMovement);
     orthogonalMovement.decidePermission();
     expect(orthogonalMovement.permitted).to.be.true;
-    orthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('a2') as Vector), tags: ['PLAYER_MOVEMENT'] });
+    orthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('a2') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
     movementComponent.modify(orthogonalMovement);
     orthogonalMovement.decidePermission();
     expect(orthogonalMovement.permitted).to.be.true;
-    orthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('c2') as Vector), tags: ['PLAYER_MOVEMENT'] });
+    orthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('f2') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
     movementComponent.modify(orthogonalMovement);
     orthogonalMovement.decidePermission();
     expect(orthogonalMovement.permitted).to.be.true;
   });
 
-  it('Denies non-orthogonal movement', () => {
-    let nonOrthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('c3') as Vector), tags: ['PLAYER_MOVEMENT'] });
+  it('Does not explicitly permit non-orthogonal movement', () => {
+    let nonOrthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('c3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
     movementComponent.modify(nonOrthogonalMovement);
     nonOrthogonalMovement.decidePermission();
     expect(nonOrthogonalMovement.permitted).to.be.false;
-    nonOrthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('a8') as Vector), tags: ['PLAYER_MOVEMENT'] });
+    nonOrthogonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('a8') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
     movementComponent.modify(nonOrthogonalMovement);
     nonOrthogonalMovement.decidePermission();
     expect(nonOrthogonalMovement.permitted).to.be.false;

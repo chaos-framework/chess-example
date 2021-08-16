@@ -4,7 +4,7 @@ import Chessboard from "../Worlds/Chessboard";
 
 export default class Captures extends Component implements Reacter {
   react(action: Action) {
-    if(action instanceof MoveAction && action.tagged('PLAYER_MOVEMENT')
+    if(action instanceof MoveAction && action.tagged('playerMovement')
     && action.target.world !== undefined) {
       // See if this moved onto enemy piece
       const { target, to } = action;

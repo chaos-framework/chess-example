@@ -28,7 +28,7 @@ export default class Move extends Ability {
       return "Move would be out of bounds!";
     }
     return new SimpleEvent([
-      target.move({ to, tags: ['PLAYER_MOVEMENT'] })
+      target.move({ to, metadata: { playerMovement: true} }).deniedByDefault()
     ]);
   }
 
