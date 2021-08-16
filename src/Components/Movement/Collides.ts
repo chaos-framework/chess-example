@@ -1,5 +1,7 @@
 import { Action, Component, Modifier, MoveAction } from '@chaos/core';
 
+import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
+
 // Disallows movement if a piece is BETWEEN the target and its destination
 export default class Collides extends Component implements Modifier {
   name = "Collides";
@@ -22,6 +24,7 @@ export default class Collides extends Component implements Modifier {
           return;
         }
       }
+      action.permit({ priority: MovementPermissionPriority.ALLOWED });
     }
   }
 }

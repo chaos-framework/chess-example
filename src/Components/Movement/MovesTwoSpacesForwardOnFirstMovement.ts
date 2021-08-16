@@ -5,7 +5,7 @@ import { getTeamFromTag } from '../../Util/Peices';
 
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
-export default class MovesOneSquareForward extends Component implements Modifier {
+export default class MovesTwoSpacesForwardOnFirstMovement extends Component implements Modifier {
   name = "Moves One Square Forward"
 
   modify(action: Action) {
@@ -22,7 +22,7 @@ export default class MovesOneSquareForward extends Component implements Modifier
       // Make sure the movement is "forward"
       const delta = to.subtract(target.position);
       // Check that the movement is only two square directly forward
-      if (delta.y === getForwardDirection(team) && Math.abs(delta.y) === 2 && delta.x === 0) {
+      if (delta.y === getForwardDirection(team) * 2 && delta.x === 0) {
         action.permit({ priority: MovementPermissionPriority.ALLOWED });
         return;
       }
