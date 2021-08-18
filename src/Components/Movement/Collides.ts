@@ -10,7 +10,6 @@ export default class Collides extends Component implements Modifier {
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
       if (target.world === undefined) {
-        action.deny({ message: 'Target not on the board.' });
         return;
       }
       const lineIterator = target.position.getLineToIterable(to);
@@ -20,7 +19,7 @@ export default class Collides extends Component implements Modifier {
       for (const vector of lineIterator) {
         const entities = target.world.getEntitiesAtCoordinates(vector.x, vector.y);
         if(entities.length > 0 && lineIterator.next().value !== undefined) {
-          action.deny({ message: 'Another piece is in the way!' });
+          action.deny({ priority: MovementPermissionPriority.DISALLOWED, message: 'Another piece is in the way!' });
           return;
         }
       }
