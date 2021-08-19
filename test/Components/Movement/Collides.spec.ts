@@ -3,8 +3,8 @@ import 'mocha';
 
 import { Entity, Vector } from '@chaos/core';
 
-import Chessboard from '../../src/Worlds/Chessboard';
-import Collides from '../../src/Components/Movement/Collides';
+import Chessboard from '../../../src/Worlds/Chessboard';
+import Collides from '../../../src/Components/Movement/Collides';
 
 describe('Colliding with other pieces', () => {
   let board: Chessboard
