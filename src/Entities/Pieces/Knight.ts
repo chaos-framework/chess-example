@@ -7,9 +7,8 @@ import MovesDiagonallyOneSquareToCapture from '../../Components/Movement/MovesDi
 import MovesTwoSpacesForwardOnFirstMovement from '../../Components/Movement/MovesTwoSpacesForwardOnFirstMovement';
 import Captures from '../../Components/Captures';
 import CannotLandOnTeam from '../../Components/Movement/CannotLandOnTeam';
-import Collides from '../../Components/Movement/Collides';
 
-const buildPawn = (team: 'WHITE' | 'BLACK'): Entity => {
+const knight = (team: 'WHITE' | 'BLACK'): Entity => {
   const name = `${team === 'WHITE' ? "White" : "Black"} Pawn`;
   const pawn = new Entity({
     name,
@@ -19,16 +18,14 @@ const buildPawn = (team: 'WHITE' | 'BLACK'): Entity => {
       moveCount: 0
     }
   });
-  pawn._attachAll([
-    new MovesOneSquareForward,
-    new MovesTwoSpacesForwardOnFirstMovement,
-    new MovesDiagonallyOneSquareToCapture,
-    new Collides,
-    new CannotLandOnTeam,
-    new Captures
-  ]);
-  pawn._learn(new Move);
+  pawn._attach(new MovesOneSquareForward());
+  pawn._attach(new MovesTwoSpacesForwardOnFirstMovement())
+  pawn._attach(new MovesDiagonallyOneSquareToCapture());
+  // pawn._attach(new Collides()); -- redundant since only moves one square
+  pawn._attach(new Captures());
+  pawn._attach(new CannotLandOnTeam());
+  pawn._learn(new Move());
   return pawn;
 }
 
-export default buildPawn;
+export default knight;
