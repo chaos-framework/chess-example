@@ -5,7 +5,10 @@ export default class CountsMovements extends Component implements Reacter {
   name = "Has to Move At Least One Space";
 
   react(action: Action) {
-    if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
+    if (action instanceof MoveAction 
+      && action.target === this.parent
+      && action.tagged('playerMovement')
+      && !action.tagged('query')) {
       const current = action.target.metadata.get('moveCount');
       if(current !== undefined && typeof current === 'number') {
         action.target.metadata.set('moveCount', current + 1);

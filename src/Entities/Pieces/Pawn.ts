@@ -5,8 +5,7 @@ import Move from '../../Abilities/Move';
 import MovesOneSquareForward from '../../Components/Movement/MovesOneSquareForward';
 import MovesDiagonallyOneSquareToCapture from '../../Components/Movement/MovesDiagonallyOneSquareToCapture';
 import MovesTwoSpacesForwardOnFirstMovement from '../../Components/Movement/MovesTwoSpacesForwardOnFirstMovement';
-import Captures from '../../Components/Captures';
-import CannotLandOnTeam from '../../Components/Movement/CannotLandOnTeam';
+import { generateCommonComponents } from './_common';
 import Collides from '../../Components/Movement/Collides';
 
 const buildPawn = (team: 'WHITE' | 'BLACK'): Entity => {
@@ -20,12 +19,11 @@ const buildPawn = (team: 'WHITE' | 'BLACK'): Entity => {
     }
   });
   pawn._attachAll([
+    ...generateCommonComponents(),
+    new Collides,
     new MovesOneSquareForward,
     new MovesTwoSpacesForwardOnFirstMovement,
     new MovesDiagonallyOneSquareToCapture,
-    new Collides,
-    new CannotLandOnTeam,
-    new Captures
   ]);
   pawn._learn(new Move);
   return pawn;

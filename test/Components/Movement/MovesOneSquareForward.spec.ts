@@ -47,39 +47,4 @@ describe('Pawn Movement -- Front Square', () => {
     whiteMovement.decidePermission();
     expect(whiteMovement.permitted).to.be.false;
   });
-
-  // it('Does not permit sideways or to same team', () => {
-  //   const sidewaysMovement = pawn.move({ to: (Chessboard.fromAlgebraic('a2') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-  //   movementComponent.modify(sidewaysMovement);
-  //   sidewaysMovement.decidePermission();
-  //   expect(sidewaysMovement.permitted).to.be.false;
-  //   const noMovement = pawn.move({ to: pawn.position, metadata: { playerMovement: true } }).deniedByDefault();
-  //   movementComponent.modify(noMovement);
-  //   noMovement.decidePermission();
-  //   expect(noMovement.permitted).to.be.false;
-  // });
-
-  // it('Denies diagonal movement without a piece to capture', () => {
-  //   let diagonalMovement = pawn.move({ to: (Chessboard.fromAlgebraic('a3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-  //   movementComponent.modify(diagonalMovement);
-  //   diagonalMovement.decidePermission();
-  //   expect(diagonalMovement.permitted).to.be.false;
-  //   diagonalMovement = pawn.move({ to: (Chessboard.fromAlgebraic('c3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-  //   movementComponent.modify(diagonalMovement);
-  //   diagonalMovement.decidePermission();
-  //   expect(diagonalMovement.permitted).to.be.false;
-  // });
-
-  // it('Allows diagonal movement with a piece to capture', () => {
-  //   new Entity({ metadata: { color: 'BLACK' } })._publish(board, Chessboard.fromAlgebraic('a3') as Vector);
-  //   let diagonalMovement = pawn.move({ to: (Chessboard.fromAlgebraic('a3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-  //   movementComponent.modify(diagonalMovement);
-  //   diagonalMovement.decidePermission();
-  //   expect(diagonalMovement.permitted).to.be.true;
-  //   new Entity({ metadata: { color: 'BLACK' } })._publish(board, Chessboard.fromAlgebraic('c3') as Vector);
-  //   diagonalMovement = pawn.move({ to: (Chessboard.fromAlgebraic('c3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-  //   movementComponent.modify(diagonalMovement);
-  //   diagonalMovement.decidePermission();
-  //   expect(diagonalMovement.permitted).to.be.true;
-  // });
 });

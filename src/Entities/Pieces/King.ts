@@ -6,22 +6,22 @@ import { generateCommonComponents } from './_common';
 import MovesDiagonally from '../../Components/Movement/MovesDiagonally';
 import MovesOrthogonally from '../../Components/Movement/MovesOrthogonally';
 import Collides from '../../Components/Movement/Collides';
+import MovesOneSquareAnyDirection from '../../Components/Movement/MovesOneSquareAnyDirection';
 
-const queen = (team: 'WHITE' | 'BLACK'): Entity => {
-  const name = `${team === 'WHITE' ? "White" : "Black"} Queen`;
-  const queen = new Entity({name, metadata: { 
-    type: Piece.QUEEN,
+const king = (team: 'WHITE' | 'BLACK'): Entity => {
+  const name = `${team === 'WHITE' ? "White" : "Black"} King`;
+  const king = new Entity({name, metadata: { 
+    type: Piece.KING,
     color: team,
     moveCount: 0
   }});
-  queen._attachAll([
+  king._attachAll([
     ...generateCommonComponents(),
     new Collides,
-    new MovesDiagonally,
-    new MovesOrthogonally
+    new MovesOneSquareAnyDirection
   ]);
-  queen._learn(new Move());
-  return queen;
+  king._learn(new Move());
+  return king;
 }
 
-export default queen;
+export default king;
