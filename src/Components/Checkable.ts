@@ -1,32 +1,39 @@
-import { Component, Action, Modifier, Reacter, MoveAction, TerminalMessage, Entity } from '@chaos/core';
+import { Component, Action, Modifier, Reacter, MoveAction, Entity } from '@chaos/core';
 
+import { isInCheck, movementWillPutInCheck } from '../Util/CheckQueries';
+import MovementPermissionPriority from '../Enums/MovementPermissionPriority';
+import Checked from './Checked';
+
+// Stops friendly pieces from moving in a way that would check this piece, and applies Checked when done so by enemy
 export default class GetsPutInCheck extends Component implements Modifier, Reacter {
   modify(action: Action) {
-    // TODO make sure parent does not check itself with any movement
+    if (action instanceof MoveAction
+      && action.tagged('playerMovement')
+      && action.target.world !== undefined
+      && this.parent instanceof Entity
+      && this.parent.world === action.target.world) {
+      // Make sure neither parent entity nor friendly piece can put this piece in check
+      const myTeam = this.parent.metadata.get('team');
+      const moverTeam = action.target.metadata.get('team');
+      if (myTeam === undefined || moverTeam === undefined) {
+        return;
+      }
+      if (myTeam === moverTeam && movementWillPutInCheck(action.target.world, this.parent, action.target, action.to)) {
+        action.deny({ priority: MovementPermissionPriority.DISALLOWED, message: `Movement would put ${this.parent.name} in check!`});
+      }
+    }
   }
 
   react(action: Action) {
-    if(action instanceof MoveAction && action.tagged('playerMovement') && action.target.world !== undefined) {
-      // Make sure we belong to a piece and weren't inadvertently attached to a world, player, etc..
-      // Also make sure we're published to a chess board and it is the same as the piece that just moved
-      if(!(this.parent instanceof Entity) || this.parent.world === undefined || this.parent.world !== action.target.world) {
-        return;
-      }
-      // Get this piece's team
-      const myTeam = this.parent.metadata.get('team');
-      if(myTeam === undefined) {
-        return;
-      }
-      const enemyTeam = action.target.metadata.get('team');
-      if(enemyTeam !== undefined && enemyTeam !== myTeam) {
-        // See if this enemy piece could potentially capture us next turn. We do this by asking
-        // the enemy piece to "modify" a movement onto our own square, making sure to pass in "query"
-        // as action metadata so that no component takes any concrete actions.
-        const potentialCapture = action.target.move({ to: this.parent.position, metadata: { playerMovement: true, query: true }});
-        action.target.modify(potentialCapture);
-        if(potentialCapture.permitted) {
-          // TODO put into check... how?
-        }
+    if (action instanceof MoveAction
+      && action.tagged('playerMovement')
+      && !action.tagged('query') 
+      && action.target.world !== undefined
+      && this.parent instanceof Entity) {
+      // See if the parent entity is put in check by this movement
+      if (isInCheck(action.target.world, this.parent)) {
+        // Put in check
+        action.followup(this.parent.attach({ component: new Checked, caster: action.target }));
       }
     }
   }

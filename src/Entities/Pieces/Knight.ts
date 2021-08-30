@@ -3,8 +3,6 @@ import { Entity } from '@chaos/core';
 import Piece from '../../Enums/Piece';
 import Move from '../../Abilities/Move';
 import { generateCommonComponents } from './_common';
-import MovesDiagonally from '../../Components/Movement/MovesDiagonally';
-import MovesOrthogonally from '../../Components/Movement/MovesOrthogonally';
 import KnightMovement from '../../Components/Movement/KnightMovement';
 
 const knight = (team: 'WHITE' | 'BLACK'): Entity => {

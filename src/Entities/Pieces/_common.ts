@@ -9,7 +9,7 @@ export function generateCommonComponents(): Component[] {
   return [
     new CannotLandOnTeam,
     new Captures,
-    new CountsMovements,
-    new HasToMoveAtLeastOneSpace
+    new HasToMoveAtLeastOneSpace,
+    new CountsMovements
   ]
 }

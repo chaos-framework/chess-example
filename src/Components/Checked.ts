@@ -1,4 +1,4 @@
-import { Component, Action, Modifier, MoveAction, TerminalMessage, Entity, MessageAction } from '@chaos/core';
+import { Component, Action, Modifier, MoveAction, Entity } from '@chaos/core';
 
 export default class Checked extends Component implements Modifier {
   modify(action: Action) {
@@ -25,8 +25,4 @@ export default class Checked extends Component implements Modifier {
       }
     }
   }
-}
-
-function generateCaptureMessage(captured: Entity, by: Entity): TerminalMessage {
-  return new TerminalMessage(by, 'captured', captured);
 }

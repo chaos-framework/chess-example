@@ -9,7 +9,7 @@ import Collides from '../../Components/Movement/Collides';
 
 const queen = (team: 'WHITE' | 'BLACK'): Entity => {
   const name = `${team === 'WHITE' ? "White" : "Black"} Queen`;
-  const queen = new Entity({name, metadata: { 
+  const queen = new Entity({ name, metadata: { 
     type: Piece.QUEEN,
     color: team,
     moveCount: 0
