@@ -6,11 +6,11 @@ import { generateCommonComponents } from './_common';
 import MovesOrthogonally from '../../Components/Movement/MovesOrthogonally';
 import Collides from '../../Components/Movement/Collides';
 
-const bishop = (team: 'WHITE' | 'BLACK'): Entity => {
+const Bishop = (team: 'WHITE' | 'BLACK'): Entity => {
   const name = `${team === 'WHITE' ? "White" : "Black"} Bishop`;
   const bishop = new Entity({name, metadata: { 
     type: Piece.ROOK,
-    color: team,
+    team,
     moveCount: 0
   }});
   bishop._attachAll([
@@ -22,4 +22,4 @@ const bishop = (team: 'WHITE' | 'BLACK'): Entity => {
   return bishop;
 }
 
-export default bishop;
+export default Bishop;

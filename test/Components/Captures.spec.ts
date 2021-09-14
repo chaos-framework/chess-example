@@ -3,11 +3,10 @@ import 'mocha';
 
 import { Entity, Vector, MoveAction, Chaos } from '@chaos/core';
 
-import Chess from '../../src';
 import Chessboard from '../../src/Worlds/Chessboard';
 import CannotLandOnTeam from '../../src/Components/Captures';
 
-describe('Cannot land on friendly piece', () => {
+describe('Capturing', () => {
   let board: Chessboard
   let piece: Entity;
   let friendly: Entity;
@@ -33,13 +32,5 @@ describe('Cannot land on friendly piece', () => {
     const followup = movement.followups[0];
     expect(followup instanceof MoveAction).to.be.true;
     expect((followup as MoveAction).to.equals(Chessboard.getCaptureSlot('BLACK', 0))).to.be.true;
-  });
-
-  it('Does not disallow landing on enemy piece', () => {
-
-  });
-
-  it('Does not disallow landing on empty space', () => {
-
   });
 });

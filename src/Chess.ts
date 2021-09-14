@@ -1,7 +1,7 @@
 import { Chaos, CONNECTION, CONNECTION_RESPONSE, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
-import buildPawn from './Entities/Pieces/Pawn';
+import Pawn from './Entities/Pieces/Pawn';
 
 Chaos.id = 'Chess';
 
@@ -28,7 +28,7 @@ export function reset() {
 
 function resetBoard() {
   // TODO remove old pieces
-  buildPawn('WHITE').publish({ world: board, position: new Vector(0, 0) }).execute();
+  Pawn('WHITE').publish({ world: board, position: new Vector(0, 0) }).execute();
 }
 
 export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {

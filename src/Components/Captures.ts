@@ -2,7 +2,10 @@ import { Component, Action, Reacter, MoveAction, TerminalMessage, Entity, Messag
 import Chess from "..";
 import Chessboard from "../Worlds/Chessboard";
 
+// Gets captures when landing on an enemy piece
 export default class Captures extends Component implements Reacter {
+  name = 'Captures';
+  
   react(action: Action) {
     if(action instanceof MoveAction && action.tagged('playerMovement')
       && action.target.world !== undefined) {

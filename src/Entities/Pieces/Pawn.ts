@@ -8,13 +8,13 @@ import MovesTwoSpacesForwardOnFirstMovement from '../../Components/Movement/Move
 import { generateCommonComponents } from './_common';
 import Collides from '../../Components/Movement/Collides';
 
-const buildPawn = (team: 'WHITE' | 'BLACK'): Entity => {
+const Pawn = (team: 'WHITE' | 'BLACK'): Entity => {
   const name = `${team === 'WHITE' ? "White" : "Black"} Pawn`;
   const pawn = new Entity({
     name,
     metadata: {
       type: Piece.PAWN,
-      color: team,
+      team,
       moveCount: 0
     }
   });
@@ -29,4 +29,4 @@ const buildPawn = (team: 'WHITE' | 'BLACK'): Entity => {
   return pawn;
 }
 
-export default buildPawn;
+export default Pawn;

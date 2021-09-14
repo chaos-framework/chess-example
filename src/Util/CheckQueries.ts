@@ -29,7 +29,7 @@ export function isInCheck(board: World, piece: Entity): boolean {
   return false;
 }
 
-export function movementWillPutInCheck(board: World, checkablePiece: Entity, movingPiece: Entity, to: Vector) {
+export function movementWillResultInCheck(board: World, checkablePiece: Entity, movingPiece: Entity, to: Vector) {
   // Temporarily move the piece to the location and test if the piece is in check
   const originalLocation = movingPiece.position;
   movingPiece._move(to);

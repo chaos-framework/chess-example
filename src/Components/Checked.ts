@@ -1,27 +1,38 @@
-import { Component, Action, Modifier, MoveAction, Entity } from '@chaos/core';
+import { Component, Action, Modifier, Reacter, MoveAction, Entity } from '@chaos/core';
 
-export default class Checked extends Component implements Modifier {
+import { isInCheck, movementWillResultInCheck } from '../Util/CheckQueries';
+import MovementPermissionPriority from '../Enums/MovementPermissionPriority';
+
+export default class Checked extends Component implements Modifier, Reacter {
+  name = 'Checked';
+  
+  // Do not allow team movement that does not remove check
   modify(action: Action) {
-    if(action instanceof MoveAction && action.tagged('playerMovement') && action.target.world !== undefined) {
+    if (action instanceof MoveAction && action.tagged('playerMovement') && action.target.world !== undefined) {
       // Make sure we belong to a team
-      if(!(this.parent instanceof Entity) || this.parent.world === undefined || this.parent.world !== action.target.world) {
+      if (!(this.parent instanceof Entity) || this.parent.world === undefined || this.parent.world !== action.target.world) {
         return;
       }
       // Get this piece's team
       const myTeam = this.parent.metadata.get('team');
-      if(myTeam === undefined) {
+      if (myTeam === undefined) {
         return;
       }
-      const enemyTeam = action.target.metadata.get('team');
-      if(enemyTeam !== undefined && enemyTeam !== myTeam) {
-        // See if this enemy piece could potentially capture us next turn. We do this by asking
-        // the enemy piece to "modify" a movement onto our own square, making sure to pass in "query"
-        // as action metadata so that no component takes any concrete actions.
-        const potentialCapture = action.target.move({ to: this.parent.position, metadata: { playerMovement: true, query: true }});
-        action.target.modify(potentialCapture);
-        if(potentialCapture.permitted) {
-          // TODO put into check... how?
-        }
+      const movingTeam = action.target.metadata.get('team');
+      if (movingTeam === myTeam && movementWillResultInCheck(action.target.world, this.parent, action.target, action.to)) {
+        // Only allow movement if this gets us out of check
+        action.deny({ priority: MovementPermissionPriority.DISALLOWED, message: `Movement will not get ${this.parent.name} out of check!`});
+      }
+    }
+  }
+
+  // Remove self if the piece is out of check
+  react(action: Action) {
+    if (action instanceof MoveAction &&
+        this.parent instanceof Entity &&
+        action.target.world !== undefined) {
+      if (!isInCheck(action.target.world, this.parent)) {
+        action.followup(this.parent.detach({ component: this }));
       }
     }
   }

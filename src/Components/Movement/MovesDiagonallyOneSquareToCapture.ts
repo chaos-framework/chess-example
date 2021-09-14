@@ -1,7 +1,6 @@
 import { Action, Component, Modifier, MoveAction } from '@chaos/core';
 
 import { getForwardDirection } from '../../Util/Movement';
-import { getTeamFromTag } from '../../Util/Peices';
 
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
@@ -24,7 +23,7 @@ export default class MovesOneSquareForward extends Component implements Modifier
         const board = target.world;
         if(board !== undefined) {
           const entityAtDestination = board.getEntitiesAtCoordinates(to.x, to.y)[0];
-          if(entityAtDestination !== undefined && getTeamFromTag(entityAtDestination) !== team) {
+          if(entityAtDestination !== undefined && entityAtDestination.metadata.get('team') !== team) {
             action.permit({ priority: MovementPermissionPriority.ALLOWED });
           }
         }

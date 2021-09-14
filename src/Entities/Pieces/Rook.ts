@@ -6,7 +6,7 @@ import { generateCommonComponents } from './_common';
 import MovesOrthogonally from '../../Components/Movement/MovesOrthogonally';
 import Collides from '../../Components/Movement/Collides';
 
-const rook = (team: 'WHITE' | 'BLACK'): Entity => {
+const Rook = (team: 'WHITE' | 'BLACK'): Entity => {
   const name = `${team === 'WHITE' ? "White" : "Black"} Rook`;
   const bishop = new Entity({name, metadata: { 
     type: Piece.ROOK,
@@ -22,4 +22,4 @@ const rook = (team: 'WHITE' | 'BLACK'): Entity => {
   return bishop;
 }
 
-export default rook;
+export default Rook;

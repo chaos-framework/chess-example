@@ -1,7 +1,6 @@
 import { Action, Component, Modifier, MoveAction } from '@chaos/core';
 
 import { getForwardDirection } from '../../Util/Movement';
-import { getTeamFromTag } from '../../Util/Peices';
 
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
