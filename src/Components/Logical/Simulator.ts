@@ -1,5 +1,5 @@
 import { Action, Component, MoveAction, Reacter, Vector } from '@chaos/core'
-import Chessboard from '../Worlds/Chessboard';
+import Chessboard from '../../Worlds/Chessboard';
 const chessEngine = require('chess');
 
 export default class Simulator extends Component implements Reacter {

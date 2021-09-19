@@ -1,13 +1,14 @@
-import { Chaos, CONNECTION, CONNECTION_RESPONSE, Player, Team, Vector } from '@chaos/core';
+import { Chaos, CONNECTION, CONNECTION_RESPONSE, Entity, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
-import Pawn from './Entities/Pieces/Pawn';
+import Simulator from './Components/Logical/Simulator';
 
 Chaos.id = 'Chess';
 
-export const board = new ChessBoard();
-export const whiteTeam = new Team({ name: 'White' });
-export const blackTeam = new Team({ name: 'Black' });
+export let board = new ChessBoard();
+export let whiteTeam = new Team({ name: 'White' });
+export let blackTeam = new Team({ name: 'Black' });
+export let simulator = new Simulator();
 
 export const totalCaptures = {
   'WHITE': 0,
@@ -17,18 +18,15 @@ export const totalCaptures = {
 export function initialize(options?: any) {
   Chaos.teams.set('White', whiteTeam);
   Chaos.teams.set('Black', blackTeam);
-  resetBoard();
-};
+  reset();
+}
 
 export function reset() {
   totalCaptures.BLACK = 0;
   totalCaptures.WHITE = 0;
-  resetBoard();
-}
-
-function resetBoard() {
-  // TODO remove old pieces
-  Pawn('WHITE').publish({ world: board, position: new Vector(0, 0) }).execute();
+  board.clear();
+  board.setUpStandardGame();
+  simulator = new Simulator();
 }
 
 export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {
