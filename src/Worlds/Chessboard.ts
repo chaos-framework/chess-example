@@ -68,14 +68,14 @@ export default class Chessboard extends World {
     Pawn(Teams.BLACK).publish({ world: this, position: Chessboard.fromAlgebraic('f7')! }).execute();
     Pawn(Teams.BLACK).publish({ world: this, position: Chessboard.fromAlgebraic('g7')! }).execute();
     Pawn(Teams.BLACK).publish({ world: this, position: Chessboard.fromAlgebraic('h7')! }).execute();
-    Rook(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('a1')! }).execute();
-    Knight(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('b1')! }).execute();
-    Bishop(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('c1')! }).execute();
-    Queen(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('d1')! }).execute();
-    King(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('e1')! }).execute();
-    Bishop(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('f1')! }).execute();
-    Knight(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('g1')! }).execute();
-    Rook(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('h1')! }).execute();
+    Rook(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('a8')! }).execute();
+    Knight(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('b8')! }).execute();
+    Bishop(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('c8')! }).execute();
+    Queen(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('d8')! }).execute();
+    King(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('e8')! }).execute();
+    Bishop(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('f8')! }).execute();
+    Knight(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('g8')! }).execute();
+    Rook(Teams.WHITE).publish({ world: this, position: Chessboard.fromAlgebraic('h8')! }).execute();
   }
 
   // Convert vector to algebraic, ie { 0 ,0 } to 'a8'

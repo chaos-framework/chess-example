@@ -7,9 +7,10 @@ import MovesDiagonallyOneSquareToCapture from '../../Components/Movement/MovesDi
 import MovesTwoSpacesForwardOnFirstMovement from '../../Components/Movement/MovesTwoSpacesForwardOnFirstMovement';
 import { generateCommonComponents } from './_common';
 import Collides from '../../Components/Movement/Collides';
+import Teams from '../../Enums/Teams';
 
-const Pawn = (team: 'WHITE' | 'BLACK'): Entity => {
-  const name = `${team === 'WHITE' ? "White" : "Black"} Pawn`;
+const Pawn = (team: Teams): Entity => {
+  const name = `${team} Pawn`;
   const pawn = new Entity({
     name,
     metadata: {
@@ -26,6 +27,7 @@ const Pawn = (team: 'WHITE' | 'BLACK'): Entity => {
     new MovesDiagonallyOneSquareToCapture,
   ]);
   pawn._learn(new Move);
+  
   return pawn;
 }
 
