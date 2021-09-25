@@ -8,16 +8,19 @@ import MovesTwoSpacesForwardOnFirstMovement from '../../Components/Movement/Move
 import { generateCommonComponents } from './_common';
 import Collides from '../../Components/Movement/Collides';
 import Teams from '../../Enums/Teams';
+import Chess from '../..';
 
-const Pawn = (team: Teams): Entity => {
-  const name = `${team} Pawn`;
+const Pawn = (teamName: Teams): Entity => {
+  const name = `${teamName} Pawn`;
+  const team = Chess.teams[teamName];
   const pawn = new Entity({
     name,
     metadata: {
       type: Piece.PAWN,
-      team,
+      team: teamName,
       moveCount: 0
-    }
+    },
+    team: team.id
   });
   pawn._attachAll([
     ...generateCommonComponents(),
@@ -27,7 +30,6 @@ const Pawn = (team: Teams): Entity => {
     new MovesDiagonallyOneSquareToCapture,
   ]);
   pawn._learn(new Move);
-  
   return pawn;
 }
 

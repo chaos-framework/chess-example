@@ -4,12 +4,15 @@ import Piece from '../../Enums/Piece';
 import Move from '../../Abilities/Move';
 import { generateCommonComponents } from './_common';
 import KnightMovement from '../../Components/Movement/KnightMovement';
+import Teams from '../../Enums/Teams';
+import Chess from '../..';
 
-const Knight = (team: 'WHITE' | 'BLACK'): Entity => {
-  const name = `${team === 'WHITE' ? "White" : "Black"} Knight`;
+const Knight = (teamName: Teams): Entity => {
+  const name = `${teamName} Knight`;
+  const team = Chess.teams[teamName];
   const knight = new Entity({name, metadata: { 
     type: Piece.KNIGHT,
-    team,
+    team: team.id,
     moveCount: 0
   }});
   knight._attachAll([

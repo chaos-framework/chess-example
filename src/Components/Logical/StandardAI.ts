@@ -8,6 +8,6 @@ export default class StandardAI extends Component {
 
   react(action: Action) {
     // See if there's an active simulator running
-    Chess.
+    // Chess.
   }
 }

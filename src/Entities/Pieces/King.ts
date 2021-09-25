@@ -8,12 +8,15 @@ import MovesOneSquareAnyDirection from '../../Components/Movement/MovesOneSquare
 import Checkable from '../../Components/Checkable';
 
 import Move from '../../Abilities/Move';
+import Chess from '../..';
+import Teams from '../../Enums/Teams';
 
-const King = (team: 'WHITE' | 'BLACK'): Entity => {
-  const name = `${team === 'WHITE' ? "White" : "Black"} King`;
+const King = (teamName: Teams): Entity => {
+  const name = `${teamName} King`;
+  const team = Chess.teams[teamName];
   const king = new Entity({name, metadata: { 
     type: Piece.KING,
-    team,
+    team: team.id,
     moveCount: 0
   }});
   king._attachAll([
