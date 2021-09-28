@@ -1,7 +1,7 @@
 import { Chaos, Entity, Vector, World } from '@chaos/core';
 
 export function isInCheck(board: World, piece: Entity): boolean {
-  if(piece.team === undefined) {
+  if (piece.team === undefined) {
     return false;
   }
   // Get all pieces on the board that do not belong to the friendly team
@@ -17,7 +17,7 @@ export function isInCheck(board: World, piece: Entity): boolean {
     const potentialCapture = enemy.move({ to: piece.position, metadata: { playerMovement: true, query: true }});
     enemy.modify(potentialCapture);
     potentialCapture.decidePermission();
-    if(potentialCapture.permitted) {
+    if (potentialCapture.permitted) {
       return true;
     }
   }

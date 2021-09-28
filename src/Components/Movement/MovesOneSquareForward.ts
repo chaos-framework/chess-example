@@ -11,7 +11,7 @@ export default class MovesOneSquareForward extends Component implements Modifier
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
       // Make sure the target has a team
-      if(target.team === undefined) {
+      if (target.team === undefined) {
         return;
       }
       const teamName = target.team.name as Teams;

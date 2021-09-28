@@ -9,7 +9,7 @@ export default class MovesDiagonally extends Component implements Modifier {
   modify(action: Action) {
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
-      if(target.position.isDiagonalTo(to)) {
+      if (target.position.isDiagonalTo(to)) {
         action.permit({ priority: MovementPermissionPriority.ALLOWED });
       }
     }

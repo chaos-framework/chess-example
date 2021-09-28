@@ -1,4 +1,5 @@
 import { Action, Component, Team } from '@chaos/core'
+import Chess from '../..';
 
 // When attached to a team will play moves in a standard chess game
 export default class StandardAI extends Component {
@@ -7,7 +8,10 @@ export default class StandardAI extends Component {
   }
 
   react(action: Action) {
-    // See if there's an active simulator running
-    // Chess.
+    // Make sure there is an active simulator running
+    const sim = Chess.simulator;
+    if (sim !== undefined) {
+      sim.engine
+    }
   }
 }

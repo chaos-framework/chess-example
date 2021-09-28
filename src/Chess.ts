@@ -1,14 +1,12 @@
 import { Chaos, CONNECTION, CONNECTION_RESPONSE, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
-import Simulator from './Components/Logical/Simulator';
 import Teams from './Enums/Teams';
 import Chessboard from './Worlds/Chessboard';
 
 Chaos.id = 'Chess';
 
 export let board: Chessboard;
-export let simulator: Simulator;
 export let turnOrder = [Teams.WHITE, Teams.BLACK];
 
 export const teams = {
@@ -19,6 +17,11 @@ export const teams = {
   [Teams.GREEN]: new Team({ name: Teams.GREEN }),
   [Teams.YELLOW]: new Team({ name: Teams.YELLOW }),
 }
+
+export let activeTeams = [
+  teams[Teams.WHITE],
+  teams[Teams.BLACK]
+]
 
 export const teamDirections = {
   [Teams.WHITE]: new Vector(0, -1),
@@ -54,7 +57,6 @@ export function reset() {
   totalCaptures[Teams.YELLOW] = 0;
   board.clear();
   board.setUpStandardGame(teams[Teams.WHITE], teams[Teams.BLACK]);
-  simulator = new Simulator();
 }
 
 export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {

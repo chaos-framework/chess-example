@@ -18,7 +18,7 @@ export default class Collides extends Component implements Modifier {
       // Iterate over rest
       for (const vector of lineIterator) {
         const entities = target.world.getEntitiesAtCoordinates(vector.x, vector.y);
-        if(entities.length > 0 && lineIterator.next().value !== undefined) {
+        if (entities.length > 0 && lineIterator.next().value !== undefined) {
           action.deny({ priority: MovementPermissionPriority.DISALLOWED, message: 'Another piece is in the way!' });
           return;
         }

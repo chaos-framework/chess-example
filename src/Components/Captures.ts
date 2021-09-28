@@ -7,15 +7,15 @@ export default class Captures extends Component implements Reacter {
   name = 'Captures';
   
   react(action: Action) {
-    if(action instanceof MoveAction && action.tagged('playerMovement')
+    if (action instanceof MoveAction && action.tagged('playerMovement')
       && action.target.world !== undefined) {
       // See if this moved onto enemy piece
       const { target, to } = action;
       const entity = action.target.world.getEntitiesAtCoordinates(to.x, to.y)[0];
-      if(target !== undefined && entity !== undefined) {
+      if (target !== undefined && entity !== undefined) {
         const enemyTeam = entity.metadata.get('team');
-        if(enemyTeam !== undefined && (enemyTeam === 'WHITE' || enemyTeam === 'BLACK')) {
-          if(entity.metadata.get('team') !== target.metadata.get('team')) {
+        if (enemyTeam !== undefined && (enemyTeam === 'WHITE' || enemyTeam === 'BLACK')) {
+          if (entity.metadata.get('team') !== target.metadata.get('team')) {
             const newLocation = Chessboard.getCaptureSlot(enemyTeam, Chess.totalCaptures[enemyTeam]);
             action.followup(entity.move({ to: newLocation }));
             Chess.totalCaptures[enemyTeam]++;

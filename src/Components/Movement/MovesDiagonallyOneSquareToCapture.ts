@@ -11,7 +11,7 @@ export default class MovesDiagonallyOneSquareToCapture extends Component impleme
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
       // Make sure the target has a team
-      if(target.team === undefined || target.world === undefined) {
+      if (target.team === undefined || target.world === undefined) {
         return;
       }
       const teamName = target.team.name as Teams;
@@ -22,7 +22,7 @@ export default class MovesDiagonallyOneSquareToCapture extends Component impleme
       if (delta.dot(forward) >= 0 && Math.abs(delta.x) === 1 && Math.abs(delta.y) === 1) {
         // Check that an enemy is in that location
         for (const entity of target.world.getEntitiesAtCoordinates(to.x, to.y)) {
-          if(entity.team !== target.team) {
+          if (entity.team !== target.team) {
             action.permit({ priority: MovementPermissionPriority.ALLOWED, by: this });
             return;
           }

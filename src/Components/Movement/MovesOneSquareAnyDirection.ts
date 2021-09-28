@@ -9,7 +9,7 @@ export default class MovesOneSquareAnyDirection extends Component implements Mod
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
       const delta = to.subtract(target.position);
-      if(Math.abs(delta.x) <= 1 && Math.abs(delta.y) <= 1) {
+      if (Math.abs(delta.x) <= 1 && Math.abs(delta.y) <= 1) {
         action.permit({ priority: MovementPermissionPriority.ALLOWED });
       }
     }

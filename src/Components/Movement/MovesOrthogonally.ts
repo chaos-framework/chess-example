@@ -8,7 +8,7 @@ export default class MovesOrthogonally extends Component implements Modifier {
   modify(action: Action) {
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
-      if(target.position.isOrthogonalTo(to)) {
+      if (target.position.isOrthogonalTo(to)) {
         action.permit({ priority: MovementPermissionPriority.ALLOWED });
       }
     }

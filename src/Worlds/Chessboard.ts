@@ -19,7 +19,7 @@ export default class Chessboard extends World {
     // Set every other tile inside the board to black
     for(let x = 0; x < 8; x++) {
       for(let y = 0; y < 8; y++) {
-        if((x + y) % 2 === 1) {
+        if ((x + y) % 2 === 1) {
           this.baseLayer.setTile(x, y, Tiles.BLACK);
         }
       }
@@ -78,12 +78,12 @@ export default class Chessboard extends World {
 
   // Convert vector to algebraic, ie { 0 ,0 } to 'a8'
   static toAlgebraic(vector: Vector): string | undefined {
-    if(!Chessboard.isInBounds(vector)) {
+    if (!Chessboard.isInBounds(vector)) {
       return undefined;
     }
     const row = vector.y * -1 + 8;
     const column = algebraicFiles[vector.x];
-    if(column === undefined) {
+    if (column === undefined) {
       return undefined;
     }
     return column + row.toString();
@@ -91,20 +91,20 @@ export default class Chessboard extends World {
 
   // Convert algebraic into a vector, ie 'a8' to { 0, 0 }
   static fromAlgebraic(algebraic: string): Vector | undefined {
-    if(algebraic.length !== 2) {
+    if (algebraic.length !== 2) {
       return undefined;
     }
     const letter = algebraic[0];
     const column = algebraicFiles.findIndex(val => val === letter);
-    if(column === -1) {
+    if (column === -1) {
       return undefined;
     }
     const row = (parseInt(algebraic[1], 10) -1) * -1 + 7;
-    if(!(typeof row === 'number')) {
+    if (!(typeof row === 'number')) {
       return undefined;
     }
     const vector = new Vector(column, row);
-    if(Chessboard.isInBounds(vector)) {
+    if (Chessboard.isInBounds(vector)) {
       return vector;
     } else {
       return undefined;

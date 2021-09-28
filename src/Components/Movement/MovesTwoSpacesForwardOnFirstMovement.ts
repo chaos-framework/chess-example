@@ -14,7 +14,7 @@ export default class MovesTwoSpacesForwardOnFirstMovement extends Component impl
         action.target.metadata.get('moveCount') === 0) {
       const { target, to } = action;
       // Make sure the target has a team
-      if(target.team === undefined) {
+      if (target.team === undefined) {
         return;
       }
       // Make sure the movement is "forward"
