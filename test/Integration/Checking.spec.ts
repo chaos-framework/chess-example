@@ -11,7 +11,7 @@ import Checked from '../../src/Components/Checked';
 
 describe('Checking', () => {
   beforeEach(() => { 
-    Chess.reset();
+    Chaos.reset();
   });
 
   describe('Pieces are put in check properly', () => {
@@ -33,7 +33,7 @@ describe('Checking', () => {
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c2')!);
       // Move into attacking position
-      const movement = enemyQueen.move({ to: Chessboard.fromAlgebraic('c1')!, metadata: { playerMovement: true } }).execute(true);
+      enemyQueen.move({ to: Chessboard.fromAlgebraic('c1')!, metadata: { playerMovement: true } }).execute(true);
       Chaos.process();
       // Expect the king to be checked
       expect(checkableKing.has('Checked')).to.be.true;

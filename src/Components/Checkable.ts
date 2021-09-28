@@ -8,32 +8,29 @@ import Checked from './Checked';
 export default class Checkable extends Component implements Modifier, Reacter {
   name = 'Checkable';
 
+  // Don't allow any friendly movement that would cause a check
   modify(action: Action) {
     if (action instanceof MoveAction
       && action.tagged('playerMovement')
       && action.target.world !== undefined
       && this.parent instanceof Entity
       && this.parent.world === action.target.world) {
-      // Make sure neither parent entity nor friendly piece can put this piece in check
-      const myTeam = this.parent.metadata.get('team');
-      const moverTeam = action.target.metadata.get('team');
-      if (myTeam === undefined || moverTeam === undefined) {
-        return;
-      }
-      if (myTeam === moverTeam && movementWillResultInCheck(action.target.world, this.parent, action.target, action.to)) {
+      if (this.parent.team === action.target.team && movementWillResultInCheck(action.target.world, this.parent, action.target, action.to)) {
         action.deny({ priority: MovementPermissionPriority.DISALLOWED, message: `Movement would put ${this.parent.name} in check!`});
       }
     }
   }
 
+  // Get put into check by enemy movement when appropriate
   react(action: Action) {
     if (action instanceof MoveAction
       && action.tagged('playerMovement')
       && !action.tagged('query') 
       && action.target.world !== undefined
-      && this.parent instanceof Entity) {
+      && this.parent instanceof Entity
+      && this.parent.world === action.target.world) {
       // See if the parent entity is put in check by this movement
-      if (movementWillResultInCheck(action.target.world, this.parent, action.target, action.to)) {
+      if (!this.parent.has('Checked') && isInCheck(this.parent.world, this.parent)) {
         // Put in check
         action.followup(this.parent.attach({ component: new Checked, caster: action.target }));
       }

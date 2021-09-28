@@ -1,19 +1,14 @@
 import { Chaos, Entity, Vector, World } from '@chaos/core';
 
 export function isInCheck(board: World, piece: Entity): boolean {
-  const friendlyTeam = piece.metadata.get('team');
-  if(friendlyTeam === undefined) {
+  if(piece.team === undefined) {
     return false;
   }
   // Get all pieces on the board that do not belong to the friendly team
   const enemyPieces: Entity[] = [];
-  for (const entityId of board.entities) {
-    const entity = Chaos.getEntity(entityId);
-    if (entity !== undefined) {
-      const entityTeam = entity.metadata.get('team');
-      if (entityTeam !== undefined && entityTeam !== friendlyTeam) {
-        enemyPieces.push(entity);
-      }
+  for (const [id, entity] of board.entities) {
+    if (entity.team !== piece.team) {
+      enemyPieces.push(entity);
     }
   }
   // See if any are capable of moving onto this piece's position

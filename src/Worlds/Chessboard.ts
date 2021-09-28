@@ -34,9 +34,8 @@ export default class Chessboard extends World {
   static blackCaptureStart = new Vector(11, 0);
 
   clear() {
-    for (const id of this.entities) {
-      const entity = Chaos.getEntity(id);
-      entity?.unpublish().execute();
+    for (const [id, entity] of this.entities) {
+      entity.unpublish().execute();
     }
   }
 
