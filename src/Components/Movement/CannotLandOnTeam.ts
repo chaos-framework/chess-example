@@ -12,14 +12,9 @@ export default class CannotLandOnTeam extends Component implements Modifier {
       if (target.world === undefined) {
         return;
       }
-      const team = target.metadata.get('team');
-      if (team === undefined || (team !== 'WHITE' && team !== 'BLACK')) {
-        action.deny({ priority: MovementPermissionPriority.DISALLOWED, message: 'Cannot determine team of this piece.' });
-        return;
-      }
       const entitiesAtLocation = target.world.getEntitiesAtCoordinates(to.x, to.y);
       for (const entity of entitiesAtLocation) {
-        if(entity.metadata.get('team') === team) {
+        if(entity.team === target.team) {
           action.deny({ priority: MovementPermissionPriority.DISALLOWED, message: "You cannot move onto your own piece."})
         }
       }

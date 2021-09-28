@@ -8,6 +8,7 @@ import Chessboard from '../../src/Worlds/Chessboard';
 import queen from '../../src/Entities/Pieces/Queen';
 import King from '../../src/Entities/Pieces/King';
 import Checked from '../../src/Components/Checked';
+import Teams from '../../src/Enums/Teams';
 
 describe('Checking', () => {
   beforeEach(() => { 
@@ -21,9 +22,9 @@ describe('Checking', () => {
     let enemyQueen: Entity;
     beforeEach(() => {
       board = new Chessboard();
-      checkableKing = King('WHITE');
-      friendlyQueen = queen('WHITE');
-      enemyQueen = queen('BLACK');
+      checkableKing = King(Teams.WHITE);
+      friendlyQueen = queen(Teams.WHITE);
+      enemyQueen = queen(Teams.BLACK);
     });
 
     it('Checkable pieces are put in check if an enemy piece can capture it with one more move', () => {

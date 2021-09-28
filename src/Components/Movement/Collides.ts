@@ -13,7 +13,7 @@ export default class Collides extends Component implements Modifier {
         return;
       }
       const lineIterator = target.position.getLineToIterable(to);
-      // Pop the first space off
+      // Pop the first space off (occupied by parent piece)
       lineIterator.next();
       // Iterate over rest
       for (const vector of lineIterator) {

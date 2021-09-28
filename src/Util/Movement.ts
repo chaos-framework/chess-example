@@ -1,1 +1,0 @@
-export const getForwardDirection = (team: 'WHITE' | 'BLACK') => { return team === 'WHITE' ? -1 : 1}

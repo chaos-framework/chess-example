@@ -3,7 +3,7 @@ import 'mocha';
 
 import { Entity, Vector, MoveAction, Chaos } from '@chaos/core';
 
-import Simulator from '../../src/Components/Simulator';
+import Simulator from '../../src/Components/Logical/Simulator';
 import Chessboard from '../../src/Worlds/Chessboard';
 
 describe('Simulating in third-party engine', () => {

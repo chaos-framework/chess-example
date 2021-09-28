@@ -1,4 +1,4 @@
-import { Entity } from '@chaos/core';
+import { Entity, Team } from '@chaos/core';
 
 import Piece from '../../Enums/Piece';
 
@@ -8,17 +8,17 @@ import MovesOneSquareAnyDirection from '../../Components/Movement/MovesOneSquare
 import Checkable from '../../Components/Checkable';
 
 import Move from '../../Abilities/Move';
-import Chess from '../..';
-import Teams from '../../Enums/Teams';
 
-const King = (teamName: Teams): Entity => {
-  const name = `${teamName} King`;
-  const team = Chess.teams[teamName];
-  const king = new Entity({name, metadata: { 
-    type: Piece.KING,
-    team: team.id,
-    moveCount: 0
-  }});
+const King = (team: Team): Entity => {
+  const name = `${team.name} King`;
+  const king = new Entity({
+    name,
+    team, 
+    metadata: { 
+      type: Piece.KING,
+      moveCount: 0
+    }
+  });
   king._attachAll([
     ...generateCommonComponents(),
     new Collides,

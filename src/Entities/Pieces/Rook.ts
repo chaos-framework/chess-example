@@ -1,19 +1,16 @@
-import { Entity } from '@chaos/core';
+import { Entity, Team } from '@chaos/core';
 
 import Piece from '../../Enums/Piece';
 import Move from '../../Abilities/Move';
 import { generateCommonComponents } from './_common';
 import MovesOrthogonally from '../../Components/Movement/MovesOrthogonally';
 import Collides from '../../Components/Movement/Collides';
-import Chess from '../..';
-import Teams from '../../Enums/Teams';
 
-const Rook = (teamName: Teams): Entity => {
-  const name = `${teamName} Rook`;
-  const team = Chess.teams[teamName];
+const Rook = (team: Team): Entity => {
+  const name = `${team.name} Rook`;
   const bishop = new Entity({
     name,
-    team: team.id,
+    team,
     metadata: {
       type: Piece.ROOK,
       moveCount: 0

@@ -24,7 +24,7 @@ describe('Can only move on turn', () => {
     const piece = new Entity({ metadata: { team: Teams.WHITE } });
     const movement = piece.move({ to: new Vector(0, 0) });
     new CanOnlyMoveOnTurn().modify(movement);
-    Chaos.currentTurn = 
+    Chaos.currentTurn = piece;
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
   });

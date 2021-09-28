@@ -1,4 +1,4 @@
-import { Entity } from '@chaos/core';
+import { Entity, Team } from '@chaos/core';
 
 import Piece from '../../Enums/Piece';
 import Move from '../../Abilities/Move';
@@ -7,20 +7,16 @@ import MovesDiagonallyOneSquareToCapture from '../../Components/Movement/MovesDi
 import MovesTwoSpacesForwardOnFirstMovement from '../../Components/Movement/MovesTwoSpacesForwardOnFirstMovement';
 import { generateCommonComponents } from './_common';
 import Collides from '../../Components/Movement/Collides';
-import Teams from '../../Enums/Teams';
-import Chess from '../..';
 
-const Pawn = (teamName: Teams): Entity => {
-  const name = `${teamName} Pawn`;
-  const team = Chess.teams[teamName];
+const Pawn = (team: Team): Entity => {
+  const name = `${team.name} Pawn`;
   const pawn = new Entity({
     name,
+    team,
     metadata: {
       type: Piece.PAWN,
-      team: teamName,
       moveCount: 0
     },
-    team: team.id
   });
   pawn._attachAll([
     ...generateCommonComponents(),

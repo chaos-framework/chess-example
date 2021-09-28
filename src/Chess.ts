@@ -1,22 +1,32 @@
-import { Chaos, CONNECTION, CONNECTION_RESPONSE, Player, Team } from '@chaos/core';
+import { Chaos, CONNECTION, CONNECTION_RESPONSE, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
 import Simulator from './Components/Logical/Simulator';
 import Teams from './Enums/Teams';
+import Chessboard from './Worlds/Chessboard';
 
 Chaos.id = 'Chess';
 
-export let board = new ChessBoard();
+export let board: Chessboard;
 export let simulator = new Simulator();
 export let turnOrder = [Teams.WHITE, Teams.BLACK]
 
-export let teams = {
+export const teams = {
   [Teams.WHITE]: new Team({ name: Teams.WHITE }),
   [Teams.BLACK]: new Team({ name: Teams.BLACK }),
   [Teams.RED]: new Team({ name: Teams.RED }),
   [Teams.BLUE]: new Team({ name: Teams.BLUE }),
   [Teams.GREEN]: new Team({ name: Teams.GREEN }),
   [Teams.YELLOW]: new Team({ name: Teams.YELLOW }),
+}
+
+export const teamDirections = {
+  [Teams.WHITE]: new Vector(0, -1),
+  [Teams.BLACK]: new Vector(0, 1),
+  [Teams.RED]: new Vector(1, 0),
+  [Teams.BLUE]: new Vector(-1, 0),
+  [Teams.GREEN]: new Vector(0, -1),
+  [Teams.YELLOW]: new Vector(0, 1)
 }
 
 export const totalCaptures = {
@@ -29,9 +39,10 @@ export const totalCaptures = {
 }
 
 export function initialize(options?: any) {
-  Chaos.teams.set('White', teams[Teams.WHITE]);
-  Chaos.teams.set('Black', teams[Teams.WHITE]);
-  board.setUpStandardGame();
+  board = new ChessBoard();
+  teams[Teams.WHITE]._publish();
+  teams[Teams.BLACK]._publish();
+  board.setUpStandardGame(teams[Teams.WHITE], teams[Teams.BLACK]);
   simulator = new Simulator();
 }
 
@@ -43,7 +54,7 @@ export function reset() {
   totalCaptures[Teams.GREEN] = 0;
   totalCaptures[Teams.YELLOW] = 0;
   board.clear();
-  board.setUpStandardGame();
+  board.setUpStandardGame(teams[Teams.WHITE], teams[Teams.BLACK]);
   simulator = new Simulator();
 }
 
