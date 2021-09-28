@@ -5,7 +5,7 @@ import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 import Teams from '../../Enums/Teams';
 
 export default class MovesTwoSpacesForwardOnFirstMovement extends Component implements Modifier {
-  name = "Moves One Square Forward"
+  name = "Can Move Two Spaces Forward On First Movement";
 
   modify(action: Action) {
     if (action instanceof MoveAction &&
@@ -17,10 +17,10 @@ export default class MovesTwoSpacesForwardOnFirstMovement extends Component impl
       if(target.team === undefined) {
         return;
       }
-      const teamName = target.team.name as Teams;
       // Make sure the movement is "forward"
-      const delta = to.subtract(target.position);
+      const teamName = target.team.name as Teams;
       const forwardTwoSquares = Chess.teamDirections[teamName].multiply(2);
+      const delta = to.subtract(target.position);
       // Check that the movement is only two square directly forward
       if (delta.equals(forwardTwoSquares)) {
         action.permit({ priority: MovementPermissionPriority.ALLOWED });

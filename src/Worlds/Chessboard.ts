@@ -7,7 +7,6 @@ import Bishop from '../Entities/Pieces/Bishop';
 import Queen from '../Entities/Pieces/Queen';
 import King from '../Entities/Pieces/King';
 import Tiles from '../Enums/Tile';
-import Teams from '../Enums/Teams'
 
 const algebraicFiles = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 

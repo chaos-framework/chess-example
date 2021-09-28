@@ -19,13 +19,13 @@ describe('Cannot land on friendly piece', () => {
     friendlyTeam._publish();
     const enemyTeam = new Team();
     enemyTeam._publish();
-    piece = new Entity({ team: friendlyTeam.id });
+    piece = new Entity({ team: friendlyTeam });
     movementComponent = new CannotLandOnTeam();
     piece._attach(movementComponent);
     piece._publish(board, (Chessboard.fromAlgebraic('a1') as Vector));
-    friendly = new Entity({ team: friendlyTeam.id });
+    friendly = new Entity({ team: friendlyTeam });
     friendly._publish(board, (Chessboard.fromAlgebraic('a2') as Vector));
-    enemy = new Entity({ team: enemyTeam.id });
+    enemy = new Entity({ team: enemyTeam });
     enemy._publish(board, (Chessboard.fromAlgebraic('b2') as Vector));
   });
 

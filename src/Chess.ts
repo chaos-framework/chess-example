@@ -8,8 +8,8 @@ import Chessboard from './Worlds/Chessboard';
 Chaos.id = 'Chess';
 
 export let board: Chessboard;
-export let simulator = new Simulator();
-export let turnOrder = [Teams.WHITE, Teams.BLACK]
+export let simulator: Simulator;
+export let turnOrder = [Teams.WHITE, Teams.BLACK];
 
 export const teams = {
   [Teams.WHITE]: new Team({ name: Teams.WHITE }),
@@ -42,8 +42,7 @@ export function initialize(options?: any) {
   board = new ChessBoard();
   teams[Teams.WHITE]._publish();
   teams[Teams.BLACK]._publish();
-  board.setUpStandardGame(teams[Teams.WHITE], teams[Teams.BLACK]);
-  simulator = new Simulator();
+  reset();
 }
 
 export function reset() {

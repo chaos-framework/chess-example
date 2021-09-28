@@ -1,17 +1,18 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { Entity, Vector } from '@chaos/core';
+import { Entity, Team, Vector } from '@chaos/core';
 import Chessboard from '../../../src/Worlds/Chessboard';
 import MovesTwoSpacesForwardOnFirstMovement from '../../../src/Components/Movement/MovesTwoSpacesForwardOnFirstMovement';
+import Teams from '../../../src/Enums/Teams';
 
-describe('Pawn Movement -- Front Square', () => {
+describe('Moving two spaces forward on first move', () => {
   let board: Chessboard
   let pawn: Entity;
   let movementComponent: MovesTwoSpacesForwardOnFirstMovement;
   beforeEach(() => {
     board = new Chessboard();
-    pawn = new Entity({ metadata: { team: 'WHITE' } });
+    pawn = new Entity({ team: new Team({ name: Teams.WHITE })});
     movementComponent = new MovesTwoSpacesForwardOnFirstMovement();
     pawn._attach(movementComponent);
     pawn._publish(board, (Chessboard.fromAlgebraic('c3') as Vector));

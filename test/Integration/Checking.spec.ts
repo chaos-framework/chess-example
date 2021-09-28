@@ -1,14 +1,13 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { Entity, Vector, MoveAction, Chaos } from '@chaos/core';
+import { Entity, Chaos, Team } from '@chaos/core';
 
 import Chess from '../../src';
 import Chessboard from '../../src/Worlds/Chessboard';
-import queen from '../../src/Entities/Pieces/Queen';
+import Queen from '../../src/Entities/Pieces/Queen';
 import King from '../../src/Entities/Pieces/King';
 import Checked from '../../src/Components/Checked';
-import Teams from '../../src/Enums/Teams';
 
 describe('Checking', () => {
   beforeEach(() => { 
@@ -22,9 +21,11 @@ describe('Checking', () => {
     let enemyQueen: Entity;
     beforeEach(() => {
       board = new Chessboard();
-      checkableKing = King(Teams.WHITE);
-      friendlyQueen = queen(Teams.WHITE);
-      enemyQueen = queen(Teams.BLACK);
+      const whiteTeam = new Team({ name: "WHITE" });
+      const blackTeam = new Team({ name: "BLACK" });
+      checkableKing = King(whiteTeam);
+      friendlyQueen = Queen(whiteTeam);
+      enemyQueen = Queen(blackTeam);
     });
 
     it('Checkable pieces are put in check if an enemy piece can capture it with one more move', () => {
