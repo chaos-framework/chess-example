@@ -1,13 +1,14 @@
-import { Chaos, CONNECTION, CONNECTION_RESPONSE, Player, Team, Vector } from '@chaos/core';
+import { Chaos, Component, CONNECTION, CONNECTION_RESPONSE, LogicalAction, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
 import Teams from './Enums/Teams';
 import Chessboard from './Worlds/Chessboard';
+import OneMovePerTurn from './Components/PlayOrder/OneMovePerTurn';
 
 Chaos.id = 'Chess';
 
 export let board: Chessboard;
-export let turnOrder = [Teams.WHITE, Teams.BLACK];
+let turnOrderComponent: Component;
 
 export const teams = {
   [Teams.WHITE]: new Team({ name: Teams.WHITE }),
@@ -15,13 +16,8 @@ export const teams = {
   [Teams.RED]: new Team({ name: Teams.RED }),
   [Teams.BLUE]: new Team({ name: Teams.BLUE }),
   [Teams.GREEN]: new Team({ name: Teams.GREEN }),
-  [Teams.YELLOW]: new Team({ name: Teams.YELLOW }),
+  [Teams.YELLOW]: new Team({ name: Teams.YELLOW })
 }
-
-export let activeTeams = [
-  teams[Teams.WHITE],
-  teams[Teams.BLACK]
-]
 
 export const teamDirections = {
   [Teams.WHITE]: new Vector(0, -1),
@@ -45,18 +41,9 @@ export function initialize(options?: any) {
   board = new ChessBoard();
   teams[Teams.WHITE]._publish();
   teams[Teams.BLACK]._publish();
+  turnOrderComponent = new OneMovePerTurn([teams[Teams.WHITE], teams[Teams.BLACK]]);
+  Chaos.components.addComponent(turnOrderComponent);
   reset();
-}
-
-export function reset() {
-  totalCaptures[Teams.WHITE] = 0;
-  totalCaptures[Teams.BLACK] = 0;
-  totalCaptures[Teams.RED] = 0;
-  totalCaptures[Teams.BLUE] = 0;
-  totalCaptures[Teams.GREEN] = 0;
-  totalCaptures[Teams.YELLOW] = 0;
-  board.clear();
-  board.setUpStandardGame(teams[Teams.WHITE], teams[Teams.BLACK]);
 }
 
 export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {
@@ -69,3 +56,15 @@ export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {
 }
 
 export function onPlayerDisconnect() {}
+
+export function reset() {
+  totalCaptures[Teams.WHITE] = 0;
+  totalCaptures[Teams.BLACK] = 0;
+  totalCaptures[Teams.RED] = 0;
+  totalCaptures[Teams.BLUE] = 0;
+  totalCaptures[Teams.GREEN] = 0;
+  totalCaptures[Teams.YELLOW] = 0;
+  board.clear();
+  board.setUpStandardGame(teams[Teams.WHITE], teams[Teams.BLACK]);
+  new LogicalAction('RESET').execute();
+}

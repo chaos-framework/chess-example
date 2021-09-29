@@ -8,3 +8,7 @@ export const createCheckAction = (target: Entity, caster: Entity) => {
 export const createCheckmateAction = (target: Entity, caster: Entity) => {
   return new LogicalAction(actions.CHECKMATE, {}, { caster, target })
 }
+
+export const createResetAction = (target: Entity, caster: Entity) => {
+  return new LogicalAction(actions.RESET, {}, { caster, target })
+}
