@@ -1,9 +1,10 @@
-import { Chaos, Component, CONNECTION, CONNECTION_RESPONSE, LogicalAction, Player, Team, Vector } from '@chaos/core';
+import { Chaos, Component, CONNECTION, CONNECTION_RESPONSE, Entity, LogicalAction, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
 import Teams from './Enums/Teams';
 import Chessboard from './Worlds/Chessboard';
 import OneMovePerTurn from './Components/PlayOrder/OneMovePerTurn';
+import { currentTurn } from '@chaos/core/lib/Game/Chaos';
 
 Chaos.id = 'Chess';
 
@@ -67,4 +68,10 @@ export function reset() {
   board.clear();
   board.setUpStandardGame(teams[Teams.WHITE], teams[Teams.BLACK]);
   new LogicalAction('RESET').execute();
+}
+
+export function exportToJSEngineStatelessFormat(): any {
+  // this should not get called if not using standard white-black teams
+  const currentTurn = (Chaos.currentTurn as Team).name === 'WHITE' ? 'white' : 'black';
+  
 }

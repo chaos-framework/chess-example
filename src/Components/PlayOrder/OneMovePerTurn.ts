@@ -22,7 +22,7 @@ export default class OneMovePerTurn extends Component implements Reacter {
 
   react(action: Action) {
     // Change turns after one movement
-    if (action instanceof MoveAction && action.tagged('playerMovement') && action.target.team !== undefined) {
+    if (action instanceof MoveAction && action.tagged('playerMovement') && action.target.team !== undefined && action.applied) {
       const nextTeam = this.getTeamForNextTurn(action.target.team);
       if(nextTeam !== action.target.team) {
         action.followup(new ChangeTurnAction({ to: nextTeam }));

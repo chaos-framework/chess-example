@@ -13,7 +13,8 @@ const Rook = (team: Team): Entity => {
     team,
     metadata: {
       type: Piece.ROOK,
-      moveCount: 0
+      moveCount: 0,
+      notation: team.name === 'WHITE' ? 'R' : 'r'
     }
   });
   bishop._attachAll([

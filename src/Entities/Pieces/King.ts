@@ -16,7 +16,8 @@ const King = (team: Team): Entity => {
     team, 
     metadata: { 
       type: Piece.KING,
-      moveCount: 0
+      moveCount: 0,
+      notation: team.name === 'WHITE' ? 'K' : 'k'
     }
   });
   king._attachAll([

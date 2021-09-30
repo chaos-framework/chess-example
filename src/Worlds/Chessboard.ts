@@ -123,6 +123,16 @@ export default class Chessboard extends World {
     return position.x < 8 && position.y < 8;
   }
 
+  exportToJSON(): any {
+    let json: any = {};
+    for(const [id, entity] of this.entities) {
+      const algebriac = Chessboard.toAlgebraic(entity.position);
+      if(algebriac !== undefined) {
+        json[algebriac.toUpperCase()] = entity.metadata.get('notation');
+      }
+    }
+  }
+
   serialize(): string {
     return "";
   }

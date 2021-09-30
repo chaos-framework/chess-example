@@ -13,7 +13,8 @@ const Bishop = (team: Team): Entity => {
     team,
     metadata: { 
       team: team.id,
-      moveCount: 0
+      moveCount: 0,
+      notation: team.name === 'WHITE' ? 'B' : 'b'
     }
   });
   bishop._attachAll([

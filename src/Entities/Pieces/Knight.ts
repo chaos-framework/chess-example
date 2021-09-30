@@ -11,8 +11,9 @@ const Knight = (team: Team): Entity => {
     name,
     team, 
     metadata: { 
-    type: Piece.KNIGHT,
-    moveCount: 0
+      type: Piece.KNIGHT,
+      moveCount: 0,
+      notation: team.name === 'WHITE' ? 'N' : 'n'
     }
   });
   knight._attachAll([

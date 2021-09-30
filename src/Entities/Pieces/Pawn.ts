@@ -15,7 +15,8 @@ const Pawn = (team: Team): Entity => {
     team,
     metadata: {
       type: Piece.PAWN,
-      moveCount: 0
+      moveCount: 0,
+      notation: team.name === 'WHITE' ? 'P' : 'p'
     },
   });
   pawn._attachAll([

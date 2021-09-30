@@ -14,7 +14,8 @@ const Queen = (team: Team): Entity => {
     team,
     metadata: { 
       type: Piece.QUEEN,
-      moveCount: 0 
+      moveCount: 0,
+      notation: team.name === 'WHITE' ? 'Q' : 'q'
     }
   });
   queen._attachAll([
