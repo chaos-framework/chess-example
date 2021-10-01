@@ -3,7 +3,6 @@ import 'mocha';
 
 import { Entity, Vector } from '@chaos/core';
 
-import Chess from '../../../src';
 import Chessboard from '../../../src/Worlds/Chessboard';
 import MovesDiagonally from '../../../src/Components/Movement/MovesDiagonally';
 
@@ -38,7 +37,7 @@ describe('Diagonal Movement', () => {
     expect(diagonalMovement.permitted).to.be.true;
   });
 
-  it('Does not permit non-diagonal movement', () => {
+  it('Does not explicitely permit non-diagonal movement', () => {
     let nonDiagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('c2') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
     movementComponent.modify(nonDiagonalMovement);
     nonDiagonalMovement.decidePermission();

@@ -39,6 +39,19 @@ export default class Chessboard extends World {
     }
   }
 
+  // Returns true if a piece has reached the far end of the board based on its "forward" direction
+  isEdgeOfBoardForForwardDirection(position: Vector, forwardDirection: Vector): boolean {
+    if(
+      (forwardDirection.y === -1 && position.y === 0) ||
+      (forwardDirection.y === 1 && position.y === 7) ||
+      (forwardDirection.x === -1 && position.x === 0) ||
+      (forwardDirection.x === 1 && position.y === 7)
+      ) {
+        return true;
+    }
+    return false;
+  }
+
   setUpStandardGame(whiteTeam: Team, blackTeam: Team) {
     // Set up white team
     Pawn(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('a2')! }).execute();

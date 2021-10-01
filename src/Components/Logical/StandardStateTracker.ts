@@ -21,10 +21,10 @@ export default class StandardStateTracker extends Component implements Reacter {
     check: false,
     checkMate: false,
     castling: {
-        "whiteLong": true,
-        "whiteShort": true,
-        "blackLong": true,
-        "blackShort": true    
+        "whiteLong": false,
+        "whiteShort": false,
+        "blackLong": false,
+        "blackShort": false
     },
     enPassant: null,
   }
@@ -33,13 +33,17 @@ export default class StandardStateTracker extends Component implements Reacter {
     // Track if we're in check or not
     if (action instanceof AttachComponentAction && action.component instanceof Checked && action.applied) {
       this.state.check = true;
+      return;
     }
     if (action instanceof DetachComponentAction && action.component instanceof Checked && action.applied) {
       this.state.check = false;
+      return;
     }
     // Track if en passant possible and, if so, which location the enemy pawn would move to
-    if (action instanceof MoveAction && action.tagged('playerMovement') && action.tagged('en_passant') && action.applied) {
-      this.state.enPassant = action.metadata.get('en_passant') as string;
+    if (action instanceof MoveAction && action.tagged('playerMovement') && action.applied) {
+      // Note that we unset enPassant if any movement happens that does not grant it
+      const enPassant = action.metadata.get('en_passant');
+      this.state.enPassant = (enPassant !== undefined && typeof enPassant === 'string') ? enPassant : null;
     }
     // TODO castling
     // TODO checkmate

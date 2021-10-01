@@ -1,4 +1,4 @@
-import { Component, Action, Modifier, Reacter, MoveAction, Entity } from '@chaos/core';
+import { Component, Action, Modifier, Reacter, MoveAction, Entity, PublishEntityAction } from '@chaos/core';
 
 import { isInCheck, movementWillResultInCheck } from '../Util/CheckQueries';
 import MovementPermissionPriority from '../Enums/MovementPermissionPriority';
@@ -23,16 +23,19 @@ export default class Checkable extends Component implements Modifier, Reacter {
 
   // Get put into check by enemy movement when appropriate
   react(action: Action) {
-    if (action instanceof MoveAction
-      && action.tagged('playerMovement')
-      && !action.tagged('query') 
-      && action.target.world !== undefined
-      && this.parent instanceof Entity
-      && this.parent.world === action.target.world) {
-      // See if the parent entity is put in check by this movement
-      if (!this.parent.has('Checked') && isInCheck(this.parent.world, this.parent)) {
-        // Put in check
-        action.followup(this.parent.attach({ component: new Checked, caster: action.target }));
+    if (this.parent instanceof Entity) {
+      const piece = action.getEntity();
+      if (piece instanceof Entity && piece.world === this.parent.world && piece.team !== this.parent.team) {
+        if (
+          (action instanceof MoveAction && action.tagged('playerMovement') && !action.tagged('query')) ||
+          (action instanceof PublishEntityAction)
+        ) {
+          // See if the parent entity is put in check by this movement
+          if (!this.parent.has('Checked') && this.parent.world !== undefined && isInCheck(this.parent.world, this.parent)) {
+            // Put in check
+            action.followup(this.parent.attach({ component: new Checked, caster: action.target }));
+          }
+        }
       }
     }
   }

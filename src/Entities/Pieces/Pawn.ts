@@ -1,12 +1,16 @@
 import { Entity, Team } from '@chaos/core';
 
-import Piece from '../../Enums/Piece';
-import Move from '../../Abilities/Move';
+
+import { generateCommonComponents } from './_common';
 import MovesOneSquareForward from '../../Components/Movement/MovesOneSquareForward';
 import MovesDiagonallyOneSquareToCapture from '../../Components/Movement/MovesDiagonallyOneSquareToCapture';
 import MovesTwoSpacesForwardOnFirstMovement from '../../Components/Movement/MovesTwoSpacesForwardOnFirstMovement';
-import { generateCommonComponents } from './_common';
 import Collides from '../../Components/Movement/Collides';
+import Queens from '../../Components/Queens';
+
+import Move from '../../Abilities/Move';
+
+import Piece from '../../Enums/Piece';
 
 const Pawn = (team: Team): Entity => {
   const name = `${team.name} Pawn`;
@@ -25,6 +29,7 @@ const Pawn = (team: Team): Entity => {
     new MovesOneSquareForward,
     new MovesTwoSpacesForwardOnFirstMovement,
     new MovesDiagonallyOneSquareToCapture,
+    new Queens
   ]);
   pawn._learn(new Move);
   return pawn;

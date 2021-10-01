@@ -2,7 +2,6 @@ import { Action, Component, Modifier, MoveAction } from '@chaos/core';
 
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
-// Disallows movements that a pawn shouldn't be able to make
 export default class MovesDiagonally extends Component implements Modifier {
   name = 'Moves Diagonally';
 

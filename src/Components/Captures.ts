@@ -5,10 +5,10 @@ import Chessboard from "../Worlds/Chessboard";
 // Gets captures when landing on an enemy piece
 export default class Captures extends Component implements Reacter {
   name = 'Captures';
-  
+
   react(action: Action) {
     if (action instanceof MoveAction && action.tagged('playerMovement')
-      && action.target.world !== undefined) {
+      && action.target.world instanceof Chessboard) {
       // See if this moved onto enemy piece
       const { target, to } = action;
       const entity = action.target.world.getEntitiesAtCoordinates(to.x, to.y)[0];
@@ -16,8 +16,8 @@ export default class Captures extends Component implements Reacter {
         const enemyTeam = entity.metadata.get('team');
         if (enemyTeam !== undefined && (enemyTeam === 'WHITE' || enemyTeam === 'BLACK')) {
           if (entity.metadata.get('team') !== target.metadata.get('team')) {
-            const newLocation = Chessboard.getCaptureSlot(enemyTeam, Chess.totalCaptures[enemyTeam]);
-            action.followup(entity.move({ to: newLocation }));
+            const captureSlot = Chessboard.getCaptureSlot(enemyTeam, Chess.totalCaptures[enemyTeam]);
+            action.followup(entity.move({ to: captureSlot }));
             Chess.totalCaptures[enemyTeam]++;
             action.followup(new MessageAction({ message: generateCaptureMessage(entity, target) }));
           }

@@ -21,10 +21,12 @@ describe('Each team gets one move per turn', () => {
 
   it('Changes the current turn after each team player movement in a continious cycle', () => {
     const firstMovement = new MoveAction({ to: new Vector(0,0), target: firstPiece, metadata: { playerMovement: true } });
+    firstMovement.applied = true;
     component.react(firstMovement);
     Chaos.process();
     expect(Chaos.currentTurn).to.equal(secondTeam);
     const secondMovement = new MoveAction({ to: new Vector(0,0), target: secondPiece, metadata: { playerMovement: true } });
+    secondMovement.applied = true;
     component.react(secondMovement);
     Chaos.process();
     expect(Chaos.currentTurn).to.equal(firstTeam);
@@ -32,13 +34,15 @@ describe('Each team gets one move per turn', () => {
     Chaos.process();
     expect(Chaos.currentTurn).to.equal(secondTeam);
   });
-  
+
   it('Ignores non-player movement (such as a piece being moved to captured section)', () => {
     const firstMovement = new MoveAction({ to: new Vector(0,0), target: firstPiece });
+    firstMovement.applied = true;
     component.react(firstMovement);
     Chaos.process();
     expect(Chaos.currentTurn).to.equal(firstTeam);
     const secondMovement = new MoveAction({ to: new Vector(0,0), target: secondPiece });
+    secondMovement.applied = true;
     component.react(secondMovement);
     Chaos.process();
     expect(Chaos.currentTurn).to.equal(firstTeam);
@@ -47,7 +51,9 @@ describe('Each team gets one move per turn', () => {
   it("Does not change turns when the team played isn't part of the turn order anyway", () => {
     const randomPiece = new Entity();
     randomPiece._joinTeam(new Team());
-    component.react(new MoveAction({ to: new Vector(0,0), target: randomPiece, metadata: { playerMovement: true } }));
+    const movement = new MoveAction({ to: new Vector(0,0), target: randomPiece, metadata: { playerMovement: true } });
+    movement.applied = true;
+    component.react(movement);
     Chaos.process();
     expect(Chaos.currentTurn).to.equal(firstTeam);
   });
