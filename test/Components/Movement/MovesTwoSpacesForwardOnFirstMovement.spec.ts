@@ -21,7 +21,7 @@ describe('Moving two spaces forward on first move', () => {
   it('Allows movement forward two spaces if moveCount is zero', () => {
     pawn.metadata.set('moveCount', 0);
     const movement = pawn.move({ to: (Chessboard.fromAlgebraic('c5') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
   });
@@ -29,7 +29,7 @@ describe('Moving two spaces forward on first move', () => {
   it('Does not give permission for movement backwards, even if moveCount is zero', () => {
     pawn.metadata.set('moveCount', 0);
     const movement = pawn.move({ to: (Chessboard.fromAlgebraic('c1') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;
   });
@@ -37,7 +37,7 @@ describe('Moving two spaces forward on first move', () => {
   it('Does not explicitly allow movement forward two spaces if moveCount is greater than zero', () => {
     pawn.metadata.set('moveCount', 1);
     const whiteMovement = pawn.move({ to: (Chessboard.fromAlgebraic('c5') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(whiteMovement);
+    movementComponent.permit(whiteMovement);
     whiteMovement.decidePermission();
     expect(whiteMovement.permitted).to.be.false;
   });

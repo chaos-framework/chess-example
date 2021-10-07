@@ -25,45 +25,45 @@ describe('Colliding with other pieces', () => {
 
   it('Allows a piece to move through open space', () => {
     let movement = piece.move({ to: (Chessboard.fromAlgebraic('b7') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
     movement = piece.move({ to: (Chessboard.fromAlgebraic('b1') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
     movement = piece.move({ to: (Chessboard.fromAlgebraic('a4') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
   });
 
   it('Allows a piece to land on another piece', () => {
     let movement = piece.move({ to: (Chessboard.fromAlgebraic('c3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
     movement = piece.move({ to: (Chessboard.fromAlgebraic('a3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
     movement = piece.move({ to: (Chessboard.fromAlgebraic('b8') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
   });
 
   it('Stops a piece from moving through other pieces to get to destination', () => {
     let movement = piece.move({ to: (Chessboard.fromAlgebraic('d3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;
     movement = piece.move({ to: (Chessboard.fromAlgebraic('e3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;
     movement = piece.move({ to: (Chessboard.fromAlgebraic('f7') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;
   });

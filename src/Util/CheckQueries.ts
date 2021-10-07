@@ -15,7 +15,7 @@ export function isInCheck(board: World, piece: Entity): boolean {
   for(const enemy of enemyPieces) {
     // Note that the metadata "query: true" is so components don't take any actions on this fake action
     const potentialCapture = enemy.move({ to: piece.position, metadata: { playerMovement: true, query: true }});
-    enemy.modify(potentialCapture);
+    enemy.handle('permit', potentialCapture);
     potentialCapture.decidePermission();
     if (potentialCapture.permitted) {
       return true;

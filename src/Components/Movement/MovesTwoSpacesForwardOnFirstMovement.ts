@@ -1,4 +1,4 @@
-import { Action, Component, Modifier, MoveAction } from '@chaos/core';
+import { Action, Component, MoveAction } from '@chaos/core';
 
 import Chess from '../..';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
@@ -6,10 +6,10 @@ import Teams from '../../Enums/Teams';
 import Chessboard from '../../Worlds/Chessboard';
 
 // Allows a pawn to move two spaces forward on it's first move, also applying the en passant component if successful
-export default class MovesTwoSpacesForwardOnFirstMovement extends Component implements Modifier {
+export default class MovesTwoSpacesForwardOnFirstMovement extends Component {
   name = "Can Move Two Spaces Forward On First Movement";
 
-  modify(action: Action) {
+  permit(action: Action) {
     if (action instanceof MoveAction &&
         action.target === this.parent &&
         action.tagged('playerMovement') &&

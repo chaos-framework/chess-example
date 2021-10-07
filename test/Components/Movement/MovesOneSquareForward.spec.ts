@@ -20,21 +20,21 @@ describe('Pawn Movement -- Front Square', () => {
 
   it('Allows movement forward one step', () => {
     const whiteMovement = pawn.move({ to: (Chessboard.fromAlgebraic('b3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(whiteMovement);
+    movementComponent.permit(whiteMovement);
     whiteMovement.decidePermission();
     expect(whiteMovement.permitted).to.be.true;
   });
 
   it('Does not give permission for movement backwards', () => {
     const whiteMovement = pawn.move({ to: (Chessboard.fromAlgebraic('b1') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(whiteMovement);
+    movementComponent.permit(whiteMovement);
     whiteMovement.decidePermission();
     expect(whiteMovement.permitted).to.be.false;
   });
 
   it('Does not give permission for movement sideways', () => {
     const whiteMovement = pawn.move({ to: (Chessboard.fromAlgebraic('c3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(whiteMovement);
+    movementComponent.permit(whiteMovement);
     whiteMovement.decidePermission();
     expect(whiteMovement.permitted).to.be.false;
   });

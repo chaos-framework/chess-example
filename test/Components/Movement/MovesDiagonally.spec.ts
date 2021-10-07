@@ -20,30 +20,30 @@ describe('Diagonal Movement', () => {
 
   it('Permits diagonal movement', () => {
     let diagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('a3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(diagonalMovement);
+    movementComponent.permit(diagonalMovement);
     diagonalMovement.decidePermission();
     expect(diagonalMovement.permitted).to.be.true;
     diagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('a1') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(diagonalMovement);
+    movementComponent.permit(diagonalMovement);
     diagonalMovement.decidePermission();
     expect(diagonalMovement.permitted).to.be.true;
     diagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('c3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(diagonalMovement);
+    movementComponent.permit(diagonalMovement);
     diagonalMovement.decidePermission();
     expect(diagonalMovement.permitted).to.be.true;
     diagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('f6') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(diagonalMovement);
+    movementComponent.permit(diagonalMovement);
     diagonalMovement.decidePermission();
     expect(diagonalMovement.permitted).to.be.true;
   });
 
   it('Does not explicitely permit non-diagonal movement', () => {
     let nonDiagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('c2') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(nonDiagonalMovement);
+    movementComponent.permit(nonDiagonalMovement);
     nonDiagonalMovement.decidePermission();
     expect(nonDiagonalMovement.permitted).to.be.false;
     nonDiagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('b8') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(nonDiagonalMovement);
+    movementComponent.permit(nonDiagonalMovement);
     nonDiagonalMovement.decidePermission();
     expect(nonDiagonalMovement.permitted).to.be.false;
   });

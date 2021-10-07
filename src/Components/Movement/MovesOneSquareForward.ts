@@ -1,13 +1,13 @@
-import { Action, Component, Modifier, MoveAction } from '@chaos/core';
+import { Action, Component, MoveAction } from '@chaos/core';
 
 import Chess from '../..';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 import Teams from '../../Enums/Teams';
 
-export default class MovesOneSquareForward extends Component implements Modifier {
+export default class MovesOneSquareForward extends Component {
   name = "Moves One Square Forward"
 
-  modify(action: Action) {
+  permit(action: Action) {
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
       // Make sure the target has a team

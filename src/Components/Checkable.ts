@@ -1,15 +1,15 @@
-import { Component, Action, Modifier, Reacter, MoveAction, Entity, PublishEntityAction } from '@chaos/core';
+import { Component, Action, MoveAction, Entity, PublishEntityAction } from '@chaos/core';
 
 import { isInCheck, movementWillResultInCheck } from '../Util/CheckQueries';
 import MovementPermissionPriority from '../Enums/MovementPermissionPriority';
 import Checked from './Checked';
 
 // Stops friendly pieces from moving in a way that would check this piece, and applies Checked when done so by enemy
-export default class Checkable extends Component implements Modifier, Reacter {
+export default class Checkable extends Component {
   name = 'Checkable';
 
   // Don't allow any friendly movement that would cause a check
-  modify(action: Action) {
+  permit(action: Action) {
     if (action instanceof MoveAction
       && action.tagged('playerMovement')
       && action.target.world !== undefined
@@ -22,7 +22,7 @@ export default class Checkable extends Component implements Modifier, Reacter {
   }
 
   // Get put into check by enemy movement when appropriate
-  react(action: Action) {
+  combat(action: Action) {
     if (this.parent instanceof Entity) {
       const piece = action.getEntity();
       if (piece instanceof Entity && piece.world === this.parent.world && piece.team !== this.parent.team) {

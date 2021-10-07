@@ -1,8 +1,8 @@
-import { Component, Reacter, Action, MoveAction, Team, ChangeTurnAction, LogicalAction } from '@chaos/core'
+import { Component, Action, MoveAction, Team, ChangeTurnAction, LogicalAction } from '@chaos/core'
 
 
 // Changes the turn to the next team after each move
-export default class OneMovePerTurn extends Component implements Reacter {
+export default class OneMovePerTurn extends Component {
   constructor(public turnOrder: Team[]) {
     super();
   }

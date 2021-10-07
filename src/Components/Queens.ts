@@ -1,4 +1,4 @@
-import { Component, Action, Reacter, MoveAction, TerminalMessage, Entity, LogicalAction, UnpublishEntityAction, PublishEntityAction } from '@chaos/core';
+import { Component, Action, MoveAction, TerminalMessage, Entity, LogicalAction, UnpublishEntityAction, PublishEntityAction } from '@chaos/core';
 
 import Chess from "..";
 import Queen from '../Entities/Pieces/Queen';
@@ -6,7 +6,7 @@ import MovementPermissionPriority from '../Enums/MovementPermissionPriority';
 import Teams from '../Enums/Teams';
 import Chessboard from '../Worlds/Chessboard';
 
-export default class Queens extends Component implements Reacter {
+export default class Queens extends Component {
   name = 'Queens';
   description = 'Automatically turns into a Queen upon reaching the far end of the board.';
   
@@ -17,7 +17,7 @@ export default class Queens extends Component implements Reacter {
       action.applied &&
       action.target === this.parent &&
       action.tagged('playerMovement') &&
-      action.target.world instanceof Chessboard      
+      action.target.world instanceof Chessboard
       ) {
       const { target, to } = action;
       // Make sure the target has a team

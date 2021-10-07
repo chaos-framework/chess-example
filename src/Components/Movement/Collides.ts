@@ -1,12 +1,12 @@
-import { Action, Component, Modifier, MoveAction } from '@chaos/core';
+import { Action, Component, MoveAction } from '@chaos/core';
 
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
 // Disallows movement if a piece is BETWEEN the target and its destination
-export default class Collides extends Component implements Modifier {
+export default class Collides extends Component {
   name = "Collides";
 
-  modify(action: Action) {
+  permit(action: Action) {
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
       if (target.world === undefined) {

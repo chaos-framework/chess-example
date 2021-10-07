@@ -1,12 +1,12 @@
-import { Action, Component, Modifier, MoveAction } from '@chaos/core';
+import { Action, Component, MoveAction } from '@chaos/core';
 
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
 // Allows for knight 2-1 movement
-export default class KnightMovement extends Component implements Modifier {
+export default class KnightMovement extends Component {
   name = 'Knight Movement';
 
-  modify(action: Action) {
+  permit(action: Action) {
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
       const delta = to.subtract(target.position).absolute();

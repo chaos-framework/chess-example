@@ -1,15 +1,20 @@
-import { Chaos, Component, CONNECTION, CONNECTION_RESPONSE, Entity, LogicalAction, Player, Team, Vector } from '@chaos/core';
+import { Chaos, Component, CONNECTION, CONNECTION_RESPONSE, LogicalAction, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
 import Teams from './Enums/Teams';
 import Chessboard from './Worlds/Chessboard';
 import OneMovePerTurn from './Components/PlayOrder/OneMovePerTurn';
-import { currentTurn } from '@chaos/core/lib/Game/Chaos';
+import StandardStateTracker from './Components/Logical/StandardStateTracker';
 
 Chaos.id = 'Chess';
+Chaos.setPhases(
+  ['modify', 'permit'],
+  ['combat', 'react', 'output']
+);
 
 export let board: Chessboard;
 let turnOrderComponent: Component;
+let stateTrackingComponent: StandardStateTracker
 
 export const teams = {
   [Teams.WHITE]: new Team({ name: Teams.WHITE }),
@@ -68,6 +73,8 @@ export function reset() {
   board.clear();
   board.setUpStandardGame(teams[Teams.WHITE], teams[Teams.BLACK]);
   new LogicalAction('RESET').execute();
+  stateTrackingComponent = new StandardStateTracker();
+  Chaos.attach(stateTrackingComponent);
 }
 
 export function exportToJSEngineStatelessFormat(): any {

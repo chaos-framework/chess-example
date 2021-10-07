@@ -27,7 +27,7 @@ describe('Capturing', () => {
 
   it('Captures enemy pieces', () => {
     let movement = piece.move({ to: enemy.position, metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.react(movement);
+    movementComponent.combat(movement);
     expect(movement.followups.length).to.be.greaterThan(0);
     const followup = movement.followups[0];
     expect(followup instanceof MoveAction).to.be.true;

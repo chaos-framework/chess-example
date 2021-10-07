@@ -19,14 +19,14 @@ describe('Must move at least one space.', () => {
 
   it('Denies movement that is not to a different tile', () => {
     const movement = piece.move({ to: (Chessboard.fromAlgebraic('b2') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;
   });
 
   it('Does not deny movement to a different tile', () => {
     const movement = piece.move({ to: (Chessboard.fromAlgebraic('g6') as Vector), metadata: { playerMovement: true } });
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
   });

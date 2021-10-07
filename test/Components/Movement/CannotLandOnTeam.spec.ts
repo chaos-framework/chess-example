@@ -3,10 +3,8 @@ import 'mocha';
 
 import { Entity, Team, Vector } from '@chaos/core';
 
-import Chess from '../../../src';
 import Chessboard from '../../../src/Worlds/Chessboard';
 import CannotLandOnTeam from '../../../src/Components/Movement/CannotLandOnTeam';
-import Teams from '../../../src/Enums/Teams';
 
 describe('Cannot land on friendly piece', () => {
   let piece: Entity;
@@ -31,21 +29,21 @@ describe('Cannot land on friendly piece', () => {
 
   it('Disallows landing on friendly piece', () => {
     let movement = piece.move({ to: friendly.position, metadata: { playerMovement: true } });
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;
   });
 
   it('Does not disallow landing on enemy piece', () => {
     let movement = piece.move({ to: enemy.position, metadata: { playerMovement: true } });
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
   });
 
   it('Does not disallow landing on empty space', () => {
     let movement = piece.move({ to: (Chessboard.fromAlgebraic('b1') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;
   });

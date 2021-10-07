@@ -1,13 +1,13 @@
-import { Component, Action, Modifier, Reacter, MoveAction, Entity } from '@chaos/core';
+import { Component, Action, MoveAction, Entity } from '@chaos/core';
 
 import { isInCheck, movementWillResultInCheck } from '../Util/CheckQueries';
 import MovementPermissionPriority from '../Enums/MovementPermissionPriority';
 
-export default class Checked extends Component implements Modifier, Reacter {
+export default class Checked extends Component {
   name = 'Checked';
   
   // Do not allow team movement that does not remove check
-  modify(action: Action) {
+  permit(action: Action) {
     if (action instanceof MoveAction && action.tagged('playerMovement') && action.target.world !== undefined) {
       // Make sure we belong to a team
       if (!(this.parent instanceof Entity) || this.parent.world === undefined || this.parent.world !== action.target.world) {
@@ -27,7 +27,7 @@ export default class Checked extends Component implements Modifier, Reacter {
   }
 
   // Remove self if the piece is out of check
-  react(action: Action) {
+  combat(action: Action) {
     if (action instanceof MoveAction &&
         this.parent instanceof Entity &&
         action.target.world !== undefined) {

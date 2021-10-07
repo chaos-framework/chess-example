@@ -1,11 +1,11 @@
-import { Action, Component, Modifier, MoveAction } from '@chaos/core';
+import { Action, Component, MoveAction } from '@chaos/core';
 
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
-export default class MovesOneSquareAnyDirection extends Component implements Modifier {
+export default class MovesOneSquareAnyDirection extends Component {
   name = "Moves One Square in Any Direction"
 
-  modify(action: Action) {
+  permit(action: Action) {
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
       const delta = to.subtract(target.position);

@@ -9,5 +9,6 @@ export default class StandardAI extends Component {
 
   react(action: Action) {
     // Make sure there is an active simulator running
+    
   }
 }

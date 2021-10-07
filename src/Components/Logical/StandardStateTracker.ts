@@ -1,4 +1,4 @@
-import { Action, AttachComponentAction, Component, DetachComponentAction, MoveAction, Reacter } from '@chaos/core';
+import { Action, AttachComponentAction, Component, DetachComponentAction, MoveAction } from '@chaos/core';
 import Checked from '../Checked';
 
 export interface GameState {
@@ -15,7 +15,9 @@ export interface GameState {
 }
 
 // Stores some basic state for use with any third-party chess engines / AIs
-export default class StandardStateTracker extends Component implements Reacter {
+export default class StandardStateTracker extends Component {
+  name = 'Standard Chess State Tracker';
+
   state: GameState = {
     isFinished: false,
     check: false,

@@ -1,12 +1,12 @@
-import { Component, Action, Reacter, MoveAction, TerminalMessage, Entity, MessageAction } from '@chaos/core';
+import { Component, Action, MoveAction, TerminalMessage, Entity, MessageAction } from '@chaos/core';
 import Chess from "..";
 import Chessboard from "../Worlds/Chessboard";
 
 // Gets captures when landing on an enemy piece
-export default class Captures extends Component implements Reacter {
+export default class Captures extends Component {
   name = 'Captures';
 
-  react(action: Action) {
+  combat(action: Action) {
     if (action instanceof MoveAction && action.tagged('playerMovement')
       && action.target.world instanceof Chessboard) {
       // See if this moved onto enemy piece

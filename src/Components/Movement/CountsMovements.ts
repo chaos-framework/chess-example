@@ -1,7 +1,8 @@
-import { Action, Component, Reacter, MoveAction } from '@chaos/core';
+import { Action, Component,  MoveAction } from '@chaos/core';
+
 
 // Forces a piece to move off its current tile if moving at all
-export default class CountsMovements extends Component implements Reacter {
+export default class CountsMovements extends Component {
   name = "Has to Move At Least One Space";
 
   react(action: Action) {

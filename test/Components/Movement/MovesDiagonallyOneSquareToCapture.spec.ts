@@ -22,14 +22,14 @@ describe('Pawn Movement -- Diagonal Capture', () => {
 
   it('Allows diagonal movement one square forward if an enemy is present in that square', () => {
     const movement = pawn.move({ to: enemy.position, metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
   });
 
   it('Does not explicitly give permission for diagonal movement where no enemy is present', () => {
     const movement = pawn.move({ to: (Chessboard.fromAlgebraic('d3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.modify(movement);
+    movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;
   });

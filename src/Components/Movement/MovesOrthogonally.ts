@@ -1,11 +1,11 @@
-import { Action, Component, Modifier, MoveAction } from '@chaos/core';
+import { Action, Component, MoveAction } from '@chaos/core';
 
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
-export default class MovesOrthogonally extends Component implements Modifier {
+export default class MovesOrthogonally extends Component {
   name = 'Moves Orthogonally';
 
-  modify(action: Action) {
+  permit(action: Action) {
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
       if (target.position.isOrthogonalTo(to)) {
