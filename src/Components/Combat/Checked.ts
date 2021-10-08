@@ -1,7 +1,7 @@
 import { Component, Action, MoveAction, Entity } from '@chaos/core';
 
-import { isInCheck, movementWillResultInCheck } from '../Util/CheckQueries';
-import MovementPermissionPriority from '../Enums/MovementPermissionPriority';
+import { isInCheck, movementWillResultInCheck } from '../../Util/CheckQueries';
+import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
 export default class Checked extends Component {
   name = 'Checked';
@@ -21,7 +21,11 @@ export default class Checked extends Component {
       const movingTeam = action.target.metadata.get('team');
       if (movingTeam === myTeam && movementWillResultInCheck(action.target.world, this.parent, action.target, action.to)) {
         // Only allow movement if this gets us out of check
-        action.deny({ priority: MovementPermissionPriority.DISALLOWED, message: `Movement will not get ${this.parent.name} out of check!`});
+        action.deny({
+          priority: MovementPermissionPriority.DISALLOWED,
+          message: `Movement will not get ${this.parent.name} out of check!`,
+          by: this
+        });
       }
     }
   }

@@ -11,7 +11,7 @@ export default class KnightMovement extends Component {
       const { target, to } = action;
       const delta = to.subtract(target.position).absolute();
       if ((delta.x === 1 && delta.y === 2) || (delta.x === 2 && delta.y === 1)) {
-        action.permit({ priority: MovementPermissionPriority.ALLOWED });
+        action.permit({ priority: MovementPermissionPriority.ALLOWED, by: this });
       }
     }
   }

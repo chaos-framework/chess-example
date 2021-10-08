@@ -21,7 +21,7 @@ const Pawn = (team: Team): Entity => {
       type: Piece.PAWN,
       moveCount: 0,
       notation: team.name === 'WHITE' ? 'P' : 'p'
-    },
+    }
   });
   pawn._attachAll([
     ...generateCommonComponents(),

@@ -1,5 +1,7 @@
 import { Action, AttachComponentAction, Component, DetachComponentAction, MoveAction } from '@chaos/core';
-import Checked from '../Checked';
+import Chessboard from '../../Worlds/Chessboard';
+import Checked from '../Combat/Checked';
+import EnPassant from '../Combat/EnPassant';
 
 export interface GameState {
   isFinished: boolean,
@@ -31,21 +33,27 @@ export default class StandardStateTracker extends Component {
     enPassant: null,
   }
 
-  react(action: Action) {
-    // Track if we're in check or not
-    if (action instanceof AttachComponentAction && action.component instanceof Checked && action.applied) {
-      this.state.check = true;
+  getState(): GameState {
+    return this.state;
+  }
+
+  updateState(action: Action) {
+    // Track Check and EnPassant statuses
+    if (action instanceof AttachComponentAction && action.applied) {
+      if(action.component instanceof Checked) {
+        this.state.check = true;
+      } else if (action.component instanceof EnPassant) {
+        this.state.enPassant = Chessboard.toAlgebraic(action.component.location) as string;
+      }
       return;
     }
-    if (action instanceof DetachComponentAction && action.component instanceof Checked && action.applied) {
-      this.state.check = false;
+    if (action instanceof DetachComponentAction && action.applied) {
+      if(action.component instanceof Checked) {
+        this.state.check = false;
+      } else if (action.component instanceof EnPassant) {
+        this.state.enPassant = null;
+      }
       return;
-    }
-    // Track if en passant possible and, if so, which location the enemy pawn would move to
-    if (action instanceof MoveAction && action.tagged('playerMovement') && action.applied) {
-      // Note that we unset enPassant if any movement happens that does not grant it
-      const enPassant = action.metadata.get('en_passant');
-      this.state.enPassant = (enPassant !== undefined && typeof enPassant === 'string') ? enPassant : null;
     }
     // TODO castling
     // TODO checkmate

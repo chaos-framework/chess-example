@@ -12,7 +12,7 @@ describe('Moving two spaces forward on first move', () => {
   let movementComponent: MovesTwoSpacesForwardOnFirstMovement;
   beforeEach(() => {
     board = new Chessboard();
-    pawn = new Entity({ team: new Team({ name: Teams.WHITE })});
+    pawn = new Entity({ team: new Team({ name: 'WHITE' })});
     movementComponent = new MovesTwoSpacesForwardOnFirstMovement();
     pawn._attach(movementComponent);
     pawn._publish(board, (Chessboard.fromAlgebraic('c3') as Vector));

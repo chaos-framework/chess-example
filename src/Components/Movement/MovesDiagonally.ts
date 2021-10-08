@@ -6,10 +6,10 @@ export default class MovesDiagonally extends Component {
   name = 'Moves Diagonally';
 
   permit(action: Action) {
-    if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
+    if (action instanceof MoveAction && action.target === this.getParentEntity() && action.tagged('playerMovement')) {
       const { target, to } = action;
       if (target.position.isDiagonalTo(to)) {
-        action.permit({ priority: MovementPermissionPriority.ALLOWED });
+        action.permit({ priority: MovementPermissionPriority.ALLOWED, by: this });
       }
     }
   }

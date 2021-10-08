@@ -1,7 +1,7 @@
 import { Chaos, Component, CONNECTION, CONNECTION_RESPONSE, LogicalAction, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
-import Teams from './Enums/Teams';
+import ChessTeam from './Enums/Teams';
 import Chessboard from './Worlds/Chessboard';
 import OneMovePerTurn from './Components/PlayOrder/OneMovePerTurn';
 import StandardStateTracker from './Components/Logical/StandardStateTracker';
@@ -9,45 +9,45 @@ import StandardStateTracker from './Components/Logical/StandardStateTracker';
 Chaos.id = 'Chess';
 Chaos.setPhases(
   ['modify', 'permit'],
-  ['combat', 'react', 'output']
+  ['combat', 'react', 'updateState', 'output']
 );
 
 export let board: Chessboard;
-let turnOrderComponent: Component;
-let stateTrackingComponent: StandardStateTracker
+export let turnOrderComponent: Component;
+export let stateTrackingComponent: StandardStateTracker
 
 export const teams = {
-  [Teams.WHITE]: new Team({ name: Teams.WHITE }),
-  [Teams.BLACK]: new Team({ name: Teams.BLACK }),
-  [Teams.RED]: new Team({ name: Teams.RED }),
-  [Teams.BLUE]: new Team({ name: Teams.BLUE }),
-  [Teams.GREEN]: new Team({ name: Teams.GREEN }),
-  [Teams.YELLOW]: new Team({ name: Teams.YELLOW })
+  WHITE: new Team({ name: 'WHITE' }),
+  BLACK: new Team({ name: 'BLACK' }),
+  RED: new Team({ name: 'RED' }),
+  BLUE: new Team({ name: 'BLUE' }),
+  GREEN: new Team({ name: 'GREEN' }),
+  YELLOW: new Team({ name: 'YELLOW' })
 }
 
 export const teamDirections = {
-  [Teams.WHITE]: new Vector(0, -1),
-  [Teams.BLACK]: new Vector(0, 1),
-  [Teams.RED]: new Vector(1, 0),
-  [Teams.BLUE]: new Vector(-1, 0),
-  [Teams.GREEN]: new Vector(0, -1),
-  [Teams.YELLOW]: new Vector(0, 1)
+  WHITE: new Vector(0, -1),
+  BLACK: new Vector(0, 1),
+  RED: new Vector(1, 0),
+  BLUE: new Vector(-1, 0),
+  GREEN: new Vector(0, -1),
+  YELLOW: new Vector(0, 1)
 }
 
 export const totalCaptures = {
-  [Teams.WHITE]: 0,
-  [Teams.BLACK]: 0,
-  [Teams.RED]: 0,
-  [Teams.BLUE]: 0,
-  [Teams.GREEN]: 0,
-  [Teams.YELLOW]: 0
+  WHITE: 0,
+  BLACK: 0,
+  RED: 0,
+  BLUE: 0,
+  GREEN: 0,
+  YELLOW: 0
 }
 
 export function initialize(options?: any) {
   board = new ChessBoard();
-  teams[Teams.WHITE]._publish();
-  teams[Teams.BLACK]._publish();
-  turnOrderComponent = new OneMovePerTurn([teams[Teams.WHITE], teams[Teams.BLACK]]);
+  teams['WHITE']._publish();
+  teams['BLACK']._publish();
+  turnOrderComponent = new OneMovePerTurn([teams.WHITE, teams.BLACK]);
   Chaos.components.addComponent(turnOrderComponent);
   reset();
 }
@@ -64,14 +64,14 @@ export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {
 export function onPlayerDisconnect() {}
 
 export function reset() {
-  totalCaptures[Teams.WHITE] = 0;
-  totalCaptures[Teams.BLACK] = 0;
-  totalCaptures[Teams.RED] = 0;
-  totalCaptures[Teams.BLUE] = 0;
-  totalCaptures[Teams.GREEN] = 0;
-  totalCaptures[Teams.YELLOW] = 0;
+  totalCaptures.WHITE = 0;
+  totalCaptures.BLACK = 0;
+  totalCaptures.RED = 0;
+  totalCaptures.BLUE = 0;
+  totalCaptures.GREEN = 0;
+  totalCaptures.YELLOW = 0;
   board.clear();
-  board.setUpStandardGame(teams[Teams.WHITE], teams[Teams.BLACK]);
+  board.setUpStandardGame(teams['WHITE'], teams['BLACK']);
   new LogicalAction('RESET').execute();
   stateTrackingComponent = new StandardStateTracker();
   Chaos.attach(stateTrackingComponent);

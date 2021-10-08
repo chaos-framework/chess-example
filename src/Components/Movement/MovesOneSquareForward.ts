@@ -2,7 +2,7 @@ import { Action, Component, MoveAction } from '@chaos/core';
 
 import Chess from '../..';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
-import Teams from '../../Enums/Teams';
+import ChessTeam from '../../Enums/Teams';
 
 export default class MovesOneSquareForward extends Component {
   name = "Moves One Square Forward"
@@ -14,13 +14,13 @@ export default class MovesOneSquareForward extends Component {
       if (target.team === undefined) {
         return;
       }
-      const teamName = target.team.name as Teams;
+      const teamName = target.team.name as ChessTeam;
       // Make sure the movement is "forward"
       const delta = to.subtract(target.position);
       const forward = Chess.teamDirections[teamName];
       // Check that the movement is only one square directly "forward"
       if (delta.equals(forward)) {
-        action.permit({ priority: MovementPermissionPriority.ALLOWED });
+        action.permit({ priority: MovementPermissionPriority.ALLOWED, by: this });
         return;
       }
     }

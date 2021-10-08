@@ -15,7 +15,11 @@ export default class CannotLandOnTeam extends Component {
       const entitiesAtLocation = target.world.getEntitiesAtCoordinates(to.x, to.y);
       for (const entity of entitiesAtLocation) {
         if (entity.team === target.team) {
-          action.deny({ priority: MovementPermissionPriority.DISALLOWED, message: "You cannot move onto your own piece."})
+          action.deny({
+            priority: MovementPermissionPriority.DISALLOWED,
+            message: "You cannot move onto your own piece.",
+            by: this
+          });
         }
       }
     }

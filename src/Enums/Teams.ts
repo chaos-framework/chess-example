@@ -1,10 +1,3 @@
-enum Teams {
-  WHITE = 'WHITE',
-  BLACK = 'BLACK',
-  RED = 'RED',
-  BLUE = 'BLUE',
-  GREEN = 'GREEN',
-  YELLOW = 'YELLOW'
-}
+type ChessTeam =  'WHITE' | 'BLACK' | 'RED' | 'BLUE' | 'GREEN' | 'YELLOW';
 
-export default Teams;
+export default ChessTeam;

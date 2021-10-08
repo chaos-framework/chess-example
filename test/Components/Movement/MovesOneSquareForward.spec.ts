@@ -12,7 +12,7 @@ describe('Pawn Movement -- Front Square', () => {
   let movementComponent: MovesOneSquareForward;
   beforeEach(() => {
     board = new Chessboard();
-    pawn = new Entity({ team: new Team({ name: Teams.WHITE }) });
+    pawn = new Entity({ team: new Team({ name: 'WHITE' }) });
     movementComponent = new MovesOneSquareForward();
     pawn._attach(movementComponent);
     pawn._publish(board, (Chessboard.fromAlgebraic('b2') as Vector));

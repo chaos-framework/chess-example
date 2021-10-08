@@ -3,7 +3,7 @@ import { Component, Action, MoveAction, TerminalMessage, Entity, LogicalAction, 
 import Chess from "..";
 import Queen from '../Entities/Pieces/Queen';
 import MovementPermissionPriority from '../Enums/MovementPermissionPriority';
-import Teams from '../Enums/Teams';
+import ChessTeam from '../Enums/Teams';
 import Chessboard from '../Worlds/Chessboard';
 
 export default class Queens extends Component {
@@ -24,7 +24,7 @@ export default class Queens extends Component {
       if (target.team === undefined) {
         return;
       }
-      const teamName = target.team.name as Teams;
+      const teamName = target.team.name as ChessTeam;
       const forward = Chess.teamDirections[teamName];
       // See if this pawn has reached the edge of the board
       if (action.target.world.isEdgeOfBoardForForwardDirection(to, forward)) {

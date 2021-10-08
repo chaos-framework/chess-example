@@ -1,6 +1,6 @@
 import { Component } from '@chaos/core'
 
-import Captures from '../../Components/Captures';
+import Captures from '../../Components/Combat/Captures';
 import CannotLandOnTeam from '../../Components/Movement/CannotLandOnTeam';
 import CountsMovements from '../../Components/Movement/CountsMovements';
 import HasToMoveAtLeastOneSpace from '../../Components/Movement/HasToMoveAtLeastOneSpace';

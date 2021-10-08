@@ -10,7 +10,7 @@ export default class MovesOneSquareAnyDirection extends Component {
       const { target, to } = action;
       const delta = to.subtract(target.position);
       if (Math.abs(delta.x) <= 1 && Math.abs(delta.y) <= 1) {
-        action.permit({ priority: MovementPermissionPriority.ALLOWED });
+        action.permit({ priority: MovementPermissionPriority.ALLOWED, by: this });
       }
     }
   }

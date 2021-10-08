@@ -10,7 +10,7 @@ describe('Can only move on turn', () => {
   let piece: Entity;
   beforeEach(() => {
     Chaos.reset();
-    piece = new Entity({ team: new Team({ name: Teams.WHITE }) });
+    piece = new Entity({ team: new Team({ name: 'WHITE' }) });
   });
 
   it("Stops a piece from moving when it's not the piece's team's turn", () => {

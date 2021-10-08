@@ -14,7 +14,7 @@ export function isInCheck(board: World, piece: Entity): boolean {
   // See if any are capable of moving onto this piece's position
   for(const enemy of enemyPieces) {
     // Note that the metadata "query: true" is so components don't take any actions on this fake action
-    const potentialCapture = enemy.move({ to: piece.position, metadata: { playerMovement: true, query: true }});
+    const potentialCapture = enemy.move({ to: piece.position, metadata: { playerMovement: true, query: true }}).deniedByDefault();
     enemy.handle('permit', potentialCapture);
     potentialCapture.decidePermission();
     if (potentialCapture.permitted) {

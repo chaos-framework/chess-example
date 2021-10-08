@@ -7,7 +7,7 @@ import Chess from '../../src';
 import Chessboard from '../../src/Worlds/Chessboard';
 import Queen from '../../src/Entities/Pieces/Queen';
 import King from '../../src/Entities/Pieces/King';
-import Checked from '../../src/Components/Checked';
+import Checked from '../../src/Components/Combat/Checked';
 
 describe('Checking', () => {
   beforeEach(() => { 

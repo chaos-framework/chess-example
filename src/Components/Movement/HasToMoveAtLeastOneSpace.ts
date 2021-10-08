@@ -10,7 +10,11 @@ export default class HasToMoveAtLeastOneSpace extends Component {
     if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
       const { target, to } = action;
       if (target.position.equals(to)) {
-        action.deny({ priority: MovementPermissionPriority.DISALLOWED, message: "A piece must move at least one space."});
+        action.deny({ 
+          priority: MovementPermissionPriority.DISALLOWED,
+          message: 'A piece must move at least one space.',
+          by: this
+        });
       }
     }
   }
