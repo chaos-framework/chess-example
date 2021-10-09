@@ -33,6 +33,31 @@ describe('Standard Game State Tracking', function() {
 
   });
 
+  it('Tracks half moves (moves since last pawn advance or capture', () => {
+    const state = Chess.stateTrackingComponent.getState();
+  });
+
+  it('Tracks moves (in chess terminology, a move is when both players have taken their turn)', () => {
+    const state = Chess.stateTrackingComponent.getState();
+    expect(state.fullMove).to.equal(1); // Moves start at one, for some reason
+    Chess.board.move('a2', 'a3')?.execute();
+    Chaos.process();
+    expect(state.fullMove).to.equal(1); // One player making a move is only a half move, so should still be one
+    Chess.board.move('a7', 'a6')?.execute();
+    Chaos.process();
+    expect(state.fullMove).to.equal(2);
+    Chess.board.move('a3', 'a4')?.execute();
+    Chaos.process();
+    Chess.board.move('a6', 'a5')?.execute();
+    Chaos.process();
+    expect(state.fullMove).to.equal(3);
+    Chess.board.move('b2', 'b3')?.execute();
+    Chaos.process();
+    Chess.board.move('b7', 'b6')?.execute();
+    Chaos.process();
+    expect(state.fullMove).to.equal(4);
+  });
+
   it.skip('Tracks checkmate', function() {
 
   });

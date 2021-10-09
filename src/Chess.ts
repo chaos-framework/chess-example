@@ -73,12 +73,19 @@ export function reset() {
   board.clear();
   board.setUpStandardGame(teams['WHITE'], teams['BLACK']);
   new LogicalAction('RESET').execute();
+  Chaos.process();
   stateTrackingComponent = new StandardStateTracker();
   Chaos.attach(stateTrackingComponent);
 }
 
 export function exportToJSEngineStatelessFormat(): any {
-  // this should not get called if not using standard white-black teams
+  // this should not get called if not using standard white&black teams
   const currentTurn = (Chaos.currentTurn as Team).name === 'WHITE' ? 'white' : 'black';
-  
+  const state = stateTrackingComponent.getState();
+  const pieces = board.exportToJSON();
+  return {
+    currentTurn,
+    pieces,
+    ...state,
+  };
 }

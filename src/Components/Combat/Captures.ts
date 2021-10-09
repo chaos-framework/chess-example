@@ -1,4 +1,4 @@
-import { Component, Action, MoveAction, TerminalMessage, Entity, MessageAction } from '@chaos/core';
+import { Component, Action, MoveAction, TerminalMessage, Entity, MessageAction, LogicalAction } from '@chaos/core';
 import Chess from "../..";
 import ChessTeam from '../../Enums/Teams';
 import Chessboard from "../../Worlds/Chessboard";
@@ -22,13 +22,9 @@ export default class Captures extends Component {
           const captureSlot = Chessboard.getCaptureSlot(enemyTeam, Chess.totalCaptures[enemyTeam]);
           action.react(entity.move({ to: captureSlot }));
           Chess.totalCaptures[enemyTeam]++;
-          // action.followup(new MessageAction({ message: generateCaptureMessage(entity, target) }));
+          action.followup(new LogicalAction('CAPTURE'));
         }
       }
     }
   }
-}
-
-function generateCaptureMessage(captured: Entity, by: Entity): TerminalMessage {
-  return new TerminalMessage(by, 'captured', captured);
 }
