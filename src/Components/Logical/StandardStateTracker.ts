@@ -63,10 +63,13 @@ export default class StandardStateTracker extends Component {
       if (action instanceof DetachComponentAction && action.component instanceof EnPassant) {
         this.state.enPassant = null;
       } else
-      // Cache current turn and count full moves and half moves
-      if (action instanceof ChangeTurnAction) {
-        if (action.to instanceof Team && action.to.name === 'WHITE') {
-          this.state.fullMove += 1;
+      // Cache current turn (white or black) and count full moves and half moves
+      if (action instanceof ChangeTurnAction && action.to instanceof Team) {
+        if (action.to.name === 'WHITE') {
+        this.state.fullMove += 1;
+        this.state.turn = 'white';
+        } else {
+          this.state.turn = 'black';
         }
         if (!this.pawnMovementOrCaptureThisTurn) {
           this.state.halfMove += 1;
