@@ -4,7 +4,6 @@ import 'mocha';
 import { Chaos } from '@chaos/core';
 import Chess from '../../src';
 
-
 describe('Standard Game State Tracking', function() {
   beforeEach(() => {
     Chaos.reset();

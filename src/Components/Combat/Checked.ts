@@ -31,12 +31,12 @@ export default class Checked extends Component {
   }
 
   // Remove self if the piece is out of check
-  combat(action: Action) {
+  check(action: Action) {
     if (action instanceof MoveAction &&
         this.parent instanceof Entity &&
         action.target.world !== undefined) {
       if (!isInCheck(action.target.world, this.parent)) {
-        action.followup(this.parent.detach({ component: this }));
+        action.react(this.parent.detach({ component: this }));
       }
     }
   }

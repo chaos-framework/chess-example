@@ -6,7 +6,7 @@ export function isInCheck(board: World, piece: Entity): boolean {
   }
   // Get all pieces on the board that do not belong to the friendly team
   const enemyPieces: Entity[] = [];
-  for (const [id, entity] of board.entities) {
+  for (const [, entity] of board.entities) {
     if (entity.team !== piece.team) {
       enemyPieces.push(entity);
     }

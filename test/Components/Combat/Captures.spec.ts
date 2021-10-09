@@ -31,10 +31,10 @@ describe('Capturing', () => {
 
   it('Captures enemy pieces', () => {
     let movement = piece.move({ to: enemy.position, metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.combat(movement);
-    expect(movement.followups.length).to.be.greaterThan(0);
-    const followup = movement.followups[0];
-    expect(followup instanceof MoveAction).to.be.true;
-    expect((followup as MoveAction).to.equals(Chessboard.getCaptureSlot('BLACK', 0))).to.be.true;
+    movementComponent.capture(movement);
+    expect(movement.reactions.length).to.be.greaterThan(0);
+    const reaction = movement.reactions[0];
+    expect(reaction instanceof MoveAction).to.be.true;
+    expect((reaction as MoveAction).to.equals(Chessboard.getCaptureSlot('BLACK', 0))).to.be.true;
   });
 });

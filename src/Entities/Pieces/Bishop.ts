@@ -3,8 +3,8 @@ import { Entity, Team } from '@chaos/core';
 import Piece from '../../Enums/Piece';
 import Move from '../../Abilities/Move';
 import { generateCommonComponents } from './_common';
-import MovesOrthogonally from '../../Components/Movement/MovesOrthogonally';
 import Collides from '../../Components/Movement/Collides';
+import MovesDiagonally from '../../Components/Movement/MovesDiagonally';
 
 const Bishop = (team: Team): Entity => {
   const name = `${team.name} Bishop`;
@@ -20,7 +20,7 @@ const Bishop = (team: Team): Entity => {
   bishop._attachAll([
     ...generateCommonComponents(),
     new Collides,
-    new MovesOrthogonally
+    new MovesDiagonally
   ]);
   bishop._learn(new Move());
   return bishop;

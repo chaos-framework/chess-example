@@ -7,10 +7,11 @@ import Chessboard from "../../Worlds/Chessboard";
 export default class Captures extends Component {
   name = 'Captures';
 
-  combat(action: Action) {
+  capture(action: Action) {
     if (
       action instanceof MoveAction &&
       action.tagged('playerMovement') && 
+      action.target.world === this.getParentEntity()?.world &&
       action.target.world instanceof Chessboard)
     {
       const { target, to } = action;
@@ -19,7 +20,7 @@ export default class Captures extends Component {
         if(entity.team !== target.team && entity.team !== undefined) {
           const enemyTeam = entity.team.name as ChessTeam;
           const captureSlot = Chessboard.getCaptureSlot(enemyTeam, Chess.totalCaptures[enemyTeam]);
-          action.followup(entity.move({ to: captureSlot }));
+          action.react(entity.move({ to: captureSlot }));
           Chess.totalCaptures[enemyTeam]++;
           // action.followup(new MessageAction({ message: generateCaptureMessage(entity, target) }));
         }

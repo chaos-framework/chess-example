@@ -26,7 +26,7 @@ export default class Checkable extends Component {
   }
 
   // Get put into check by enemy movement when appropriate
-  combat(action: Action) {
+  check(action: Action) {
     if (this.parent instanceof Entity) {
       const piece = action.getEntity();
       if (piece instanceof Entity && piece.world === this.parent.world && piece.team !== this.parent.team) {

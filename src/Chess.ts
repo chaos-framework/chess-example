@@ -9,7 +9,7 @@ import StandardStateTracker from './Components/Logical/StandardStateTracker';
 Chaos.id = 'Chess';
 Chaos.setPhases(
   ['modify', 'permit'],
-  ['combat', 'react', 'updateState', 'output']
+  ['capture', 'check', 'react', 'updateState', 'output']
 );
 
 export let board: Chessboard;
