@@ -1,19 +1,51 @@
-import { Action, Component, Team } from '@chaos/core'
+import { Action, Component, Team } from '@chaos/core';
+const jsChessEngine = require('js-chess-engine');
+
+const { move, aiMove } = jsChessEngine
+
 import Chess from '../..';
 
-export const AI_LEVELS = [0, 1, 2, 3, 4]
+const difficultyNames = [
+  'Dumb',
+  'Beginner',
+  'Intermediate',
+  'Advanced',
+  'Master'
+]
 
 // When attached to a team will play moves in a standard chess game
-// Relies on 
+// Relies on js-chess-engine
 export default class StandardAI extends Component {
   name = "Standard AI";
-  constructor(public team: Team, difficulty = 2) {
+
+  constructor(private difficulty = 2, public moveAutomatically = true) {
     super();
-    this.name = "hi";
+    if(difficulty < 0 || difficulty > 4) {
+      this.difficulty = 2;
+    }
+    this.name = `${difficultyNames[this.difficulty]} AI`;
   }
 
   react(action: Action) {
-    // Make sure we're tracking state
-    
+    if(this.moveAutomatically) {
+      // ...
+    }
+  }
+
+  getAIMove(): [string, string] | undefined {
+    try {
+      const boardConfiguration = Chess.exportToJSEngineStatelessFormat();
+      const result = aiMove(boardConfiguration, this.difficulty);
+      if (result instanceof Object) {
+        const keys = Object.keys(result);
+        if (keys.length === 1) {
+          const key = keys[0];
+          return [key, result[key]]
+        }
+      }
+      return undefined;
+    } catch (e) {
+      return undefined;
+    }
   }
 }

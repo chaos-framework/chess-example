@@ -5,6 +5,22 @@ import { Chaos } from '@chaos/core';
 import Chess from '../../src';
 import { board } from '../../src/Chess';
 
+describe('Chessboard position export', function() {
+  beforeEach(() => {
+    Chaos.reset();
+    Chess.initialize();
+    Chaos.process();
+  });
+
+  it('Exports positions correctly', () => {
+    const output = Chess.board.exportToJSON();
+    expect(output['A2']).to.equal('P');
+    expect(output['B2']).to.equal('P');
+    expect(output['A1']).to.equal('R');
+    expect(output['D8']).to.equal('q');
+  });
+});
+
 describe('Standard Game State Tracking', function() {
   beforeEach(() => {
     Chaos.reset();

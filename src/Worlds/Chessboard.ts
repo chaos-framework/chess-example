@@ -152,12 +152,13 @@ export default class Chessboard extends World {
 
   exportToJSON(): any {
     let json: any = {};
-    for(const [id, entity] of this.entities) {
+    for(const [, entity] of this.entities) {
       const algebriac = Chessboard.toAlgebraic(entity.position);
       if(algebriac !== undefined) {
         json[algebriac.toUpperCase()] = entity.metadata.get('notation');
       }
     }
+    return json;
   }
 
   serialize(): string {
