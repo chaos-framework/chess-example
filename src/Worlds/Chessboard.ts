@@ -42,7 +42,7 @@ export default class Chessboard extends World {
 
   // Returns true if a piece has reached the far end of the board based on its "forward" direction
   isEdgeOfBoardForForwardDirection(position: Vector, forwardDirection: Vector): boolean {
-    if(
+    if (
       (forwardDirection.y === -1 && position.y === 0) ||
       (forwardDirection.y === 1 && position.y === 7) ||
       (forwardDirection.x === -1 && position.x === 0) ||
@@ -60,7 +60,7 @@ export default class Chessboard extends World {
       return undefined;
     }
     const piece = this.getEntitiesAtCoordinates(orig.x, orig.y)[0];
-    if(piece === undefined) {
+    if (piece === undefined) {
       return undefined;
     }
     return piece.move({ to: dest, metadata: { playerMovement } });
@@ -154,7 +154,7 @@ export default class Chessboard extends World {
     let json: any = {};
     for(const [, entity] of this.entities) {
       const algebriac = Chessboard.toAlgebraic(entity.position);
-      if(algebriac !== undefined) {
+      if (algebriac !== undefined) {
         json[algebriac.toUpperCase()] = entity.metadata.get('notation');
       }
     }

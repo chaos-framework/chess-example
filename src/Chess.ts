@@ -1,7 +1,6 @@
 import { Chaos, Component, CONNECTION, CONNECTION_RESPONSE, LogicalAction, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
-import ChessTeam from './Enums/Teams';
 import Chessboard from './Worlds/Chessboard';
 import OneMovePerTurn from './Components/PlayOrder/OneMovePerTurn';
 import StandardStateTracker from './Components/Logical/StandardStateTracker';
@@ -9,7 +8,7 @@ import StandardStateTracker from './Components/Logical/StandardStateTracker';
 Chaos.id = 'Chess';
 Chaos.setPhases(
   ['modify', 'permit'],
-  ['capture', 'check', 'react', 'updateState', 'output']
+  ['capture', 'check', 'react', 'updateState', 'ai', 'output']
 );
 
 export let board: Chessboard;

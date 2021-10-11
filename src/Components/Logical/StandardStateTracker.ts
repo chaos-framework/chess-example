@@ -13,7 +13,7 @@ export interface GameState {
       whiteLong: boolean,
       whiteShort: boolean,
       blackLong: boolean,
-      blackShort: boolean    
+      blackShort: boolean
   },
   enPassant: string | null,
   fullMove: number,
@@ -48,7 +48,7 @@ export default class StandardStateTracker extends Component {
 
   updateState(action: Action) {
     // We only care about successful actions
-    if(action.applied) {
+    if (action.applied) {
       // Track check being applied or removed
       if (action instanceof AttachComponentAction && action.component instanceof Checked) {
         this.state.check = true;
@@ -78,7 +78,7 @@ export default class StandardStateTracker extends Component {
         }
       } else
       // Track anything that would reset the half move counter
-      if((action instanceof MoveAction && action.target.metadata.get('type') === Piece.PAWN) ||
+      if ((action instanceof MoveAction && action.target.metadata.get('type') === Piece.PAWN) ||
           action instanceof LogicalAction && action.name === 'CAPTURE') {
             this.pawnMovementOrCaptureThisTurn = true;
             this.state.halfMove = 0;

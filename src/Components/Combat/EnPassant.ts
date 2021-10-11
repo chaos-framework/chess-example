@@ -14,7 +14,7 @@ export default class EnPassant extends Component {
 
   // Detach self when it's the parent's turn again
   react(action: Action) {
-    if(action instanceof ChangeTurnAction && this.parent instanceof Entity && action.to === this.parent.team) {
+    if (action instanceof ChangeTurnAction && this.parent instanceof Entity && action.to === this.parent.team) {
       action.react(this.detach({ target: this.parent }));
     }
   }

@@ -24,7 +24,7 @@ export default class OneMovePerTurn extends Component {
     // Change turns after one movement
     if (action instanceof MoveAction && action.tagged('playerMovement') && action.target.team !== undefined && action.applied) {
       const nextTeam = this.getTeamForNextTurn(action.target.team);
-      if(nextTeam !== action.target.team) {
+      if (nextTeam !== action.target.team) {
         action.followup(new ChangeTurnAction({ to: nextTeam }));
       }
       return;
@@ -32,7 +32,7 @@ export default class OneMovePerTurn extends Component {
     // Change back to first team after game resets
     if (action instanceof LogicalAction && action.name === 'RESET') {
       const firstTeam = this.turnOrder[0];
-      if(firstTeam !== undefined) {
+      if (firstTeam !== undefined) {
         action.followup(new ChangeTurnAction({ to: firstTeam }));
       }
       return;

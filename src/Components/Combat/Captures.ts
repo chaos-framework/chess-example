@@ -17,7 +17,7 @@ export default class Captures extends Component {
       const { target, to } = action;
       // Loop over all pieces in that location (note that this now includes the parent itself)
       for(const entity of action.target.world.getEntitiesAtCoordinates(to.x, to.y)) {
-        if(entity.team !== target.team && entity.team !== undefined) {
+        if (entity.team !== target.team && entity.team !== undefined) {
           const enemyTeam = entity.team.name as ChessTeam;
           const captureSlot = Chessboard.getCaptureSlot(enemyTeam, Chess.totalCaptures[enemyTeam]);
           action.react(entity.move({ to: captureSlot }));

@@ -37,9 +37,9 @@ export default class MovesTwoSpacesForwardOnFirstMovement extends Component {
 
   react(action: Action) {
     const parent = this.getParentEntity();
-    if(parent !== undefined && action.target == parent && action.tagged('en_passant') && action.applied) {
+    if (parent !== undefined && action.target == parent && action.tagged('en_passant') && action.applied) {
       const location = Chessboard.fromAlgebraic(action.metadata.get('en_passant') as string || '');
-      if(location !== undefined) {
+      if (location !== undefined) {
         action.react(parent.attach({ component: new EnPassant(location) }));
       }
     }

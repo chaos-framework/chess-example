@@ -24,7 +24,7 @@ export default class MovesDiagonallyOneSquareToCapture extends Component {
         for (const [id, entity] of target.world.entities) {
           if (entity.team !== target.team) {
             // Check if enemy is in that location or has an active en passant in the spot we're moving to
-            if(entity.position.equals(action.to) || (entity.components.get('En Passant') as EnPassant)?.location.equals(action.to))
+            if (entity.position.equals(action.to) || (entity.components.get('En Passant') as EnPassant)?.location.equals(action.to))
             action.permit({ priority: MovementPermissionPriority.ALLOWED, by: this });
             return;
           }

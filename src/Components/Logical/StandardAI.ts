@@ -1,7 +1,7 @@
-import { Action, Component, Team } from '@chaos/core';
+import { Action, ChangeTurnAction, Component, Scope, Team } from '@chaos/core';
 const jsChessEngine = require('js-chess-engine');
 
-const { move, aiMove } = jsChessEngine
+const { aiMove } = jsChessEngine
 
 import Chess from '../..';
 
@@ -18,17 +18,38 @@ const difficultyNames = [
 export default class StandardAI extends Component {
   name = "Standard AI";
 
+  scope: { [key: string]: Scope } = {
+    ai: 'game'
+  }
+
   constructor(private difficulty = 2, public moveAutomatically = true) {
     super();
-    if(difficulty < 0 || difficulty > 4) {
+    if (difficulty < 0 || difficulty > 4) {
       this.difficulty = 2;
     }
     this.name = `${difficultyNames[this.difficulty]} AI`;
   }
 
-  react(action: Action) {
-    if(this.moveAutomatically) {
-      // ...
+  // Play moves for the attached team
+  ai(action: Action) {
+    if (
+      this.moveAutomatically &&
+      action instanceof ChangeTurnAction &&
+      this.parent !== undefined &&
+      action.to === this.parent
+    ) {
+      const aiMove = this.getAIMove();
+      if(aiMove === undefined) {
+        console.log('AI could not find a move for this board.');
+        return;
+      }
+      console.log(aiMove);
+      const moveAction = Chess.board.move(aiMove[0], aiMove[1]);
+      if(moveAction === undefined) {
+        console.log('AI could not find a move for this board.');
+        return;
+      }
+      action.followup(moveAction);
     }
   }
 
@@ -40,7 +61,7 @@ export default class StandardAI extends Component {
         const keys = Object.keys(result);
         if (keys.length === 1) {
           const key = keys[0];
-          return [key, result[key]]
+          return [key.toLowerCase(), result[key].toLowerCase()]
         }
       }
       return undefined;
