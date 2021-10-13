@@ -1,9 +1,10 @@
-import { Chaos, Component, CONNECTION, CONNECTION_RESPONSE, LogicalAction, Player, Team, Vector } from '@chaos/core';
+import { ChangeTurnAction, Chaos, Component, CONNECTION, CONNECTION_RESPONSE, DetachComponentAction, LogicalAction, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
 import Chessboard from './Worlds/Chessboard';
 import OneMovePerTurn from './Components/PlayOrder/OneMovePerTurn';
 import StandardStateTracker from './Components/Logical/StandardStateTracker';
+import ChessTeam from './Enums/Teams';
 
 Chaos.id = 'Chess';
 Chaos.setPhases(
@@ -13,9 +14,9 @@ Chaos.setPhases(
 
 export let board: Chessboard;
 export let turnOrderComponent: Component;
-export let stateTrackingComponent: StandardStateTracker
+export let stateTrackingComponent: StandardStateTracker;
 
-export const teams = {
+export let teams = {
   WHITE: new Team({ name: 'WHITE' }),
   BLACK: new Team({ name: 'BLACK' }),
   RED: new Team({ name: 'RED' }),
@@ -65,13 +66,15 @@ export function onPlayerDisconnect() {}
 export function reset() {
   totalCaptures.WHITE = 0;
   totalCaptures.BLACK = 0;
-  totalCaptures.RED = 0;
-  totalCaptures.BLUE = 0;
-  totalCaptures.GREEN = 0;
-  totalCaptures.YELLOW = 0;
   board.clear();
   board.setUpStandardGame(teams['WHITE'], teams['BLACK']);
-  new LogicalAction('RESET').execute();
+  new ChangeTurnAction({ to: teams['WHITE'] }).execute();
+  for(const [,component] of teams['WHITE'].components.all) {
+    teams['WHITE'].components.removeComponent(component); // TODO won't broadcast
+  }
+  for(const [,component] of teams['BLACK'].components.all) {
+    teams['BLACK'].components.removeComponent(component); // TODO won't broadcast
+  }
   Chaos.process();
   stateTrackingComponent = new StandardStateTracker();
   Chaos.attach(stateTrackingComponent);

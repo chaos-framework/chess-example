@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { ChangeTurnAction, Chaos } from '@chaos/core';
+import { Chaos } from '@chaos/core';
 
 import Chess from '../../src';
 import StandardAI from '../../src/Components/Logical/StandardAI';
@@ -33,7 +33,7 @@ describe('AI', function() {
     }
   });
 
-  it.only("Will react to it's team getting the turn by moving a piece when a move is available", function() {
+  it("Will react to it's team getting the turn by moving a piece when a move is available", function() {
     Chess.teams['BLACK'].components.addComponent(new StandardAI(2));
     Chess.board.move('c2', 'c4')?.execute();
     Chaos.process();

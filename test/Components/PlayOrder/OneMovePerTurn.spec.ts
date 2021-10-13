@@ -58,11 +58,11 @@ describe('Each team gets one move per turn', () => {
     expect(Chaos.currentTurn).to.equal(firstTeam);
   });
 
-  it("Resets to the first team when getting a 'RESET' logical action", () => {
-    Chaos.currentTurn = secondTeam;
-    component.react(new LogicalAction('RESET'));
-    Chaos.process();
-    expect(Chaos.currentTurn).to.equal(firstTeam);
-  });
+  // it("Resets to the first team when getting a 'RESET' logical action", () => {
+  //   Chaos.currentTurn = secondTeam;
+  //   component.react(new LogicalAction('RESET'));
+  //   Chaos.process();
+  //   expect(Chaos.currentTurn).to.equal(firstTeam);
+  // });
 
 });

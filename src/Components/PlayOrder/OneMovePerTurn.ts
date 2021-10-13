@@ -29,14 +29,6 @@ export default class OneMovePerTurn extends Component {
       }
       return;
     }
-    // Change back to first team after game resets
-    if (action instanceof LogicalAction && action.name === 'RESET') {
-      const firstTeam = this.turnOrder[0];
-      if (firstTeam !== undefined) {
-        action.followup(new ChangeTurnAction({ to: firstTeam }));
-      }
-      return;
-    }
   }
 
   // TODO serialize and unserialize state

@@ -2,10 +2,15 @@ import { Component, Action, MoveAction, Entity } from '@chaos/core';
 
 import { isInCheck, movementWillResultInCheck } from '../../Util/CheckQueries';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
+import Chessboard from '../../Worlds/Chessboard';
 
 export default class Checked extends Component {
   name = 'Checked';
-  
+
+  constructor(public by: Entity) {
+    super();
+  }
+
   // Do not allow team movement that does not remove check
   permit(action: Action) {
     if (action instanceof MoveAction && action.tagged('playerMovement') && action.target.world !== undefined) {
@@ -19,7 +24,7 @@ export default class Checked extends Component {
         return;
       }
       const movingTeam = action.target.metadata.get('team');
-      if (movingTeam === myTeam && movementWillResultInCheck(action.target.world, this.parent, action.target, action.to)) {
+      if (movingTeam === myTeam && movementWillResultInCheck(action.target.world as Chessboard, this.parent, action.target, action.to)) {
         // Only allow movement if this gets us out of check
         action.deny({
           priority: MovementPermissionPriority.DISALLOWED,
@@ -35,7 +40,7 @@ export default class Checked extends Component {
     if (action instanceof MoveAction &&
         this.parent instanceof Entity &&
         action.target.world !== undefined) {
-      if (!isInCheck(action.target.world, this.parent)) {
+      if (!isInCheck(action.target.world as Chessboard, this.parent)) {
         action.react(this.parent.detach({ component: this }));
       }
     }

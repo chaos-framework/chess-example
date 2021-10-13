@@ -66,6 +66,18 @@ export default class Chessboard extends World {
     return piece.move({ to: dest, metadata: { playerMovement } });
   }
 
+  playSquares(): Generator<Vector> {
+    return this.getPlaySquares(new Vector(0,0), new Vector(8,8));
+  }
+
+  private getPlaySquares = function*(starting: Vector, dimensions: Vector) {
+    for(let x = starting.x; x < dimensions.x; x++) {
+      for(let y = starting.y; y < dimensions.y; y++) {
+        yield new Vector(x, y);
+      }
+    }
+  }
+
   setUpStandardGame(whiteTeam: Team, blackTeam: Team) {
     // Set up white team
     Pawn(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('a2')! }).direct().execute();

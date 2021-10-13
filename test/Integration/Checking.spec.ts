@@ -43,7 +43,7 @@ describe('Checking', () => {
       checkableKing._publish(board, Chessboard.fromAlgebraic('a1')!);
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
-      checkableKing._attach(new Checked);
+      checkableKing._attach(new Checked(enemyQueen));
       // Move the king out of check
       checkableKing.move({ to: Chessboard.fromAlgebraic('a2')!, metadata: { playerMovement: true } }).execute(true);
       Chaos.process();
@@ -55,7 +55,7 @@ describe('Checking', () => {
       checkableKing._publish(board, Chessboard.fromAlgebraic('a1')!);
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
-      checkableKing._attach(new Checked);
+      checkableKing._attach(new Checked(enemyQueen));
       // Move the king out of check
       friendlyQueen.move({ to: Chessboard.fromAlgebraic('b1')!, metadata: { playerMovement: true } }).execute(true);
       Chaos.process();
@@ -87,7 +87,7 @@ describe('Checking', () => {
       checkableKing._publish(board, Chessboard.fromAlgebraic('a1')!);
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
-      checkableKing._attach(new Checked);
+      checkableKing._attach(new Checked(enemyQueen));
       // Try to move in an unhelpful way
       const movement = friendlyQueen.move({ to: Chessboard.fromAlgebraic('b3')!, metadata: { playerMovement: true } });
       movement.execute();
