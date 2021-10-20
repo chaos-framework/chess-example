@@ -1,11 +1,13 @@
-import { Component, Action, MoveAction, Entity } from '@chaos/core';
+import { Component, Action, MoveAction, Entity, AttachComponentAction, LogicalAction } from '@chaos/core';
 
-import { isInCheck, movementWillResultInCheck } from '../../Util/CheckQueries';
+import { isInCheck, isInCheckmate, movementWillResultInCheck } from '../../Util/CheckQueries';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 import Chessboard from '../../Worlds/Chessboard';
+import Checkmated from './Checkmated';
 
 export default class Checked extends Component {
   name = 'Checked';
+  description = 'Can be put in check by an enemy piece';
 
   constructor(public by: Entity) {
     super();
@@ -35,8 +37,16 @@ export default class Checked extends Component {
     }
   }
 
-  // Remove self if the piece is out of check
   check(action: Action) {
+    // Check for checkmate when applied
+    if (action instanceof AttachComponentAction && action.component === this) {
+      // See if we're in checkmate
+      if(isInCheckmate(action.target.world! as Chessboard, action.target, this.by)) {
+        action.react(new AttachComponentAction({ caster: this.by, target: action.target, component: new Checkmated }));
+        // action.followup(new LogicalAction('CHECKMATE', { piece: action.target, by: this.by }));
+      }
+    }
+    // Remove self if the piece is out of check
     if (action instanceof MoveAction &&
         this.parent instanceof Entity &&
         action.target.world !== undefined) {

@@ -2,6 +2,7 @@ import { Action, AttachComponentAction, ChangeTurnAction, Component, DetachCompo
 import Piece from '../../Enums/Piece';
 import Chessboard from '../../Worlds/Chessboard';
 import Checked from '../Combat/Checked';
+import Checkmated from '../Combat/Checkmated';
 import EnPassant from '../Combat/EnPassant';
 
 export interface GameState {
@@ -55,6 +56,10 @@ export default class StandardStateTracker extends Component {
       } else
       if (action instanceof DetachComponentAction && action.component instanceof Checked) {
         this.state.check = false;
+      } else
+      // Track checkmate
+      if (action instanceof AttachComponentAction && action.component instanceof Checkmated) {
+        this.state.checkMate = true;
       } else
       // Check en passant being applied or removed
       if (action instanceof AttachComponentAction && action.component instanceof EnPassant) {

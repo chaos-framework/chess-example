@@ -1,4 +1,4 @@
-import { Component, Action, MoveAction, Entity, PublishEntityAction } from '@chaos/core';
+import { Component, Action, MoveAction, Entity, PublishEntityAction, LogicalAction } from '@chaos/core';
 
 import { isInCheck, movementWillResultInCheck } from '../../Util/CheckQueries';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
@@ -29,8 +29,8 @@ export default class Checkable extends Component {
   // Get put into check by enemy movement when appropriate
   check(action: Action) {
     if (this.parent instanceof Entity) {
-      const piece = action.getEntity();
-      if (piece instanceof Entity && piece.world === this.parent.world && piece.team !== this.parent.team) {
+      const piece = this.parent;
+      if (piece.world === this.parent.world && piece.team !== this.parent.team) {
         if (
           ((action instanceof MoveAction && action.tagged('playerMovement')) ||
           (action instanceof PublishEntityAction)) && action.applied

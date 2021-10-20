@@ -56,6 +56,9 @@ export default class StandardAI extends Component {
   getAIMove(): [string, string] | undefined {
     try {
       const boardConfiguration = Chess.exportToJSEngineStatelessFormat();
+      if(boardConfiguration.checkMate === true) {
+        return undefined;
+      }
       const result = aiMove(boardConfiguration, this.difficulty);
       if (result instanceof Object) {
         const keys = Object.keys(result);
