@@ -1,10 +1,15 @@
-import { ChangeTurnAction, Chaos, Component, CONNECTION, CONNECTION_RESPONSE, DetachComponentAction, LogicalAction, Player, Team, Vector } from '@chaos/core';
+import { ChangeTurnAction, Chaos, Component, CONNECTION, CONNECTION_RESPONSE, DetachComponentAction, Entity, LogicalAction, Player, Team, Vector } from '@chaos/core';
 
 import ChessBoard from './Worlds/Chessboard';
 import Chessboard from './Worlds/Chessboard';
 import OneMovePerTurn from './Components/PlayOrder/OneMovePerTurn';
 import StandardStateTracker from './Components/Logical/StandardStateTracker';
-import ChessTeam from './Enums/Teams';
+import Pawn from './Entities/Pieces/Pawn';
+import Bishop from './Entities/Pieces/Bishop';
+import Rook from './Entities/Pieces/Rook';
+import Knight from './Entities/Pieces/Knight';
+import Queen from './Entities/Pieces/Queen';
+import King from './Entities/Pieces/King';
 
 Chaos.id = 'Chess';
 Chaos.setPhases(
@@ -114,7 +119,7 @@ export function reset() {
   totalCaptures.WHITE = 0;
   totalCaptures.BLACK = 0;
   board.clear();
-  board.setUpStandardGame(teams['WHITE'], teams['BLACK']);
+  board.setUpStandardGame();
   new ChangeTurnAction({ to: teams['WHITE'] }).execute();
   for(const [,component] of teams['WHITE'].components.all) {
     teams['WHITE'].components.removeComponent(component); // TODO won't broadcast
@@ -136,4 +141,33 @@ export function exportToJSEngineStatelessFormat(): any {
     pieces,
     ...state,
   };
+}
+
+export function createStandardPieceFromNotation(notation: string): Entity | undefined {
+  switch(notation) {
+    case 'P':
+      return Pawn(teams.WHITE);
+    case 'p':
+      return Pawn(teams.BLACK);
+    case 'B':
+      return Bishop(teams.WHITE);
+    case 'b':
+      return Bishop(teams.BLACK);
+    case 'R':
+      return Rook(teams.WHITE);
+    case 'r':
+      return Rook(teams.BLACK);
+    case 'N':
+      return Knight(teams.WHITE);
+    case 'n':
+      return Knight(teams.BLACK);
+    case 'Q':
+      return Queen(teams.WHITE);
+    case 'q':
+      return Queen(teams.BLACK);
+    case 'K':
+      return King(teams.WHITE);
+    case 'k':
+      return King(teams.BLACK);
+  }
 }

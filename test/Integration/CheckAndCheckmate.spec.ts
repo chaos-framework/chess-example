@@ -9,17 +9,17 @@ import Queen from '../../src/Entities/Pieces/Queen';
 import King from '../../src/Entities/Pieces/King';
 import Checked from '../../src/Components/Combat/Checked';
 
-describe('Checking', () => {
-  beforeEach(() => { 
+describe('Checking', function() {
+  beforeEach(function() { 
     Chaos.reset();
   });
 
-  describe('Pieces are put in check properly', () => {
+  describe('Pieces are put in check properly', function() {
     let board: Chessboard;
     let checkableKing: Entity;
     let friendlyQueen: Entity;
     let enemyQueen: Entity;
-    beforeEach(() => {
+    beforeEach(function() {
       board = new Chessboard();
       const whiteTeam = new Team({ name: 'WHITE' });
       const blackTeam = new Team({ name: 'BLACK' });
@@ -28,7 +28,7 @@ describe('Checking', () => {
       enemyQueen = Queen(blackTeam);
     });
 
-    it('Checkable pieces are put in check if an enemy piece can capture it with one more move', () => {
+    it('Checkable pieces are put in check if an enemy piece can capture it with one more move', function() {
       checkableKing._publish(board, Chessboard.fromAlgebraic('a1')!);
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c2')!);
@@ -39,7 +39,7 @@ describe('Checking', () => {
       expect(checkableKing.has('Checked')).to.be.true;
     });
 
-    it('Pieces in check can escape it by moving to safety', () => {
+    it('Pieces in check can escape it by moving to safety', function() {
       checkableKing._publish(board, Chessboard.fromAlgebraic('a1')!);
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
@@ -51,7 +51,7 @@ describe('Checking', () => {
       expect(checkableKing.has('Checked')).to.be.false;
     });
 
-    it('Pieces in check can be saved by friendly pieces moving in the way', () => {
+    it('Pieces in check can be saved by friendly pieces moving in the way', function() {
       checkableKing._publish(board, Chessboard.fromAlgebraic('a1')!);
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
@@ -63,7 +63,7 @@ describe('Checking', () => {
       expect(checkableKing.has('Checked')).to.be.false;
     });
 
-    it('Checkable pieces cannot move themselves into check', () => {
+    it('Checkable pieces cannot move themselves into check', function() {
       checkableKing._publish(board, Chessboard.fromAlgebraic('a2')!);
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
@@ -73,7 +73,7 @@ describe('Checking', () => {
       expect(movement.permitted).to.be.false;
     });
 
-    it('Pieces cannot move in a way that puts a friendly piece into check', () => {
+    it('Pieces cannot move in a way that puts a friendly piece into check', function() {
       checkableKing._publish(board, Chessboard.fromAlgebraic('a1')!);
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b1')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
@@ -83,7 +83,7 @@ describe('Checking', () => {
       expect(movement.permitted).to.be.false;
     });
 
-    it('Friendly pieces can only move in a way that would break the check', () => {
+    it('Friendly pieces can only move in a way that would break the check', function() {
       checkableKing._publish(board, Chessboard.fromAlgebraic('a1')!);
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
@@ -94,4 +94,8 @@ describe('Checking', () => {
       expect(movement.permitted).to.be.false;
     });
   });
+});
+
+describe('Pieces are put in check properly', function() {
+
 });

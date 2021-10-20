@@ -1,4 +1,4 @@
-import { Chaos, World, Vector, Team, MoveAction } from '@chaos/core';
+import { Chaos, World, Vector, Team, MoveAction, Entity } from '@chaos/core';
 
 import Pawn from '../Entities/Pieces/Pawn';
 import Rook from '../Entities/Pieces/Rook';
@@ -8,6 +8,8 @@ import Queen from '../Entities/Pieces/Queen';
 import King from '../Entities/Pieces/King';
 import Tiles from '../Enums/Tile';
 import ChessTeam from '../Enums/Teams';
+import { stringify } from 'querystring';
+import Chess from '..';
 
 const algebraicFiles = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
@@ -78,41 +80,41 @@ export default class Chessboard extends World {
     }
   }
 
-  setUpStandardGame(whiteTeam: Team, blackTeam: Team) {
-    // Set up white team
-    Pawn(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('a2')! }).direct().execute();
-    Pawn(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('b2')! }).direct().execute();
-    Pawn(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('c2')! }).direct().execute();
-    Pawn(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('d2')! }).direct().execute();
-    Pawn(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('e2')! }).direct().execute();
-    Pawn(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('f2')! }).direct().execute();
-    Pawn(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('g2')! }).direct().execute();
-    Pawn(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('h2')! }).direct().execute();
-    Rook(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('a1')! }).direct().execute();
-    Knight(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('b1')! }).direct().execute();
-    Bishop(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('c1')! }).direct().execute();
-    Queen(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('d1')! }).direct().execute();
-    King(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('e1')! }).direct().execute();
-    Bishop(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('f1')! }).direct().execute();
-    Knight(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('g1')! }).direct().execute();
-    Rook(whiteTeam).publish({ world: this, position: Chessboard.fromAlgebraic('h1')! }).direct().execute();
-    // Set up black team
-    Pawn(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('a7')! }).direct().execute();
-    Pawn(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('b7')! }).direct().execute();
-    Pawn(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('c7')! }).direct().execute();
-    Pawn(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('d7')! }).direct().execute();
-    Pawn(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('e7')! }).direct().execute();
-    Pawn(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('f7')! }).direct().execute();
-    Pawn(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('g7')! }).direct().execute();
-    Pawn(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('h7')! }).direct().execute();
-    Rook(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('a8')! }).direct().execute();
-    Knight(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('b8')! }).direct().execute();
-    Bishop(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('c8')! }).direct().execute();
-    Queen(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('d8')! }).direct().execute();
-    King(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('e8')! }).direct().execute();
-    Bishop(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('f8')! }).direct().execute();
-    Knight(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('g8')! }).direct().execute();
-    Rook(blackTeam).publish({ world: this, position: Chessboard.fromAlgebraic('h8')! }).direct().execute();
+  setUpStandardGame() {
+    this.setupCustomGame(`
+      rnbqkbnr
+      pppppppp
+      ........
+      ........
+      ........
+      ........
+      PPPPPPPP
+      RNBQKBNR
+    `);
+  }
+
+  setupCustomGame(board: string) {
+    board = board.replace(/\s+/g, '');
+    if(board.length !== 64) {
+      throw new Error('Bad layout string passed!');
+    }
+    for(let i = 0; i < 64; i++) {
+      const piece = Chess.createStandardPieceFromNotation(board[i]);
+      if (piece !== undefined) {
+        const x = i % 8;
+        const y = Math.floor(i / 8);
+        piece.publish({ world: this, position: new Vector(x, y) }).direct().execute();
+      }
+    }
+  }
+
+  pieceAt(algebriac: string): Entity | undefined {
+    const position = Chessboard.fromAlgebraic(algebriac);
+    if (position !== undefined) {
+      const piece = this.getEntitiesAtCoordinates(position.x, position.y)[0];
+      return piece;
+    }
+    return undefined;
   }
 
   // Convert vector to algebraic, ie { 0 ,0 } to 'a8'
