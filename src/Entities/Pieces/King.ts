@@ -22,6 +22,7 @@ const King = (team: Team): Entity => {
   });
   king._attachAll([
     ...generateCommonComponents(),
+    new Collides,
     new MovesOneSquareAnyDirection,
     new Checkable
   ]);

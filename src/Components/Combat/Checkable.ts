@@ -30,16 +30,16 @@ export default class Checkable extends Component {
   check(action: Action) {
     if (this.parent instanceof Entity) {
       const piece = this.parent;
-      if (piece.world === this.parent.world && piece.team !== this.parent.team) {
+      if (piece.world === piece.world && action.target?.team !== piece.team) {
         if (
           ((action instanceof MoveAction && action.tagged('playerMovement')) ||
           (action instanceof PublishEntityAction)) && action.applied
         ) {
           // See if the parent entity is put in check by this movement
-          if (!this.parent.has('Checked') && this.parent.world !== undefined && isInCheck(this.parent.world as Chessboard , this.parent)) {
+          if (!piece.has('Checked') && piece.world !== undefined && isInCheck(piece.world as Chessboard , piece)) {
             // Put in check
             const by = action instanceof MoveAction ? action.target : action.entity;
-            action.followup(this.parent.attach({ component: new Checked(by), caster: action.target }));
+            action.followup(piece.attach({ component: new Checked(by), caster: action.target }));
           }
         }
       }

@@ -21,8 +21,8 @@ describe('Checking', () => {
     let enemyQueen: Entity;
     beforeEach(() => {
       board = new Chessboard();
-      const whiteTeam = new Team({ name: "WHITE" });
-      const blackTeam = new Team({ name: "BLACK" });
+      const whiteTeam = new Team({ name: 'WHITE' });
+      const blackTeam = new Team({ name: 'BLACK' });
       checkableKing = King(whiteTeam);
       friendlyQueen = Queen(whiteTeam);
       enemyQueen = Queen(blackTeam);

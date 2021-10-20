@@ -31,10 +31,10 @@ describe('Standard Game State Tracking', function() {
   it('Tracks en passant status', function() {
     Chess.board.move('a2', 'a4')?.execute();
     Chaos.process();
-    expect(Chess.stateTrackingComponent.getState().enPassant).to.equal('a3');
+    expect(Chess.state.enPassant).to.equal('a3');
     Chess.board.move('a7', 'a6')?.execute();
     Chaos.process();
-    expect(Chess.stateTrackingComponent.getState().enPassant).to.be.null;
+    expect(Chess.state.enPassant).to.be.null;
   });
 
   it.skip('Tracks castling status', function() {
@@ -42,7 +42,7 @@ describe('Standard Game State Tracking', function() {
   });
 
   it('Tracks half moves since last meaningful play (individual player moves since last pawn advance or capture)', () => {
-    const state = Chess.stateTrackingComponent.getState();
+    const state = Chess.state;
     // Move the two knights back and forth
     for (let i = 0; i < 10; i += 1) {
       board.move('b1', 'a3')?.execute();
@@ -74,7 +74,7 @@ describe('Standard Game State Tracking', function() {
   });
 
   it('Tracks moves (in chess terminology, a move is when both players have taken their turn)', () => {
-    const state = Chess.stateTrackingComponent.getState();
+    const state = Chess.state;
     expect(state.fullMove).to.equal(1); // Moves start at one, for some reason
     Chess.board.move('a2', 'a3')?.execute();
     Chaos.process();
@@ -95,7 +95,7 @@ describe('Standard Game State Tracking', function() {
   });
 
   it('Tracks which team has the current turn', () => {
-    const state = Chess.stateTrackingComponent.getState();
+    const state = Chess.state;
     expect(state.turn).to.equal('white');
     Chess.board.move('a2', 'a4')?.execute();
     Chaos.process();
@@ -108,10 +108,10 @@ describe('Standard Game State Tracking', function() {
   it('Tracks check status from previous turn', function() {
     Chess.board.move('c1', 'd7')?.execute(true); // force an illegal move to have a bishop put the black king in check
     Chaos.process();
-    expect(Chess.stateTrackingComponent.getState().check).to.equal(true);
+    expect(Chess.state.check).to.equal(true);
     Chess.board.move('d8', 'd7')?.execute(); // capture the white bishop as the black queen
     Chaos.process();
-    expect(Chess.stateTrackingComponent.getState().check).to.equal(false);
+    expect(Chess.state.check).to.equal(false);
   });
 
   it.skip('Tracks checkmate', function() {

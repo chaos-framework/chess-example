@@ -23,16 +23,16 @@ export let teams = {
   BLUE: new Team({ name: 'BLUE' }),
   GREEN: new Team({ name: 'GREEN' }),
   YELLOW: new Team({ name: 'YELLOW' })
-}
+};
 
-export const teamDirections = {
+export const teamDirections = Object.freeze({
   WHITE: new Vector(0, -1),
   BLACK: new Vector(0, 1),
   RED: new Vector(1, 0),
   BLUE: new Vector(-1, 0),
   GREEN: new Vector(0, -1),
   YELLOW: new Vector(0, 1)
-}
+});
 
 export const totalCaptures = {
   WHITE: 0,
@@ -41,6 +41,38 @@ export const totalCaptures = {
   BLUE: 0,
   GREEN: 0,
   YELLOW: 0
+};
+
+interface GameState { // redundant?
+  isFinished: boolean,
+  turn: 'white' | 'black',
+  check: boolean,
+  checkMate: boolean,
+  castling: {
+      whiteLong: boolean,
+      whiteShort: boolean,
+      blackLong: boolean,
+      blackShort: boolean
+  },
+  enPassant: string | null,
+  fullMove: number,
+  halfMove: number
+}
+
+export let state: GameState = {
+  isFinished: false,
+  turn: 'white',
+  check: false,
+  checkMate: false,
+  castling: {
+      "whiteLong": false,
+      "whiteShort": false,
+      "blackLong": false,
+      "blackShort": false
+  },
+  enPassant: null,
+  fullMove: 1,
+  halfMove: 0
 }
 
 export function initialize(options?: any) {
@@ -64,6 +96,21 @@ export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {
 export function onPlayerDisconnect() {}
 
 export function reset() {
+  state = {
+    isFinished: false,
+    turn: 'white',
+    check: false,
+    checkMate: false,
+    castling: {
+        "whiteLong": false,
+        "whiteShort": false,
+        "blackLong": false,
+        "blackShort": false
+    },
+    enPassant: null,
+    fullMove: 1,
+    halfMove: 0
+  }
   totalCaptures.WHITE = 0;
   totalCaptures.BLACK = 0;
   board.clear();
@@ -83,7 +130,6 @@ export function reset() {
 export function exportToJSEngineStatelessFormat(): any {
   // this should not get called if not using standard white&black teams
   const currentTurn = (Chaos.currentTurn as Team).name === 'WHITE' ? 'white' : 'black';
-  const state = stateTrackingComponent.getState();
   const pieces = board.exportToJSON();
   return {
     currentTurn,
