@@ -11,18 +11,22 @@ export default class Checkable extends Component {
 
   // Don't allow any friendly movement that would cause a check
   permit(action: Action) {
+    let queryDepth = action.metadata.get('queryDepth');
+    if (typeof queryDepth !== 'number') {
+      queryDepth = 0;
+    }
     if (action instanceof MoveAction
-      && action.tagged('playerMovement') && !action.tagged('query')
+      && action.tagged('playerMovement') && queryDepth <= 1
       && action.target.world !== undefined
       && this.parent instanceof Entity
       && this.parent.world === action.target.world) {
-      if (this.parent.team === action.target.team && movementWillResultInCheck(action.target.world as Chessboard, this.parent, action.target, action.to)) {
-        action.deny({
-          priority: MovementPermissionPriority.DISALLOWED,
-          message: `Movement would put ${this.parent.name} in check!`,
-          by: this
-        });
-      }
+        if (this.parent.team === action.target.team && movementWillResultInCheck(action.target.world as Chessboard, this.parent, action.target, action.to, queryDepth)) {
+          action.deny({
+            priority: MovementPermissionPriority.DISALLOWED,
+            message: `Movement would put ${this.parent.name} in check!`,
+            by: this
+          });
+        }
     }
   }
 

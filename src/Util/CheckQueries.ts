@@ -2,16 +2,16 @@ import { Entity, Team, Vector } from '@chaos/core';
 
 import Chessboard from '../Worlds/Chessboard';
 
-export function movementWillResultInCheck(board: Chessboard, checkablePiece: Entity, movingPiece: Entity, to: Vector) {
+export function movementWillResultInCheck(board: Chessboard, checkablePiece: Entity, movingPiece: Entity, to: Vector, depth = 0) {
   // Temporarily move the piece to the location and test if the piece is in check
   const originalLocation = movingPiece.position;
   movingPiece._move(to);
-  const inCheck = isInCheck(board, checkablePiece);
+  const inCheck = isInCheck(board, checkablePiece, depth);
   movingPiece._move(originalLocation);
   return inCheck;
 }
 
-export function isInCheck(board: Chessboard, piece: Entity): boolean {
+export function isInCheck(board: Chessboard, piece: Entity, depth = 0): boolean {
   if (piece.team === undefined) {
     return false;
   }
@@ -19,18 +19,17 @@ export function isInCheck(board: Chessboard, piece: Entity): boolean {
   const enemyPieces = getEnemyPieces(board, piece.team);
   // See if any are capable of moving onto this piece's position
   for(const enemy of enemyPieces) {
-    // Note that the metadata "query: true" is so components don't take any actions on this fake action
-    if(moveIsPossible(enemy, piece.position)) {
+    if(moveIsPossible(enemy, piece.position, depth + 1)) {
       return true;
     }
   }
   return false;
 }
 
-export function isInCheckmate(board: Chessboard, piece: Entity, attacker: Entity): boolean {
+export function isInCheckmate(board: Chessboard, piece: Entity, attacker: Entity, depth = 0): boolean {
   // See if the piece can move anywhere to break the check, including capturing the attacker
   for(const position of board.playSquares()) {
-    if(!position.equals(piece.position) && moveIsPossible(piece, position)) {
+    if(!position.equals(piece.position) && moveIsPossible(piece, position, depth + 1)) {
       return false;
     }
   }
@@ -38,12 +37,12 @@ export function isInCheckmate(board: Chessboard, piece: Entity, attacker: Entity
   const positionsBetweenAttackerAndPiece = [...piece.position.getLineTo(attacker.position)]
   for(const ally of getAlliedPieces(board, piece.team!)) {
     // Try to capture the attacker
-    if(moveIsPossible(ally, attacker.position)) {
+    if(moveIsPossible(ally, attacker.position, depth + 1)) {
       return false;
     }
     // See if any movements between attacker and piece in check will break it
     for(const position of positionsBetweenAttackerAndPiece) {
-      if(moveIsPossible(ally, position) && !movementWillResultInCheck(board, piece, ally, position)) {
+      if(moveIsPossible(ally, position, depth + 1)) {
         return false;
       }
     }
@@ -51,8 +50,8 @@ export function isInCheckmate(board: Chessboard, piece: Entity, attacker: Entity
   return true;
 }
 
-function moveIsPossible(piece: Entity, position: Vector): boolean {
-  const potentialCapture = piece.move({ to: position, metadata: { playerMovement: true, query: true }}).deniedByDefault();
+function moveIsPossible(piece: Entity, position: Vector, queryDepth: number): boolean {
+  const potentialCapture = piece.move({ to: position, metadata: { playerMovement: true, queryDepth }}).deniedByDefault();
   piece.handle('permit', potentialCapture);
   potentialCapture.decidePermission();
   return potentialCapture.permitted;

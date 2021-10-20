@@ -1,14 +1,6 @@
-import { Chaos, World, Vector, Team, MoveAction, Entity } from '@chaos/core';
-
-import Pawn from '../Entities/Pieces/Pawn';
-import Rook from '../Entities/Pieces/Rook';
-import Knight from '../Entities/Pieces/Knight';
-import Bishop from '../Entities/Pieces/Bishop';
-import Queen from '../Entities/Pieces/Queen';
-import King from '../Entities/Pieces/King';
+import {  World, Vector, MoveAction, Entity } from '@chaos/core';
 import Tiles from '../Enums/Tile';
 import ChessTeam from '../Enums/Teams';
-import { stringify } from 'querystring';
 import Chess from '..';
 
 const algebraicFiles = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];

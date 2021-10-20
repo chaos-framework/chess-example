@@ -9,7 +9,7 @@ export default class CountsMovements extends Component {
     if (action instanceof MoveAction 
       && action.target === this.parent
       && action.tagged('playerMovement')
-      && !action.tagged('query')) {
+      && action.applied) {
       const current = action.target.metadata.get('moveCount');
       if (current !== undefined && typeof current === 'number') {
         action.target.metadata.set('moveCount', current + 1);

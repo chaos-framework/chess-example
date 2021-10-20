@@ -20,6 +20,7 @@ describe('Counts Movements', () => {
   it('Counts player movements', () => {
     piece.metadata.set('moveCount', 0);
     const movement = piece.move({ to: (Chessboard.fromAlgebraic('b3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
+    movement.applied = true;
     movementComponent.react(movement);
     expect(piece.metadata.get('moveCount')).to.equal(1);
     movementComponent.react(movement);
@@ -31,13 +32,6 @@ describe('Counts Movements', () => {
   it("Does not count movements of action if it is not a player's move", () => {
     piece.metadata.set('moveCount', 0);
     const movement = piece.move({ to: (Chessboard.fromAlgebraic('b3') as Vector) }).deniedByDefault();
-    movementComponent.react(movement);
-    expect(piece.metadata.get('moveCount')).to.equal(0);
-  });
-  
-  it('Does not count movements of action is tagged as a query', () => {
-    piece.metadata.set('moveCount', 0);
-    const movement = piece.move({ to: (Chessboard.fromAlgebraic('b3') as Vector), metadata: { playerMovement: true, query: true } }).deniedByDefault();
     movementComponent.react(movement);
     expect(piece.metadata.get('moveCount')).to.equal(0);
   });

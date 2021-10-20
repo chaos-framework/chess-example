@@ -96,6 +96,26 @@ describe('Checking', function() {
   });
 });
 
-describe('Pieces are put in check properly', function() {
-
+describe('Pieces are put in checkmate properly', function() {
+  it('Puts pieces into checkmate when appropriate', function() {
+    const board = new Chessboard();
+    board.setupCustomGame(`
+      kp.....p
+      .p......
+      ........
+      ........
+      .Q......
+      ........
+      ........
+      ........
+    `);
+    board.move('b4', 'b3')?.execute(); // random movement
+    Chaos.process();
+    expect(board.pieceAt('a8')?.components.has('Checkmated')).to.be.false;
+    board.move('h8', 'h7')?.execute();            // black movement that won't stop upcoming check
+    Chaos.process();
+    board.move('b3', 'a3')?.execute(); // king should not be able to leave
+    Chaos.process();
+    expect(board.pieceAt('a8')?.components.has('Checkmated')).to.be.true;
+  });
 });
