@@ -1,4 +1,4 @@
-import { Component, Action, MoveAction, Team, ChangeTurnAction, LogicalAction } from '@chaos/core'
+import { Component, Action, MoveAction, Team, ChangeTurnAction, LogicalAction } from '@chaos-framework/core'
 
 
 // Changes the turn to the next team after each move

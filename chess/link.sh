@@ -1,0 +1,1 @@
+npm install; npm link @chaos-framework/core

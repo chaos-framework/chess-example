@@ -1,4 +1,4 @@
-import { Action, AttachComponentAction, ChangeTurnAction, Component, DetachComponentAction, LogicalAction, MoveAction, Team } from '@chaos/core';
+import { Action, AttachComponentAction, ChangeTurnAction, Component, DetachComponentAction, LogicalAction, MoveAction, Team } from '@chaos-framework/core';
 
 import Chess from '../..';
 import Piece from '../../Enums/Piece';

@@ -1,7 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
 
-import { Chaos, Entity, Team, Vector } from '@chaos/core';
+import { Chaos, Entity, Team, Vector } from '@chaos-framework/core';
 
 import CanOnlyMoveOnTurn from '../../../src/Components/PlayOrder/CanOnlyMoveOnTurn';
 import Teams from '../../../src/Enums/Teams';

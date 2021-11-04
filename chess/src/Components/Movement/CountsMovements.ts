@@ -1,4 +1,4 @@
-import { Action, Component,  MoveAction } from '@chaos/core';
+import { Action, Component,  MoveAction } from '@chaos-framework/core';
 
 
 // Forces a piece to move off its current tile if moving at all

@@ -1,4 +1,4 @@
-import { Entity, LogicalAction } from "@chaos/core";
+import { Entity, LogicalAction } from "@chaos-framework/core";
 import actions from './types';
 
 export const createCheckAction = (target: Entity, caster: Entity) => {

@@ -1,4 +1,4 @@
-import { Component } from '@chaos/core'
+import { Component } from '@chaos-framework/core'
 
 import Captures from '../../Components/Combat/Captures';
 import CannotLandOnTeam from '../../Components/Movement/CannotLandOnTeam';

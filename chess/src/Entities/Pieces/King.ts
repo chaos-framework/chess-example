@@ -1,4 +1,4 @@
-import { Entity, Team } from '@chaos/core';
+import { Entity, Team } from '@chaos-framework/core';
 
 import Piece from '../../Enums/Piece';
 

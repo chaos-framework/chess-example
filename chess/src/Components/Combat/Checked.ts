@@ -1,4 +1,4 @@
-import { Component, Action, MoveAction, Entity, AttachComponentAction, LogicalAction } from '@chaos/core';
+import { Component, Action, MoveAction, Entity, AttachComponentAction, LogicalAction } from '@chaos-framework/core';
 
 import { isInCheck, isInCheckmate, movementWillResultInCheck } from '../../Util/CheckQueries';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';

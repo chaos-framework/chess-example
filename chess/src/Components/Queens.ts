@@ -1,4 +1,4 @@
-import { Component, Action, MoveAction, TerminalMessage, Entity, LogicalAction, UnpublishEntityAction, PublishEntityAction } from '@chaos/core';
+import { Component, Action, MoveAction, TerminalMessage, Entity, LogicalAction, UnpublishEntityAction, PublishEntityAction } from '@chaos-framework/core';
 
 import Chess from "..";
 import Queen from '../Entities/Pieces/Queen';

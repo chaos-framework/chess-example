@@ -1,4 +1,4 @@
-import { Action, Component, MoveAction } from '@chaos/core';
+import { Action, Component, MoveAction } from '@chaos-framework/core';
 
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 

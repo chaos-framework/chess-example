@@ -1,7 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
 
-import { Chaos, Entity, LogicalAction, MoveAction, Team, Vector } from '@chaos/core';
+import { Chaos, Entity, LogicalAction, MoveAction, Team, Vector } from '@chaos-framework/core';
 
 import OneMovePerTurn from '../../../src/Components/PlayOrder/OneMovePerTurn';
 

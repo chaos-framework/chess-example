@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { Entity, Vector, MoveAction, Chaos, Team } from '@chaos/core';
+import { Entity, Vector, MoveAction, Chaos, Team } from '@chaos-framework/core';
 
 import Chessboard from '../../../src/Worlds/Chessboard';
 import Captures from '../../../src/Components/Combat/Captures';

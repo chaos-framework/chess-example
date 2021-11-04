@@ -1,4 +1,4 @@
-import {  World, Vector, MoveAction, Entity } from '@chaos/core';
+import {  World, Vector, MoveAction, Entity } from '@chaos-framework/core';
 import Tiles from '../Enums/Tile';
 import ChessTeam from '../Enums/Teams';
 import Chess from '..';

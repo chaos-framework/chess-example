@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { Chaos } from '@chaos/core';
+import { Chaos } from '@chaos-framework/core';
 
 import Chess from '../../src';
 import StandardAI from '../../src/Components/Logical/StandardAI';

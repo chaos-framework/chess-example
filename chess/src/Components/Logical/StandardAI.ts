@@ -1,4 +1,4 @@
-import { Action, ChangeTurnAction, Component, Scope, Team } from '@chaos/core';
+import { Action, ChangeTurnAction, Component, Scope, Team } from '@chaos-framework/core';
 const jsChessEngine = require('js-chess-engine');
 
 const { aiMove } = jsChessEngine

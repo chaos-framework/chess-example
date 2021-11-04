@@ -1,4 +1,4 @@
-import { Action, Event} from '@chaos/core';
+import { Action, Event} from '@chaos-framework/core';
 
 // Returns all events from array passed into constructor
 export class SimpleEvent implements Event {

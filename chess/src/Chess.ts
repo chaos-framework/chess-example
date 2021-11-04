@@ -1,4 +1,4 @@
-import { ChangeTurnAction, Chaos, Component, CONNECTION, CONNECTION_RESPONSE, DetachComponentAction, Entity, LogicalAction, Player, Team, Vector } from '@chaos/core';
+import { ChangeTurnAction, Chaos, Component, CONNECTION, CONNECTION_RESPONSE, DetachComponentAction, Entity, LogicalAction, Player, Team, Vector } from '@chaos-framework/core';
 
 import ChessBoard from './Worlds/Chessboard';
 import Chessboard from './Worlds/Chessboard';

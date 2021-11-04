@@ -1,4 +1,4 @@
-import { Action, ChangeTurnAction, Component, Entity, Scope, Vector } from '@chaos/core'
+import { Action, ChangeTurnAction, Component, Entity, Scope, Vector } from '@chaos-framework/core'
 
 export default class EnPassant extends Component {
   name = 'En Passant';
