@@ -12,15 +12,16 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/and0p/chess-adventureworks.git"
+    "url": "git+https://github.com/chaos-framework/examples.git",
+    "directory": "chess"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/and0p/chess-adventureworks/issues"
+    "url": "https://github.com/chaos-framework/examples/issues"
   },
-  "homepage": "https://github.com/and0p/chess-adventureworks#readme",
+  "homepage": "https://github.com/and0p/chaos-framework/examples/chess#readme",
   "devDependencies": {
     "@types/assert": "^1.5.2",
     "@types/chai": "^4.2.14",
