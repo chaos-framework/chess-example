@@ -1,7 +1,7 @@
 import {  World, Vector, MoveAction, Entity } from '@chaos-framework/core';
 import Tiles from '../Enums/Tile';
 import ChessTeam from '../Enums/Teams';
-import Chess from '..';
+import * as Chess from '../Chess';
 
 const algebraicFiles = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 

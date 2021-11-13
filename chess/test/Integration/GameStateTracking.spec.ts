@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import 'mocha';
 
 import { Chaos } from '@chaos-framework/core';
-import Chess from '../../src';
+import * as Chess from'../../src';
 import { board } from '../../src/Chess';
 
 describe('Chessboard position export', function() {

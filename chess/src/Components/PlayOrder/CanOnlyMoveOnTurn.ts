@@ -1,6 +1,6 @@
 import { Component, Action, MoveAction, Team, Chaos } from '@chaos-framework/core'
 
-import Chess from '../..';
+import * as Chess from'../..';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 import ChessTeam from '../../Enums/Teams';
 

@@ -1,6 +1,6 @@
 import { Action, AttachComponentAction, ChangeTurnAction, Component, DetachComponentAction, LogicalAction, MoveAction, Team } from '@chaos-framework/core';
 
-import Chess from '../..';
+import * as Chess from'../..';
 import Piece from '../../Enums/Piece';
 import Chessboard from '../../Worlds/Chessboard';
 import Checked from '../Combat/Checked';

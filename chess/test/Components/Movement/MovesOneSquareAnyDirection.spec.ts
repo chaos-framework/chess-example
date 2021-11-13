@@ -3,7 +3,7 @@ import 'mocha';
 
 import { Entity, Vector } from '@chaos-framework/core';
 
-import Chess from '../../../src';
+import * as Chess from'../../../src';
 import Chessboard from '../../../src/Worlds/Chessboard';
 import MovesOneSquareAnyDirection from '../../../src/Components/Movement/MovesOneSquareAnyDirection';
 

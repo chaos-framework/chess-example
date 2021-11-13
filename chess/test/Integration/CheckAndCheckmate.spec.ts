@@ -3,7 +3,7 @@ import 'mocha';
 
 import { Entity, Chaos, Team } from '@chaos-framework/core';
 
-import Chess from '../../src';
+import * as Chess from'../../src';
 import Chessboard from '../../src/Worlds/Chessboard';
 import Queen from '../../src/Entities/Pieces/Queen';
 import King from '../../src/Entities/Pieces/King';

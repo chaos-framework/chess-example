@@ -1,5 +1,5 @@
 import { Component, Action, MoveAction, TerminalMessage, Entity, MessageAction, LogicalAction } from '@chaos-framework/core';
-import Chess from "../..";
+import * as Chess from"../..";
 import ChessTeam from '../../Enums/Teams';
 import Chessboard from "../../Worlds/Chessboard";
 

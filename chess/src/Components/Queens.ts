@@ -1,6 +1,6 @@
 import { Component, Action, MoveAction, TerminalMessage, Entity, LogicalAction, UnpublishEntityAction, PublishEntityAction } from '@chaos-framework/core';
 
-import Chess from "..";
+import * as Chess from '../Chess';
 import Queen from '../Entities/Pieces/Queen';
 import MovementPermissionPriority from '../Enums/MovementPermissionPriority';
 import ChessTeam from '../Enums/Teams';

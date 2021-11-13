@@ -3,7 +3,7 @@ import 'mocha';
 
 import { Chaos } from '@chaos-framework/core';
 
-import Chess from '../../src';
+import * as Chess from'../../src';
 import StandardAI from '../../src/Components/Logical/StandardAI';
 
 describe('AI', function() {

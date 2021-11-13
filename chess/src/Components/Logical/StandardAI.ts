@@ -3,7 +3,7 @@ const jsChessEngine = require('js-chess-engine');
 
 const { aiMove } = jsChessEngine
 
-import Chess from '../..';
+import * as Chess from'../..';
 
 const difficultyNames = [
   'Dumb',
