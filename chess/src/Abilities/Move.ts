@@ -1,4 +1,4 @@
-import { Entity, Ability, Event, OptionalCastParameters, Vector, MoveAction } from '@chaos-framework/core';
+import { Entity, Ability, Event, OptionalCastParameters, Vector } from '@chaos-framework/core';
 
 import Chessboard from '../Worlds/Chessboard';
 import { SimpleEvent } from '../Events/SimpleEvent';

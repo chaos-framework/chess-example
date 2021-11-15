@@ -11,6 +11,7 @@ import Knight from './Entities/Pieces/Knight';
 import Queen from './Entities/Pieces/Queen';
 import King from './Entities/Pieces/King';
 import StandardAI from './Components/Logical/StandardAI';
+import MoveLogger from './Components/Logical/MoveLogger';
 
 Chaos.id = 'Chess';
 Chaos.setPhases(
@@ -87,6 +88,7 @@ export function initialize(options: any = {}) {
   teams['BLACK']._publish();
   turnOrderComponent = new OneMovePerTurn([teams.WHITE, teams.BLACK]);
   Chaos.components.addComponent(turnOrderComponent);
+  Chaos.components.addComponent(new MoveLogger);
   reset();
   // Make it an AI match, if specified in the options
   if(options.aiOnly === true) {
