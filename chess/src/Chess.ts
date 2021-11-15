@@ -10,6 +10,7 @@ import Rook from './Entities/Pieces/Rook';
 import Knight from './Entities/Pieces/Knight';
 import Queen from './Entities/Pieces/Queen';
 import King from './Entities/Pieces/King';
+import StandardAI from './Components/Logical/StandardAI';
 
 Chaos.id = 'Chess';
 Chaos.setPhases(
@@ -80,13 +81,22 @@ export let state: GameState = {
   halfMove: 0
 }
 
-export function initialize(options?: any) {
+export function initialize(options: any = {}) {
   board = new ChessBoard();
   teams['WHITE']._publish();
   teams['BLACK']._publish();
   turnOrderComponent = new OneMovePerTurn([teams.WHITE, teams.BLACK]);
   Chaos.components.addComponent(turnOrderComponent);
   reset();
+  // Make it an AI match, if specified in the options
+  if(options.aiOnly === true) {
+    console.log("Initializing chess with AI players");
+    const whiteAI = new StandardAI(2, true, 300);
+    const blackAI = new StandardAI(2, true, 300);
+    teams['WHITE'].components.addComponent(whiteAI);
+    teams['BLACK'].components.addComponent(blackAI);
+    new LogicalAction('GAME_START', { firstTeam: teams['WHITE'] }).execute();
+  }
 }
 
 export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {

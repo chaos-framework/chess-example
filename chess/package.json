@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "test": "env DEBUG=true mocha"
+    "test": "env mocha"
   },
   "files": [
     "lib/**/*"

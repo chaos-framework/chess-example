@@ -1,4 +1,4 @@
-import { Action, ChangeTurnAction, Component, Scope, Team } from '@chaos-framework/core';
+import { Action, ChangeTurnAction, Chaos, Component, LogicalAction, Scope, Team } from '@chaos-framework/core';
 const jsChessEngine = require('js-chess-engine');
 
 const { aiMove } = jsChessEngine
@@ -22,7 +22,7 @@ export default class StandardAI extends Component {
     ai: 'game'
   }
 
-  constructor(private difficulty = 2, public moveAutomatically = true) {
+  constructor(private difficulty = 2, public automaticMovement = false, public delay = 0) {
     super();
     if (difficulty < 0 || difficulty > 4) {
       this.difficulty = 2;
@@ -32,24 +32,31 @@ export default class StandardAI extends Component {
 
   // Play moves for the attached team
   ai(action: Action) {
+    const { automaticMovement, delay } = this;
     if (
-      this.moveAutomatically &&
-      action instanceof ChangeTurnAction &&
-      this.parent !== undefined &&
-      action.to === this.parent
+      automaticMovement &&
+      this.parent instanceof Team &&
+      (action instanceof ChangeTurnAction && action.to === this.parent) ||
+      (action instanceof LogicalAction && action.name === "GAME_START" && action.payload.firstTeam === this.parent)
     ) {
       const aiMove = this.getAIMove();
       if(aiMove === undefined) {
-        console.log('AI could not find a move for this board.');
+        console.error('AI could not find a move for this board.');
         return;
       }
-      console.log(aiMove);
       const moveAction = Chess.board.move(aiMove[0], aiMove[1]);
       if(moveAction === undefined) {
-        console.log('AI could not find a move for this board.');
+        console.error('AI could not find a move for this board.');
         return;
       }
-      action.followup(moveAction);
+      if(delay > 0) {
+        setTimeout( () => {
+            action.followup(moveAction);
+            Chaos.process(); 
+          }, delay)
+      } else {
+        action.followup(moveAction);
+      }
     }
   }
 
