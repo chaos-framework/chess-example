@@ -5,6 +5,8 @@ import { Entity, Vector, MoveAction, Chaos, Team } from '@chaos-framework/core';
 
 import Chessboard from '../../../src/Worlds/Chessboard';
 import Captures from '../../../src/Components/Combat/Captures';
+import ChessMove from '../../../src/Actions/ChessMove';
+import Capture from '../../../src/Actions/Capture';
 
 describe('Capturing', () => {
   let board: Chessboard
@@ -30,11 +32,11 @@ describe('Capturing', () => {
   });
 
   it('Captures enemy pieces', () => {
-    let movement = piece.move({ to: enemy.position, metadata: { playerMovement: true } }).deniedByDefault();
+    let movement = new ChessMove(piece, enemy.position);
     movementComponent.capture(movement);
     expect(movement.reactions.length).to.be.greaterThan(0);
     const reaction = movement.reactions[0];
-    expect(reaction instanceof MoveAction).to.be.true;
-    expect((reaction as MoveAction).to.equals(Chessboard.getCaptureSlot('BLACK', 0))).to.be.true;
+    expect(reaction instanceof Capture).to.be.true;
+    expect((reaction as Capture).entity).to.equal(enemy);
   });
 });

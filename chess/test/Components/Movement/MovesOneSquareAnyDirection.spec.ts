@@ -3,9 +3,9 @@ import 'mocha';
 
 import { Entity, Vector } from '@chaos-framework/core';
 
-import * as Chess from'../../../src';
 import Chessboard from '../../../src/Worlds/Chessboard';
 import MovesOneSquareAnyDirection from '../../../src/Components/Movement/MovesOneSquareAnyDirection';
+import ChessMove from '../../../src/Actions/ChessMove';
 
 describe('Moves One Square in Any Direction', () => {
   let board: Chessboard
@@ -20,49 +20,23 @@ describe('Moves One Square in Any Direction', () => {
   });
 
   it('Permits all movement one square away', () => {
-    let movement = piece.move({ to: (Chessboard.fromAlgebraic('a1') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(movement);
-    movement.decidePermission();
-    expect(movement.permitted).to.be.true;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('b1') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(movement);
-    movement.decidePermission();
-    expect(movement.permitted).to.be.true;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('c1') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(movement);
-    movement.decidePermission();
-    expect(movement.permitted).to.be.true;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('c2') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(movement);
-    movement.decidePermission();
-    expect(movement.permitted).to.be.true;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('c3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(movement);
-    movement.decidePermission();
-    expect(movement.permitted).to.be.true;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('b3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(movement);
-    movement.decidePermission();
-    expect(movement.permitted).to.be.true;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('a3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(movement);
-    movement.decidePermission();
-    expect(movement.permitted).to.be.true;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('a2') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(movement);
-    movement.decidePermission();
-    expect(movement.permitted).to.be.true;
+    const positions = ['a1', 'b1', 'c1', 'c2', 'c3', 'b3', 'a3', 'a2'];
+    for(const position of positions) {
+      let movement = new ChessMove(piece, Chessboard.fromAlgebraic(position)!);
+      movementComponent.permit(movement);
+      movement.decidePermission();
+      expect(movement.permitted).to.be.true;
+    }
   });
 
   it('Does not explicitely permit movement more than one square away', () => {
-    let twoSquareMovement = piece.move({ to: (Chessboard.fromAlgebraic('d2') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(twoSquareMovement);
-    twoSquareMovement.decidePermission();
-    expect(twoSquareMovement.permitted).to.be.false;
-    twoSquareMovement = piece.move({ to: (Chessboard.fromAlgebraic('b4') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(twoSquareMovement);
-    twoSquareMovement.decidePermission();
-    expect(twoSquareMovement.permitted).to.be.false;
+    let movement = new ChessMove(piece, Chessboard.fromAlgebraic('d2')!);
+    movementComponent.permit(movement);
+    movement.decidePermission();
+    expect(movement.permitted).to.be.false;
+    new ChessMove(piece, Chessboard.fromAlgebraic('b4')!);
+    movementComponent.permit(movement);
+    movement.decidePermission();
+    expect(movement.permitted).to.be.false;
   });
-
 });

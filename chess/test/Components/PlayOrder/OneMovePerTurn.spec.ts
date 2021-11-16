@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import { Chaos, Entity, LogicalAction, MoveAction, Team, Vector } from '@chaos-framework/core';
 
 import OneMovePerTurn from '../../../src/Components/PlayOrder/OneMovePerTurn';
+import ChessMove from '../../../src/Actions/ChessMove';
 
 describe('Each team gets one move per turn', () => {
   const firstTeam = new Team();
@@ -20,12 +21,12 @@ describe('Each team gets one move per turn', () => {
   });
 
   it('Changes the current turn after each team player movement in a continious cycle', () => {
-    const firstMovement = new MoveAction({ to: new Vector(0,0), target: firstPiece, metadata: { playerMovement: true } });
+    const firstMovement = new ChessMove(firstPiece, new Vector(0,0));
     firstMovement.applied = true;
     component.react(firstMovement);
     Chaos.process();
     expect(Chaos.currentTurn).to.equal(secondTeam);
-    const secondMovement = new MoveAction({ to: new Vector(0,0), target: secondPiece, metadata: { playerMovement: true } });
+    const secondMovement = new ChessMove(secondPiece, new Vector(0,0));
     secondMovement.applied = true;
     component.react(secondMovement);
     Chaos.process();
@@ -51,18 +52,11 @@ describe('Each team gets one move per turn', () => {
   it("Does not change turns when the team played isn't part of the turn order anyway", () => {
     const randomPiece = new Entity();
     randomPiece._joinTeam(new Team());
-    const movement = new MoveAction({ to: new Vector(0,0), target: randomPiece, metadata: { playerMovement: true } });
+    const movement = new ChessMove(randomPiece, new Vector(0,0));
     movement.applied = true;
     component.react(movement);
     Chaos.process();
     expect(Chaos.currentTurn).to.equal(firstTeam);
   });
-
-  // it("Resets to the first team when getting a 'RESET' logical action", () => {
-  //   Chaos.currentTurn = secondTeam;
-  //   component.react(new LogicalAction('RESET'));
-  //   Chaos.process();
-  //   expect(Chaos.currentTurn).to.equal(firstTeam);
-  // });
 
 });

@@ -1,5 +1,7 @@
 import { Component, Action, MoveAction, TerminalMessage, Entity, MessageAction, LogicalAction } from '@chaos-framework/core';
 import * as Chess from"../..";
+import Capture from '../../Actions/Capture';
+import ChessMove from '../../Actions/ChessMove';
 import ChessTeam from '../../Enums/Teams';
 import Chessboard from "../../Worlds/Chessboard";
 
@@ -9,20 +11,16 @@ export default class Captures extends Component {
 
   capture(action: Action) {
     if (
-      action instanceof MoveAction &&
-      action.tagged('playerMovement') && 
-      action.target.world === this.getParentEntity()?.world &&
-      action.target.world instanceof Chessboard)
+      action instanceof ChessMove && action.target === this.parent && action.target.world !== undefined)
     {
       const { target, to } = action;
       // Loop over all pieces in that location (note that this now includes the parent itself)
       for(const entity of action.target.world.getEntitiesAtCoordinates(to.x, to.y)) {
         if (entity.team !== target.team && entity.team !== undefined) {
           const enemyTeam = entity.team.name as ChessTeam;
-          const captureSlot = Chessboard.getCaptureSlot(enemyTeam, Chess.totalCaptures[enemyTeam]);
-          action.react(entity.move({ to: captureSlot }));
+          action.react(new Capture(entity, target));
+          action.captured = entity;
           Chess.totalCaptures[enemyTeam]++;
-          action.followup(new LogicalAction('CAPTURE'));
         }
       }
     }

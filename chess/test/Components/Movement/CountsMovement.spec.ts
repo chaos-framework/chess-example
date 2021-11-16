@@ -4,6 +4,7 @@ import 'mocha';
 import { Entity, Vector } from '@chaos-framework/core';
 import Chessboard from '../../../src/Worlds/Chessboard';
 import CountsMovements from '../../../src/Components/Movement/CountsMovements';
+import ChessMove from '../../../src/Actions/ChessMove';
 
 describe('Counts Movements', () => {
   let board: Chessboard
@@ -19,7 +20,7 @@ describe('Counts Movements', () => {
 
   it('Counts player movements', () => {
     piece.metadata.set('moveCount', 0);
-    const movement = piece.move({ to: (Chessboard.fromAlgebraic('b3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
+    let movement = new ChessMove(piece, Chessboard.fromAlgebraic('b3')!);
     movement.applied = true;
     movementComponent.react(movement);
     expect(piece.metadata.get('moveCount')).to.equal(1);
@@ -31,13 +32,13 @@ describe('Counts Movements', () => {
   
   it("Does not count movements of action if it is not a player's move", () => {
     piece.metadata.set('moveCount', 0);
-    const movement = piece.move({ to: (Chessboard.fromAlgebraic('b3') as Vector) }).deniedByDefault();
+    let movement = new ChessMove(piece, Chessboard.fromAlgebraic('b3')!);
     movementComponent.react(movement);
     expect(piece.metadata.get('moveCount')).to.equal(0);
   });
 
   it('Does not set moveCount on an entity that does not have it specified already', () => {
-    const movement = piece.move({ to: (Chessboard.fromAlgebraic('b3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
+    let movement = new ChessMove(piece, Chessboard.fromAlgebraic('b3')!);
     movementComponent.react(movement);
     expect(piece.metadata.get('moveCount')).to.be.undefined;
   });

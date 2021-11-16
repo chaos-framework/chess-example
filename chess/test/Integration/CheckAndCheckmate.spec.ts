@@ -8,6 +8,7 @@ import Chessboard from '../../src/Worlds/Chessboard';
 import Queen from '../../src/Entities/Pieces/Queen';
 import King from '../../src/Entities/Pieces/King';
 import Checked from '../../src/Components/Combat/Checked';
+import ChessMove from '../../src/Actions/ChessMove';
 
 describe('Checking', function() {
   beforeEach(function() { 
@@ -33,8 +34,7 @@ describe('Checking', function() {
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c2')!);
       // Move into attacking position
-      enemyQueen.move({ to: Chessboard.fromAlgebraic('c1')!, metadata: { playerMovement: true } }).execute(true);
-      Chaos.process();
+      new ChessMove(enemyQueen, Chessboard.fromAlgebraic('c1')!).execute(true);
       // Expect the king to be checked
       expect(checkableKing.has('Checked')).to.be.true;
     });
@@ -45,8 +45,7 @@ describe('Checking', function() {
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
       checkableKing._attach(new Checked(enemyQueen));
       // Move the king out of check
-      checkableKing.move({ to: Chessboard.fromAlgebraic('a2')!, metadata: { playerMovement: true } }).execute(true);
-      Chaos.process();
+      new ChessMove(checkableKing, Chessboard.fromAlgebraic('a2')!).execute(true);
       // Expect the king to no longer be checked
       expect(checkableKing.has('Checked')).to.be.false;
     });
@@ -57,7 +56,7 @@ describe('Checking', function() {
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
       checkableKing._attach(new Checked(enemyQueen));
       // Move the king out of check
-      friendlyQueen.move({ to: Chessboard.fromAlgebraic('b1')!, metadata: { playerMovement: true } }).execute(true);
+      new ChessMove(friendlyQueen, Chessboard.fromAlgebraic('b1')!).execute(true);
       Chaos.process();
       // Expect the king to no longer be checked
       expect(checkableKing.has('Checked')).to.be.false;
@@ -68,8 +67,8 @@ describe('Checking', function() {
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
       // Try to move the king into check
-      const movement = checkableKing.move({ to: Chessboard.fromAlgebraic('a1')!, metadata: { playerMovement: true } });
-      movement.execute();
+      const movement = new ChessMove(checkableKing, Chessboard.fromAlgebraic('a1')!);
+      movement.execute(true);
       expect(movement.permitted).to.be.false;
     });
 
@@ -78,7 +77,7 @@ describe('Checking', function() {
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b1')!);
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
       // Try to move in a dangerous way
-      const movement = friendlyQueen.move({ to: Chessboard.fromAlgebraic('b2')!, metadata: { playerMovement: true } });
+      const movement = new ChessMove(friendlyQueen, Chessboard.fromAlgebraic('b2')!);
       movement.execute();
       expect(movement.permitted).to.be.false;
     });
@@ -89,7 +88,7 @@ describe('Checking', function() {
       enemyQueen._publish(board, Chessboard.fromAlgebraic('c1')!);
       checkableKing._attach(new Checked(enemyQueen));
       // Try to move in an unhelpful way
-      const movement = friendlyQueen.move({ to: Chessboard.fromAlgebraic('b3')!, metadata: { playerMovement: true } });
+      const movement = new ChessMove(friendlyQueen, Chessboard.fromAlgebraic('b3')!);
       movement.execute();
       expect(movement.permitted).to.be.false;
     });

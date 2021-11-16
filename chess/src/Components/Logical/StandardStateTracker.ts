@@ -1,6 +1,8 @@
 import { Action, AttachComponentAction, ChangeTurnAction, Component, DetachComponentAction, LogicalAction, MoveAction, Team } from '@chaos-framework/core';
 
 import * as Chess from'../..';
+import Capture from '../../Actions/Capture';
+import ChessMove from '../../Actions/ChessMove';
 import Piece from '../../Enums/Piece';
 import Chessboard from '../../Worlds/Chessboard';
 import Checked from '../Combat/Checked';
@@ -49,8 +51,8 @@ export default class StandardStateTracker extends Component {
         }
       } else
       // Track anything that would reset the half move counter
-      if ((action instanceof MoveAction && action.target.metadata.get('type') === Piece.PAWN) ||
-          action instanceof LogicalAction && action.name === 'CAPTURE') {
+      if ((action instanceof ChessMove && action.target.metadata.get('type') === Piece.PAWN) ||
+          action instanceof Capture) {
             this.pawnMovementOrCaptureThisTurn = true;
             Chess.state.halfMove = 0;
       }

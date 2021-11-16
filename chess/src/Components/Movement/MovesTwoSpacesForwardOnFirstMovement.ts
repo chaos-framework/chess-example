@@ -1,6 +1,7 @@
 import { Action, Component, MoveAction } from '@chaos-framework/core';
 
 import * as Chess from '../../Chess';
+import ChessMove from '../../Actions/ChessMove';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 import ChessTeam from '../../Enums/Teams';
 import Chessboard from '../../Worlds/Chessboard';
@@ -11,10 +12,7 @@ export default class MovesTwoSpacesForwardOnFirstMovement extends Component {
   name = "Can Move Two Spaces Forward On First Movement";
 
   permit(action: Action) {
-    if (action instanceof MoveAction &&
-        action.target === this.parent &&
-        action.tagged('playerMovement') &&
-        action.target.metadata.get('moveCount') === 0) {
+    if (action instanceof ChessMove && action.target === this.parent && action.target.metadata.get('moveCount') === 0) {
       const { target, to } = action;
       // Make sure the target has a team
       if (target.team === undefined) {

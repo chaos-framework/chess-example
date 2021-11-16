@@ -2,12 +2,13 @@ import {  World, Vector, MoveAction, Entity } from '@chaos-framework/core';
 import Tiles from '../Enums/Tile';
 import ChessTeam from '../Enums/Teams';
 import * as Chess from '../Chess';
+import ChessMove from '../Actions/ChessMove';
 
 const algebraicFiles = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
 export default class Chessboard extends World {
   constructor() {
-    super({ width: 13, height: 8, fill: Tiles.EMPTY });
+    super({ width: 8, height: 8, fill: Tiles.EMPTY });
     
     // Fill in white tiles
     this.baseLayer.drawSquare(Tiles.WHITE, new Vector(0, 0), 8);
@@ -19,14 +20,7 @@ export default class Chessboard extends World {
         }
       }
     }
-
-    // Draw spaces for captured black pieces (onto white tiles) and vice versa
-    this.baseLayer.drawSquare(Tiles.WHITE, Chessboard.whiteCaptureStart, 2, 8);
-    this.baseLayer.drawSquare(Tiles.BLACK, Chessboard.blackCaptureStart, 2, 8);
   }
-
-  static whiteCaptureStart = new Vector(9, 0);
-  static blackCaptureStart = new Vector(11, 0);
 
   clear() {
     for (const [id, entity] of this.entities) {
@@ -47,7 +41,7 @@ export default class Chessboard extends World {
     return false;
   }
 
-  move(from: Vector | string, to: Vector | string, playerMovement: boolean = true): MoveAction | undefined {
+  move(from: Vector | string, to: Vector | string, playerMovement: boolean = true): ChessMove | undefined {
     let orig = from instanceof Vector ? from : Chessboard.fromAlgebraic(from);
     let dest = to instanceof Vector ? to : Chessboard.fromAlgebraic(to);
     if (orig === undefined || dest === undefined) {
@@ -57,7 +51,7 @@ export default class Chessboard extends World {
     if (piece === undefined) {
       return undefined;
     }
-    return piece.move({ to: dest, metadata: { playerMovement } });
+    return new ChessMove(piece, dest);
   }
 
   playSquares(): Generator<Vector> {
@@ -143,15 +137,8 @@ export default class Chessboard extends World {
       return undefined;
     }
   }
-
-  static getCaptureSlot(team: ChessTeam, previouslyCaptured: number): Vector {
-    const startingVector = team === 'WHITE' ? Chessboard.whiteCaptureStart : Chessboard.blackCaptureStart;
-    return startingVector.add(new Vector(
-      Math.floor(previouslyCaptured / 8),
-      previouslyCaptured % 8
-    ));
-  }
   
+  // TODO this should be an instance method on all World instances, not just this specific one
   static isInBounds(position: Vector) {
     return position.x < 8 && position.y < 8;
   }

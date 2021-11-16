@@ -1,4 +1,5 @@
 import { Action, Component, MoveAction } from '@chaos-framework/core';
+import ChessMove from '../../Actions/ChessMove';
 
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
@@ -7,7 +8,7 @@ export default class CannotLandOnTeam extends Component {
   name = "Cannot Land On Team";
 
   permit(action: Action) {
-    if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
+    if (action instanceof ChessMove && action.target === this.parent) {
       const { target, to } = action;
       if (target.world === undefined) {
         return;

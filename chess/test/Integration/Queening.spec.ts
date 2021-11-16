@@ -6,6 +6,7 @@ import { Entity, Chaos, Team, Vector } from '@chaos-framework/core';
 import Pawn from '../../src/Entities/Pieces/Pawn';
 import Chessboard from '../../src/Worlds/Chessboard';
 import King from '../../src/Entities/Pieces/King';
+import ChessMove from '../../src/Actions/ChessMove';
 
 describe('Queening', () => {
   let board: Chessboard;
@@ -22,8 +23,7 @@ describe('Queening', () => {
   });
 
   it('Pawns are replaced with queens when they reach the edge of the board', () => {
-    pawn.move({ to: queeningSquare, metadata: { playerMovement: true } }).execute();
-    Chaos.process();
+    new ChessMove(pawn, queeningSquare).execute();
     expect(pawn.published).to.be.false;
     const queen = board.getEntitiesAtCoordinates(queeningSquare.x, queeningSquare.y)[0];
     expect(queen).to.exist;
@@ -33,7 +33,7 @@ describe('Queening', () => {
   it('Queens will put a king in check when they replace a pawn', () => {
     const king = King(new Team({ name: 'BLACK' }));
     king._publish(board, Chessboard.fromAlgebraic('e8')!);
-    pawn.move({ to: queeningSquare, metadata: { playerMovement: true } }).execute();
+    new ChessMove(pawn, queeningSquare).execute();
     Chaos.process();
     expect(king.has('Checked')).to.be.true;
   });

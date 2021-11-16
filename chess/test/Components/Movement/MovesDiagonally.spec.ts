@@ -5,6 +5,7 @@ import { Entity, Vector } from '@chaos-framework/core';
 
 import Chessboard from '../../../src/Worlds/Chessboard';
 import MovesDiagonally from '../../../src/Components/Movement/MovesDiagonally';
+import ChessMove from '../../../src/Actions/ChessMove';
 
 describe('Diagonal Movement', () => {
   let board: Chessboard
@@ -19,33 +20,33 @@ describe('Diagonal Movement', () => {
   });
 
   it('Permits diagonal movement', () => {
-    let diagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('a3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
+    let diagonalMovement = new ChessMove(piece, Chessboard.fromAlgebraic('a3')!);
     movementComponent.permit(diagonalMovement);
     diagonalMovement.decidePermission();
     expect(diagonalMovement.permitted).to.be.true;
-    diagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('a1') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
+    diagonalMovement = new ChessMove(piece, Chessboard.fromAlgebraic('a1')!);
     movementComponent.permit(diagonalMovement);
     diagonalMovement.decidePermission();
     expect(diagonalMovement.permitted).to.be.true;
-    diagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('c3') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
+    diagonalMovement = new ChessMove(piece, Chessboard.fromAlgebraic('c3')!);
     movementComponent.permit(diagonalMovement);
     diagonalMovement.decidePermission();
     expect(diagonalMovement.permitted).to.be.true;
-    diagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('f6') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
+    diagonalMovement = new ChessMove(piece, Chessboard.fromAlgebraic('f6')!);
     movementComponent.permit(diagonalMovement);
     diagonalMovement.decidePermission();
     expect(diagonalMovement.permitted).to.be.true;
   });
 
-  it('Does not explicitely permit non-diagonal movement', () => {
-    let nonDiagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('c2') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(nonDiagonalMovement);
-    nonDiagonalMovement.decidePermission();
-    expect(nonDiagonalMovement.permitted).to.be.false;
-    nonDiagonalMovement = piece.move({ to: (Chessboard.fromAlgebraic('b8') as Vector), metadata: { playerMovement: true } }).deniedByDefault();
-    movementComponent.permit(nonDiagonalMovement);
-    nonDiagonalMovement.decidePermission();
-    expect(nonDiagonalMovement.permitted).to.be.false;
+  it('Does not explicitly permit non-diagonal movement', () => {
+    let movement = new ChessMove(piece, Chessboard.fromAlgebraic('c2')!);
+    movementComponent.permit(movement);
+    movement.decidePermission();
+    expect(movement.permitted).to.be.false;
+    movement = new ChessMove(piece, Chessboard.fromAlgebraic('b8')!);
+    movementComponent.permit(movement);
+    movement.decidePermission();
+    expect(movement.permitted).to.be.false;
   });
 
 });

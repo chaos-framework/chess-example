@@ -1,5 +1,6 @@
 import { Component, Action, MoveAction, Team, ChangeTurnAction, LogicalAction } from '@chaos-framework/core'
 
+import ChessMove from '../../Actions/ChessMove';
 
 // Changes the turn to the next team after each move
 export default class OneMovePerTurn extends Component {
@@ -22,7 +23,7 @@ export default class OneMovePerTurn extends Component {
 
   react(action: Action) {
     // Change turns after one movement
-    if (action instanceof MoveAction && action.tagged('playerMovement') && action.target.team !== undefined && action.applied) {
+    if (action instanceof ChessMove && action.target.team !== undefined && action.applied) {
       const nextTeam = this.getTeamForNextTurn(action.target.team);
       if (nextTeam !== action.target.team) {
         action.followup(new ChangeTurnAction({ to: nextTeam }));

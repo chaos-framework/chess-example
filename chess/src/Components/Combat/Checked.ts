@@ -4,6 +4,7 @@ import { isInCheck, isInCheckmate, movementWillResultInCheck } from '../../Util/
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 import Chessboard from '../../Worlds/Chessboard';
 import Checkmated from './Checkmated';
+import ChessMove from '../../Actions/ChessMove';
 
 export default class Checked extends Component {
   name = 'Checked';
@@ -15,7 +16,7 @@ export default class Checked extends Component {
 
   // Do not allow team movement that does not remove check
   permit(action: Action) {
-    if (action instanceof MoveAction && action.tagged('playerMovement') && action.target.world !== undefined) {
+    if (action instanceof ChessMove && action.target.world !== undefined) {
       // Make sure we belong to a team
       if (!(this.parent instanceof Entity) || this.parent.world === undefined || this.parent.world !== action.target.world) {
         return;
@@ -26,7 +27,7 @@ export default class Checked extends Component {
         return;
       }
       const movingTeam = action.target.metadata.get('team');
-      if (movingTeam === myTeam && movementWillResultInCheck(action.target.world as Chessboard, this.parent, action.target, action.to)) {
+      if (movingTeam === myTeam && movementWillResultInCheck(action.target.world, this.parent, action.target, action.to)) {
         // Only allow movement if this gets us out of check
         action.deny({
           priority: MovementPermissionPriority.DISALLOWED,
@@ -46,10 +47,10 @@ export default class Checked extends Component {
       }
     }
     // Remove self if the piece is out of check
-    if (action instanceof MoveAction &&
+    if (action instanceof ChessMove &&
         this.parent instanceof Entity &&
         action.target.world !== undefined) {
-      if (!isInCheck(action.target.world as Chessboard, this.parent)) {
+      if (!isInCheck(action.target.world, this.parent)) {
         action.react(this.parent.detach({ component: this }));
       }
     }

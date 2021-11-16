@@ -1,8 +1,9 @@
-import { Entity, Team, Vector } from '@chaos-framework/core';
+import { Entity, Team, Vector, World } from '@chaos-framework/core';
+import ChessMove from '../Actions/ChessMove';
 
 import Chessboard from '../Worlds/Chessboard';
 
-export function movementWillResultInCheck(board: Chessboard, checkablePiece: Entity, movingPiece: Entity, to: Vector, depth = 0) {
+export function movementWillResultInCheck(board: World, checkablePiece: Entity, movingPiece: Entity, to: Vector, depth = 0) {
   // Temporarily move the piece to the location and test if the piece is in check
   const originalLocation = movingPiece.position;
   movingPiece._move(to);
@@ -11,7 +12,7 @@ export function movementWillResultInCheck(board: Chessboard, checkablePiece: Ent
   return inCheck;
 }
 
-export function isInCheck(board: Chessboard, piece: Entity, depth = 0): boolean {
+export function isInCheck(board: World, piece: Entity, depth = 0): boolean {
   if (piece.team === undefined) {
     return false;
   }
@@ -28,9 +29,12 @@ export function isInCheck(board: Chessboard, piece: Entity, depth = 0): boolean 
 
 export function isInCheckmate(board: Chessboard, piece: Entity, attacker: Entity, depth = 0): boolean {
   // See if the piece can move anywhere to break the check, including capturing the attacker
-  for(const position of board.playSquares()) {
-    if(!position.equals(piece.position) && moveIsPossible(piece, position, depth + 1)) {
-      return false;
+  for (let x = 0; x < 8; x++) {
+    for (let y = 0; y < 8; y++) {
+      const position = new Vector(x, y);
+      if(!position.equals(piece.position) && moveIsPossible(piece, position, depth + 1)) {
+        return false;
+      }
     }
   }
   // See if any allied pieces can either move between the attacker in a way that breaks the check OR capture the attacker
@@ -51,13 +55,13 @@ export function isInCheckmate(board: Chessboard, piece: Entity, attacker: Entity
 }
 
 function moveIsPossible(piece: Entity, position: Vector, queryDepth: number): boolean {
-  const potentialCapture = piece.move({ to: position, metadata: { playerMovement: true, queryDepth }}).deniedByDefault();
+  const potentialCapture = new ChessMove(piece, position, queryDepth);
   piece.handle('permit', potentialCapture);
   potentialCapture.decidePermission();
   return potentialCapture.permitted;
 }
 
-function getAlliedPieces(board: Chessboard, friendlyTeam: Team): Entity[] {
+function getAlliedPieces(board: World, friendlyTeam: Team): Entity[] {
   const enemyPieces: Entity[] = [];
   for (const [, entity] of board.entities) {
     if (entity.team === friendlyTeam) {
@@ -67,7 +71,7 @@ function getAlliedPieces(board: Chessboard, friendlyTeam: Team): Entity[] {
   return enemyPieces;
 }
 
-function getEnemyPieces(board: Chessboard, friendlyTeam: Team): Entity[] {
+function getEnemyPieces(board: World, friendlyTeam: Team): Entity[] {
   const enemyPieces: Entity[] = [];
   for (const [, entity] of board.entities) {
     if (entity.team !== friendlyTeam) {

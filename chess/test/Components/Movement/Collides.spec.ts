@@ -5,6 +5,7 @@ import { Entity, Vector } from '@chaos-framework/core';
 
 import Chessboard from '../../../src/Worlds/Chessboard';
 import Collides from '../../../src/Components/Movement/Collides';
+import ChessMove from '../../../src/Actions/ChessMove';
 
 describe('Colliding with other pieces', () => {
   let board: Chessboard
@@ -24,45 +25,51 @@ describe('Colliding with other pieces', () => {
   });
 
   it('Does not deny a piece a move through open space', () => {
-    let movement = piece.move({ to: (Chessboard.fromAlgebraic('b7') as Vector), metadata: { playerMovement: true } });
+    let movement = new ChessMove(piece, Chessboard.fromAlgebraic('b7')!);
+    movement.permit({ priority: 1 });;
     movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('b1') as Vector), metadata: { playerMovement: true } });
+    movement = new ChessMove(piece, Chessboard.fromAlgebraic('b1')!);
+    movement.permit({ priority: 1 });;
     movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('a4') as Vector), metadata: { playerMovement: true } });
+    movement = new ChessMove(piece, Chessboard.fromAlgebraic('a4')!);
+    movement.permit({ priority: 1 });;
     movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
   });
 
   it('Does not deny a piece from moving onto another piece at the end of a move through open space', () => {
-    let movement = piece.move({ to: (Chessboard.fromAlgebraic('c3') as Vector), metadata: { playerMovement: true } });
+    let movement = new ChessMove(piece, Chessboard.fromAlgebraic('c3')!);
+    movement.permit({ priority: 1 });;
     movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('a3') as Vector), metadata: { playerMovement: true } });
+    movement = new ChessMove(piece, Chessboard.fromAlgebraic('a3')!);
+    movement.permit({ priority: 1 });;
     movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('b8') as Vector), metadata: { playerMovement: true } });
+    movement = new ChessMove(piece, Chessboard.fromAlgebraic('b8')!);
+    movement.permit({ priority: 1 });;
     movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;
   });
 
   it('Stops a piece from moving through other pieces to get to destination', () => {
-    let movement = piece.move({ to: (Chessboard.fromAlgebraic('d3') as Vector), metadata: { playerMovement: true } });
+    let movement = new ChessMove(piece, Chessboard.fromAlgebraic('d3')!);
     movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('e3') as Vector), metadata: { playerMovement: true } });
+    movement = new ChessMove(piece, Chessboard.fromAlgebraic('e3')!);
     movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;
-    movement = piece.move({ to: (Chessboard.fromAlgebraic('f7') as Vector), metadata: { playerMovement: true } });
+    movement = new ChessMove(piece, Chessboard.fromAlgebraic('f7')!);
     movementComponent.permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;

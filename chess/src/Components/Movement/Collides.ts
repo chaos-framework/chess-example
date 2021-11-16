@@ -1,5 +1,6 @@
 import { Action, Component, MoveAction } from '@chaos-framework/core';
 
+import ChessMove from '../../Actions/ChessMove';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
 // Disallows movement if a piece is BETWEEN the target and its destination
@@ -7,7 +8,7 @@ export default class Collides extends Component {
   name = "Collides";
 
   permit(action: Action) {
-    if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
+    if (action instanceof ChessMove && action.target === this.parent) {
       const { target, to } = action;
       if (target.world === undefined) {
         return;

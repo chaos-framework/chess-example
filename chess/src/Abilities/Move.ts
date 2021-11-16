@@ -2,6 +2,7 @@ import { Entity, Ability, Event, OptionalCastParameters, Vector } from '@chaos-f
 
 import Chessboard from '../Worlds/Chessboard';
 import { SimpleEvent } from '../Events/SimpleEvent';
+import ChessMove from '../Actions/ChessMove';
 
 export interface MoveParams {
   to: Vector
@@ -28,7 +29,7 @@ export default class Move extends Ability {
       return "Move would be out of bounds!";
     }
     return new SimpleEvent([
-      target.move({ caster, to, metadata: { playerMovement: true} }).deniedByDefault()
+      new ChessMove(target, to, 0, { caster })
     ]);
   }
 

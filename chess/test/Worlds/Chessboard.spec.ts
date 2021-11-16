@@ -16,28 +16,6 @@ describe('Chessboard', () => {
     expect(board.getTile(7, 0)).to.equal(Tile.BLACK);
     expect(board.getTile(7, 1)).to.equal(Tile.WHITE);
     expect(board.getTile(7, 7)).to.equal(Tile.WHITE);
-
-    // Gap between board and capture spot
-    expect(board.getTile(8,0)).to.equal(Tile.EMPTY);
-
-    // Spaces for captured pieces should be on the right, first for white team's captures, then black
-    expect(board.getTile(9,0)).to.equal(Tile.WHITE);
-    expect(board.getTile(9,7)).to.equal(Tile.WHITE);
-    expect(board.getTile(11,0)).to.equal(Tile.BLACK);
-    expect(board.getTile(11,7)).to.equal(Tile.BLACK);
-  });
-
-  it('Gives capture slots correctly', () => {
-    expect(Chessboard.getCaptureSlot('WHITE', 0).equals(new Vector(9, 0))).to.be.true;
-    expect(Chessboard.getCaptureSlot('WHITE', 1).equals(new Vector(9, 1))).to.be.true;
-    expect(Chessboard.getCaptureSlot('WHITE', 7).equals(new Vector(9, 7))).to.be.true;
-    expect(Chessboard.getCaptureSlot('WHITE', 8).equals(new Vector(10, 0))).to.be.true;
-    expect(Chessboard.getCaptureSlot('WHITE', 15).equals(new Vector(10, 7))).to.be.true;
-    expect(Chessboard.getCaptureSlot('BLACK', 0).equals(new Vector(11, 0))).to.be.true;
-    expect(Chessboard.getCaptureSlot('BLACK', 1).equals(new Vector(11, 1))).to.be.true;
-    expect(Chessboard.getCaptureSlot('BLACK', 7).equals(new Vector(11, 7))).to.be.true;
-    expect(Chessboard.getCaptureSlot('BLACK', 8).equals(new Vector(12, 0))).to.be.true;
-    expect(Chessboard.getCaptureSlot('BLACK', 15).equals(new Vector(12, 7))).to.be.true;
   });
 
   describe('Algebraic notation', () => {

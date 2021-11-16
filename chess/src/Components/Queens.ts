@@ -1,8 +1,8 @@
 import { Component, Action, MoveAction, TerminalMessage, Entity, LogicalAction, UnpublishEntityAction, PublishEntityAction } from '@chaos-framework/core';
 
 import * as Chess from '../Chess';
+import ChessMove from '../Actions/ChessMove';
 import Queen from '../Entities/Pieces/Queen';
-import MovementPermissionPriority from '../Enums/MovementPermissionPriority';
 import ChessTeam from '../Enums/Teams';
 import Chessboard from '../Worlds/Chessboard';
 
@@ -12,13 +12,7 @@ export default class Queens extends Component {
   
   react(action: Action) {
     // Send out queening message if appropirate
-    if (
-      action instanceof MoveAction &&
-      action.applied &&
-      action.target === this.parent &&
-      action.tagged('playerMovement') &&
-      action.target.world instanceof Chessboard
-      ) {
+    if (action instanceof ChessMove && action.target === this.parent && action.applied && action.target.world instanceof Chessboard) {
       const { target, to } = action;
       // Make sure the target has a team
       if (target.team === undefined) {

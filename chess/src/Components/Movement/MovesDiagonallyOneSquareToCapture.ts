@@ -1,6 +1,7 @@
 import { Action, Component, MoveAction } from '@chaos-framework/core';
 
 import * as Chess from'../..';
+import ChessMove from '../../Actions/ChessMove';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 import ChessTeam from '../../Enums/Teams';
 import EnPassant from '../Combat/EnPassant';
@@ -9,7 +10,7 @@ export default class MovesDiagonallyOneSquareToCapture extends Component {
   name = "Moves Diagonally One Square To Capture"
 
   permit(action: Action) {
-    if (action instanceof MoveAction && action.target === this.parent && action.tagged('playerMovement')) {
+    if (action instanceof ChessMove && action.target === this.parent) {
       const { target, to } = action;
       // Make sure the target has a team
       if (target.team === undefined || target.world === undefined) {
