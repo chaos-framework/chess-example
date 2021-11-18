@@ -27,7 +27,7 @@ export function isInCheck(board: World, piece: Entity, depth = 0): boolean {
   return false;
 }
 
-export function isInCheckmate(board: Chessboard, piece: Entity, attacker: Entity, depth = 0): boolean {
+export function isInCheckmate(board: World, piece: Entity, attacker: Entity, depth = 0): boolean {
   // See if the piece can move anywhere to break the check, including capturing the attacker
   for (let x = 0; x < 8; x++) {
     for (let y = 0; y < 8; y++) {

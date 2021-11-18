@@ -37,7 +37,8 @@ export default class Queens extends Component {
       // Queen the piece
       const queen = Queen(this.parent.team!);
       action.followup(this.parent.unpublish());
-      action.followup(queen.publish({ world: this.parent.world!, position: this.parent.position }));
+      action.followup(queen.publish({ world: this.parent.world!, position: this.parent.position })
+        .withMessage(this.parent, 'has turned into', queen));
       return;
     }
   }

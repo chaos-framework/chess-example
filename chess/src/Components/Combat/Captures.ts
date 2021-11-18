@@ -3,9 +3,8 @@ import * as Chess from"../..";
 import Capture from '../../Actions/Capture';
 import ChessMove from '../../Actions/ChessMove';
 import ChessTeam from '../../Enums/Teams';
-import Chessboard from "../../Worlds/Chessboard";
 
-// Gets captures when landing on an enemy piece
+// Captures when landing on an enemy piece
 export default class Captures extends Component {
   name = 'Captures';
 

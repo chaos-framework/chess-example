@@ -12,10 +12,11 @@ export default class ChessMove extends MoveAction {
   }
 
   generateMessage() {
-    if (this.captured !== null) {
+    if (this.captured !== undefined) {
       this.terminalMessage = new TerminalMessage(this.target, 'at', Chessboard.toAlgebraic(this.from), 'captured', this.captured, 'at', Chessboard.toAlgebraic(this.to) || "a strange place");
     } else {
-      this.terminalMessage = new TerminalMessage(this.target, 'at', Chessboard.toAlgebraic(this.from), 'moved to', Chessboard.toAlgebraic(this.to) || "a strange place");
+      this.terminalMessage = new TerminalMessage(this.target, 'at', Chessboard.toAlgebraic(this.from) || "a strange place", 'moved to', Chessboard.toAlgebraic(this.to) || "a strange place");
     }
+    super.generateMessage();
   }
 }

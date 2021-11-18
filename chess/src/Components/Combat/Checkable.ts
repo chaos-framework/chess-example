@@ -37,7 +37,9 @@ export default class Checkable extends Component {
           if (!piece.has('Checked') && piece.world !== undefined && isInCheck(piece.world as Chessboard , piece)) {
             // Put in check
             const by = action instanceof MoveAction ? action.target : action.entity;
-            action.followup(piece.attach({ component: new Checked(by), caster: action.target }));
+            const component = new Checked(by);
+            action.followup(piece.attach({ component, caster: action.target })
+              .withMessage(this.parent, 'was', component, 'by', by));
           }
         }
       }

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
 
-import { Entity, Chaos, Team } from '@chaos-framework/core';
+import { Entity, Chaos, Team, Vector, MoveAction } from '@chaos-framework/core';
 
 import * as Chess from'../../src';
 import Chessboard from '../../src/Worlds/Chessboard';
@@ -28,7 +28,7 @@ describe('Checking', function() {
       friendlyQueen = Queen(whiteTeam);
       enemyQueen = Queen(blackTeam);
     });
-
+    
     it('Checkable pieces are put in check if an enemy piece can capture it with one more move', function() {
       checkableKing._publish(board, Chessboard.fromAlgebraic('a1')!);
       friendlyQueen._publish(board, Chessboard.fromAlgebraic('b2')!);

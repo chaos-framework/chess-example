@@ -42,8 +42,10 @@ export default class Checked extends Component {
     // Check for checkmate when applied
     if (action instanceof AttachComponentAction && action.component === this) {
       // See if we're in checkmate
-      if(isInCheckmate(action.target.world! as Chessboard, action.target, this.by)) {
-        action.react(new AttachComponentAction({ caster: this.by, target: action.target, component: new Checkmated }));
+      if(isInCheckmate(action.target.world!, action.target, this.by)) {
+        const component = new Checkmated;
+        action.react(new AttachComponentAction({ caster: this.by, target: action.target, component })
+          .withMessage(this.parent as Entity, 'was', component));
       }
     }
     // Remove self if the piece is out of check
