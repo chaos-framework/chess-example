@@ -95,8 +95,11 @@ export function initialize(options: any = {}) {
     const blackAI = new StandardAI(2, true, 300);
     teams['WHITE'].components.addComponent(whiteAI);
     teams['BLACK'].components.addComponent(blackAI);
-    new LogicalAction('GAME_START', { firstTeam: teams['WHITE'] }).execute();
   }
+}
+
+export function play(): void {
+  new LogicalAction('GAME_START', { firstTeam: teams['WHITE'] }).execute();
 }
 
 export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {
