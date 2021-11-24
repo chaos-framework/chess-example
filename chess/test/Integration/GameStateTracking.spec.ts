@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import 'mocha';
-
 import { Chaos } from '@chaos-framework/core';
-import * as Chess from'../../src';
-import { board } from '../../src/Chess';
+
+import * as Chess from'../../src/Chess.js';
+const { board } = Chess;
 
 describe('Chessboard position export', function() {
   beforeEach(() => {

@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 import 'mocha';
-
 import { Entity, Team, Vector } from '@chaos-framework/core';
-import Chessboard from '../../../src/Worlds/Chessboard';
-import MovesDiagonallyOneSquareToCapture from '../../../src/Components/Movement/MovesDiagonallyOneSquareToCapture';
-import ChessMove from '../../../src/Actions/ChessMove';
+
+import Chessboard from '../../../src/Worlds/Chessboard.js';
+import MovesDiagonallyOneSquareToCapture from '../../../src/Components/Movement/MovesDiagonallyOneSquareToCapture.js';
+import ChessMove from '../../../src/Actions/ChessMove.js';
 
 describe('Pawn Movement -- Diagonal Capture', () => {
   let board: Chessboard

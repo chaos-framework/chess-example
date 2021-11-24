@@ -1,16 +1,13 @@
 import { Entity, Team } from '@chaos-framework/core';
 
-
-import { generateCommonComponents } from './_common';
-import MovesOneSquareForward from '../../Components/Movement/MovesOneSquareForward';
-import MovesDiagonallyOneSquareToCapture from '../../Components/Movement/MovesDiagonallyOneSquareToCapture';
-import MovesTwoSpacesForwardOnFirstMovement from '../../Components/Movement/MovesTwoSpacesForwardOnFirstMovement';
-import Collides from '../../Components/Movement/Collides';
-import Queens from '../../Components/Queens';
-
-import Move from '../../Abilities/Move';
-
-import Piece from '../../Enums/Piece';
+import { generateCommonComponents } from './_common.js';
+import MovesOneSquareForward from '../../Components/Movement/MovesOneSquareForward.js';
+import MovesDiagonallyOneSquareToCapture from '../../Components/Movement/MovesDiagonallyOneSquareToCapture.js';
+import MovesTwoSpacesForwardOnFirstMovement from '../../Components/Movement/MovesTwoSpacesForwardOnFirstMovement.js';
+import Collides from '../../Components/Movement/Collides.js';
+import Queens from '../../Components/Queens.js';
+import Move from '../../Abilities/Move.js';
+import Piece from '../../Enums/Piece.js';
 
 const Pawn = (team: Team): Entity => {
   const name = `${team.name} Pawn`;

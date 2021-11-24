@@ -1,7 +1,7 @@
-import { Action, Component, MoveAction } from '@chaos-framework/core';
-import ChessMove from '../../Actions/ChessMove';
+import { Action, Component } from '@chaos-framework/core';
 
-import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
+import ChessMove from '../../Actions/ChessMove.js';
+import MovementPermissionPriority from '../../Enums/MovementPermissionPriority.js';
 
 // Disallows movement if landing on your own piece
 export default class CannotLandOnTeam extends Component {

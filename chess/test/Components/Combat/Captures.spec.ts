@@ -3,10 +3,10 @@ import 'mocha';
 
 import { Entity, Vector, MoveAction, Chaos, Team } from '@chaos-framework/core';
 
-import Chessboard from '../../../src/Worlds/Chessboard';
-import Captures from '../../../src/Components/Combat/Captures';
-import ChessMove from '../../../src/Actions/ChessMove';
-import Capture from '../../../src/Actions/Capture';
+import Chessboard from '../../../src/Worlds/Chessboard.js';
+import Captures from '../../../src/Components/Combat/Captures.js';
+import ChessMove from '../../../src/Actions/ChessMove.js';
+import Capture from '../../../src/Actions/Capture.js';
 
 describe('Capturing', () => {
   let board: Chessboard

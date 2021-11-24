@@ -1,12 +1,13 @@
-import { Component, Action, MoveAction, TerminalMessage, Entity, MessageAction, LogicalAction } from '@chaos-framework/core';
+import { Component, Action } from '@chaos-framework/core';
+
 import * as Chess from"../..";
-import Capture from '../../Actions/Capture';
-import ChessMove from '../../Actions/ChessMove';
-import ChessTeam from '../../Enums/Teams';
+import Capture from '../../Actions/Capture.js';
+import ChessMove from '../../Actions/ChessMove.js';
+import ChessTeam from '../../Enums/Teams.js';
 
 // Captures when landing on an enemy piece
 export default class Captures extends Component {
-  name = 'Captures';
+  name = 'Captures.js';
 
   capture(action: Action) {
     if (

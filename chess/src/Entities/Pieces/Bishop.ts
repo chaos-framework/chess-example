@@ -1,10 +1,9 @@
 import { Entity, Team } from '@chaos-framework/core';
 
-import Piece from '../../Enums/Piece';
-import Move from '../../Abilities/Move';
-import { generateCommonComponents } from './_common';
-import Collides from '../../Components/Movement/Collides';
-import MovesDiagonally from '../../Components/Movement/MovesDiagonally';
+import Move from '../../Abilities/Move.js';
+import { generateCommonComponents } from './_common.js';
+import Collides from '../../Components/Movement/Collides.js';
+import MovesDiagonally from '../../Components/Movement/MovesDiagonally.js';
 
 const Bishop = (team: Team): Entity => {
   const name = `${team.name} Bishop`;

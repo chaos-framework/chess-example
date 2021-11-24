@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import 'mocha';
-
 import { Entity, Team, Vector } from '@chaos-framework/core';
-import Chessboard from '../../../src/Worlds/Chessboard';
-import MovesOneSquareForward from '../../../src/Components/Movement/MovesOneSquareForward';
-import Teams from '../../../src/Enums/Teams';
-import ChessMove from '../../../src/Actions/ChessMove';
+
+import Chessboard from '../../../src/Worlds/Chessboard.js';
+import MovesOneSquareForward from '../../../src/Components/Movement/MovesOneSquareForward.js';
+import Teams from '../../../src/Enums/Teams.js';
+import ChessMove from '../../../src/Actions/ChessMove.js';
 
 describe('Pawn Movement -- Front Square', () => {
   let board: Chessboard;

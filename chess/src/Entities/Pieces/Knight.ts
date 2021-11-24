@@ -1,9 +1,9 @@
 import { Entity, Team } from '@chaos-framework/core';
 
-import Piece from '../../Enums/Piece';
-import Move from '../../Abilities/Move';
-import { generateCommonComponents } from './_common';
-import KnightMovement from '../../Components/Movement/KnightMovement';
+import Piece from '../../Enums/Piece.js';
+import Move from '../../Abilities/Move.js';
+import { generateCommonComponents } from './_common.js';
+import KnightMovement from '../../Components/Movement/KnightMovement.js';
 
 const Knight = (team: Team): Entity => {
   const name = `${team.name} Knight`;

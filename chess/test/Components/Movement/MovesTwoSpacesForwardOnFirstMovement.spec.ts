@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 import 'mocha';
-
 import { Entity, Team, Vector } from '@chaos-framework/core';
-import Chessboard from '../../../src/Worlds/Chessboard';
-import MovesTwoSpacesForwardOnFirstMovement from '../../../src/Components/Movement/MovesTwoSpacesForwardOnFirstMovement';
-import ChessMove from '../../../src/Actions/ChessMove';
+
+import Chessboard from '../../../src/Worlds/Chessboard.js';
+import MovesTwoSpacesForwardOnFirstMovement from '../../../src/Components/Movement/MovesTwoSpacesForwardOnFirstMovement.js';
+import ChessMove from '../../../src/Actions/ChessMove.js';
 
 describe('Moving two spaces forward on first move', () => {
   let board: Chessboard

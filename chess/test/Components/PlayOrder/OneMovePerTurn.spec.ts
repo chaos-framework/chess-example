@@ -1,10 +1,9 @@
 import 'mocha';
 import { expect } from 'chai';
+import { Chaos, Entity, MoveAction, Team, Vector } from '@chaos-framework/core';
 
-import { Chaos, Entity, LogicalAction, MoveAction, Team, Vector } from '@chaos-framework/core';
-
-import OneMovePerTurn from '../../../src/Components/PlayOrder/OneMovePerTurn';
-import ChessMove from '../../../src/Actions/ChessMove';
+import OneMovePerTurn from '../../../src/Components/PlayOrder/OneMovePerTurn.js';
+import ChessMove from '../../../src/Actions/ChessMove.js';
 
 describe('Each team gets one move per turn', () => {
   const firstTeam = new Team();

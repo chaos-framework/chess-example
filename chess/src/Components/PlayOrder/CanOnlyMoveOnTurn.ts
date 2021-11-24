@@ -1,6 +1,6 @@
-import { Component, Action, MoveAction, Team, Chaos } from '@chaos-framework/core'
+import { Component, Action, Chaos } from '@chaos-framework/core'
 
-import ChessMove from '../../Actions/ChessMove';
+import ChessMove from '../../Actions/ChessMove.js';
 import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
 
 // Only allows player movement during the team's turn

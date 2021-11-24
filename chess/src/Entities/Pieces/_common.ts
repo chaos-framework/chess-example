@@ -1,9 +1,9 @@
 import { Component } from '@chaos-framework/core'
 
-import Captures from '../../Components/Combat/Captures';
-import CannotLandOnTeam from '../../Components/Movement/CannotLandOnTeam';
-import CountsMovements from '../../Components/Movement/CountsMovements';
-import HasToMoveAtLeastOneSpace from '../../Components/Movement/HasToMoveAtLeastOneSpace';
+import Captures from '../../Components/Combat/Captures.js';
+import CannotLandOnTeam from '../../Components/Movement/CannotLandOnTeam.js';
+import CountsMovements from '../../Components/Movement/CountsMovements.js';
+import HasToMoveAtLeastOneSpace from '../../Components/Movement/HasToMoveAtLeastOneSpace.js';
 
 export function generateCommonComponents(): Component[] {
   return [

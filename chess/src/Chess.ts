@@ -1,16 +1,15 @@
-import { ChangeTurnAction, Chaos, Component, CONNECTION, CONNECTION_RESPONSE, Entity, LogicalAction, Player, Team, Vector } from '@chaos-framework/core';
+import { ChangeTurnAction, Chaos, Component, CONNECTION, CONNECTION_RESPONSE, Entity, LogicalAction, Player, Team, Vector } from '@chaos-framework/core.js.js.js';
 
-import ChessBoard from './Worlds/Chessboard';
-import Chessboard from './Worlds/Chessboard';
-import OneMovePerTurn from './Components/PlayOrder/OneMovePerTurn';
-import StandardStateTracker from './Components/Logical/StandardStateTracker';
-import Pawn from './Entities/Pieces/Pawn';
-import Bishop from './Entities/Pieces/Bishop';
-import Rook from './Entities/Pieces/Rook';
-import Knight from './Entities/Pieces/Knight';
-import Queen from './Entities/Pieces/Queen';
-import King from './Entities/Pieces/King';
-import StandardAI from './Components/Logical/StandardAI';
+import Chessboard from './Worlds/Chessboard.js';
+import OneMovePerTurn from './Components/PlayOrder/OneMovePerTurn.js';
+import StandardStateTracker from './Components/Logical/StandardStateTracker.js';
+import Pawn from './Entities/Pieces/Pawn.js';
+import Bishop from './Entities/Pieces/Bishop.js';
+import Rook from './Entities/Pieces/Rook.js';
+import Knight from './Entities/Pieces/Knight.js';
+import Queen from './Entities/Pieces/Queen.js';
+import King from './Entities/Pieces/King.js';
+import StandardAI from './Components/Logical/StandardAI.js';
 
 Chaos.id = 'Chess';
 Chaos.setPhases(

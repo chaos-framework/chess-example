@@ -1,14 +1,14 @@
-import { Component, Action, MoveAction, Entity, PublishEntityAction, LogicalAction } from '@chaos-framework/core';
+import { Component, Action, MoveAction, Entity, PublishEntityAction } from '@chaos-framework/core';
 
-import { isInCheck, movementWillResultInCheck } from '../../Util/CheckQueries';
-import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
-import Checked from './Checked';
-import Chessboard from '../../Worlds/Chessboard';
-import ChessMove from '../../Actions/ChessMove';
+import { isInCheck, movementWillResultInCheck } from '../../Util/CheckQueries.js';
+import MovementPermissionPriority from '../../Enums/MovementPermissionPriority.js';
+import Checked from './Checked.js';
+import Chessboard from '../../Worlds/Chessboard.js';
+import ChessMove from '../../Actions/ChessMove.js';
 
 // Stops friendly pieces from moving in a way that would check this piece, and applies Checked when done so by enemy
 export default class Checkable extends Component {
-  name = 'Checkable';
+  name = 'Checkable.js';
 
   // Don't allow any friendly movement that would cause a check
   permit(action: Action) {

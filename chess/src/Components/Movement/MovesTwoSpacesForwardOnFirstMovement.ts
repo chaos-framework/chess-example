@@ -1,11 +1,11 @@
-import { Action, Component, MoveAction } from '@chaos-framework/core';
+import { Action, Component } from '@chaos-framework/core';
 
-import * as Chess from '../../Chess';
-import ChessMove from '../../Actions/ChessMove';
-import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
-import ChessTeam from '../../Enums/Teams';
-import Chessboard from '../../Worlds/Chessboard';
-import EnPassant from '../Combat/EnPassant';
+import * as Chess from '../../Chess.js';
+import ChessMove from '../../Actions/ChessMove.js';
+import MovementPermissionPriority from '../../Enums/MovementPermissionPriority.js';
+import ChessTeam from '../../Enums/Teams.js';
+import Chessboard from '../../Worlds/Chessboard.js';
+import EnPassant from '../Combat/EnPassant.js';
 
 // Allows a pawn to move two spaces forward on it's first move, also applying the en passant component if successful
 export default class MovesTwoSpacesForwardOnFirstMovement extends Component {

@@ -3,10 +3,10 @@ import 'mocha';
 
 import { Entity, Chaos, Team, Vector } from '@chaos-framework/core';
 
-import Pawn from '../../src/Entities/Pieces/Pawn';
-import Chessboard from '../../src/Worlds/Chessboard';
-import King from '../../src/Entities/Pieces/King';
-import ChessMove from '../../src/Actions/ChessMove';
+import Pawn from '../../src/Entities/Pieces/Pawn.js';
+import Chessboard from '../../src/Worlds/Chessboard.js';
+import King from '../../src/Entities/Pieces/King.js';
+import ChessMove from '../../src/Actions/ChessMove.js';
 
 describe('Queening', () => {
   let board: Chessboard;

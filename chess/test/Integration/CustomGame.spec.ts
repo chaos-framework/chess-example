@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import 'mocha';
-
 import { Chaos } from '@chaos-framework/core';
-import Chessboard from '../../src/Worlds/Chessboard';
+
+import Chessboard from '../../src/Worlds/Chessboard.js';
 
 describe('Chessboard custom game setup from string', function() {
   this.beforeEach(function() {

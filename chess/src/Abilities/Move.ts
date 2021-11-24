@@ -1,8 +1,8 @@
 import { Entity, Ability, Event, OptionalCastParameters, Vector } from '@chaos-framework/core';
 
-import Chessboard from '../Worlds/Chessboard';
-import { SimpleEvent } from '../Events/SimpleEvent';
-import ChessMove from '../Actions/ChessMove';
+import Chessboard from '../Worlds/Chessboard.js';
+import { SimpleEvent } from '../Events/SimpleEvent.js';
+import ChessMove from '../Actions/ChessMove.js';
 
 export interface MoveParams {
   to: Vector

@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import 'mocha';
 
 import { Entity, Vector } from '@chaos-framework/core';
-import Chessboard from '../../../src/Worlds/Chessboard';
-import CountsMovements from '../../../src/Components/Movement/CountsMovements';
-import ChessMove from '../../../src/Actions/ChessMove';
+import Chessboard from '../../../src/Worlds/Chessboard.js';
+import CountsMovements from '../../../src/Components/Movement/CountsMovements.js';
+import ChessMove from '../../../src/Actions/ChessMove.js';
 
 describe('Counts Movements', () => {
   let board: Chessboard

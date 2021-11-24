@@ -1,5 +1,6 @@
 import { ActionParameters, Entity, MoveAction, TerminalMessage, Vector } from '@chaos-framework/core';
-import Chessboard from '../Worlds/Chessboard';
+
+import Chessboard from '../Worlds/Chessboard.js';
 
 export default class ChessMove extends MoveAction {
   enPassant = false;

@@ -1,6 +1,6 @@
-import { Component, Action, MoveAction, Team, ChangeTurnAction, LogicalAction } from '@chaos-framework/core'
+import { Component, Action, Team, ChangeTurnAction } from '@chaos-framework/core'
 
-import ChessMove from '../../Actions/ChessMove';
+import ChessMove from '../../Actions/ChessMove.js';
 
 // Changes the turn to the next team after each move
 export default class OneMovePerTurn extends Component {

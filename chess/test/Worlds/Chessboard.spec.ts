@@ -3,8 +3,8 @@ import 'mocha';
 
 import { Vector } from '@chaos-framework/core';
 
-import Chessboard from '../../src/Worlds/Chessboard';
-import Tile from '../../src/Enums/Tile';
+import Chessboard from '../../src/Worlds/Chessboard.js';
+import Tile from '../../src/Enums/Tile.js';
 
 describe('Chessboard', () => {
   const board = new Chessboard();

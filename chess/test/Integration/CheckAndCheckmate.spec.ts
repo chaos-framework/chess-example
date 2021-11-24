@@ -1,14 +1,12 @@
 import { expect } from 'chai';
 import 'mocha';
+import { Entity, Chaos, Team } from '@chaos-framework/core';
 
-import { Entity, Chaos, Team, Vector, MoveAction } from '@chaos-framework/core';
-
-import * as Chess from'../../src';
-import Chessboard from '../../src/Worlds/Chessboard';
-import Queen from '../../src/Entities/Pieces/Queen';
-import King from '../../src/Entities/Pieces/King';
-import Checked from '../../src/Components/Combat/Checked';
-import ChessMove from '../../src/Actions/ChessMove';
+import Chessboard from '../../src/Worlds/Chessboard.js';
+import Queen from '../../src/Entities/Pieces/Queen.js';
+import King from '../../src/Entities/Pieces/King.js';
+import Checked from '../../src/Components/Combat/Checked.js';
+import ChessMove from '../../src/Actions/ChessMove.js';
 
 describe('Checking', function() {
   beforeEach(function() { 

@@ -3,9 +3,9 @@ import 'mocha';
 
 import { Entity, Vector, Chaos, Team, LogicalAction } from '@chaos-framework/core';
 
-import Queens from '../../src/Components/Queens';
-import Chessboard from '../../src/Worlds/Chessboard';
-import ChessMove from '../../src/Actions/ChessMove';
+import Queens from '../../src/Components/Queens.js';
+import Chessboard from '../../src/Worlds/Chessboard.js';
+import ChessMove from '../../src/Actions/ChessMove.js';
 
 describe('Queens', () => {
   let pawn: Entity;

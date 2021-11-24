@@ -3,9 +3,9 @@ import 'mocha';
 
 import { Entity, Vector } from '@chaos-framework/core';
 
-import Chessboard from '../../../src/Worlds/Chessboard';
-import MovesDiagonally from '../../../src/Components/Movement/MovesDiagonally';
-import ChessMove from '../../../src/Actions/ChessMove';
+import Chessboard from '../../../src/Worlds/Chessboard.js';
+import MovesDiagonally from '../../../src/Components/Movement/MovesDiagonally.js';
+import ChessMove from '../../../src/Actions/ChessMove.js';
 
 describe('Diagonal Movement', () => {
   let board: Chessboard

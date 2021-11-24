@@ -3,9 +3,8 @@ import 'mocha';
 
 import { Chaos, MoveAction } from '@chaos-framework/core';
 
-import * as Chess from'../../src';
-import StandardAI from '../../src/Components/Logical/StandardAI';
-import { delay } from 'lodash';
+import * as Chess from'../../src/Chess.js';
+import StandardAI from '../../src/Components/Logical/StandardAI.js';
 
 describe('AI', function() {
   let whiteAI: StandardAI;

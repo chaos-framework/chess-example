@@ -1,7 +1,6 @@
 import { Entity, Team, Vector, World } from '@chaos-framework/core';
-import ChessMove from '../Actions/ChessMove';
 
-import Chessboard from '../Worlds/Chessboard';
+import ChessMove from '../Actions/ChessMove.js';
 
 export function movementWillResultInCheck(board: World, checkablePiece: Entity, movingPiece: Entity, to: Vector, depth = 0) {
   // Temporarily move the piece to the location and test if the piece is in check

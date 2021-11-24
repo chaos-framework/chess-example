@@ -1,11 +1,10 @@
 import { expect } from 'chai';
 import 'mocha';
-
 import { Entity, Vector } from '@chaos-framework/core';
 
-import Chessboard from '../../../src/Worlds/Chessboard';
-import MovesOneSquareAnyDirection from '../../../src/Components/Movement/MovesOneSquareAnyDirection';
-import ChessMove from '../../../src/Actions/ChessMove';
+import Chessboard from '../../../src/Worlds/Chessboard.js';
+import MovesOneSquareAnyDirection from '../../../src/Components/Movement/MovesOneSquareAnyDirection.js';
+import ChessMove from '../../../src/Actions/ChessMove.js';
 
 describe('Moves One Square in Any Direction', () => {
   let board: Chessboard

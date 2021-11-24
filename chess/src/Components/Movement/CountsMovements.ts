@@ -1,6 +1,6 @@
-import { Action, Component,  MoveAction } from '@chaos-framework/core';
+import { Action, Component } from '@chaos-framework/core';
 
-import ChessMove from '../../Actions/ChessMove';
+import ChessMove from '../../Actions/ChessMove.js';
 
 // Forces a piece to move off its current tile if moving at all
 export default class CountsMovements extends Component {

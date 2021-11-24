@@ -1,14 +1,14 @@
 import { Component, Action, MoveAction, TerminalMessage, Entity, LogicalAction, UnpublishEntityAction, PublishEntityAction } from '@chaos-framework/core';
 
-import * as Chess from '../Chess';
-import ChessMove from '../Actions/ChessMove';
-import Queen from '../Entities/Pieces/Queen';
-import ChessTeam from '../Enums/Teams';
-import Chessboard from '../Worlds/Chessboard';
+import * as Chess from '../Chess.js';
+import ChessMove from '../Actions/ChessMove.js';
+import Queen from '../Entities/Pieces/Queen.js';
+import ChessTeam from '../Enums/Teams.js';
+import Chessboard from '../Worlds/Chessboard.js';
 
 export default class Queens extends Component {
-  name = 'Queens';
-  description = 'Automatically turns into a Queen upon reaching the far end of the board.';
+  name = 'Queens.js';
+  description = 'Automatically turns into a Queen upon reaching the far end of the board..js';
   
   react(action: Action) {
     // Send out queening message if appropirate

@@ -1,13 +1,11 @@
 import { Entity, Team } from '@chaos-framework/core';
 
-import Piece from '../../Enums/Piece';
-
-import { generateCommonComponents } from './_common';
-import Collides from '../../Components/Movement/Collides';
-import MovesOneSquareAnyDirection from '../../Components/Movement/MovesOneSquareAnyDirection';
-import Checkable from '../../Components/Combat/Checkable';
-
-import Move from '../../Abilities/Move';
+import Piece from '../../Enums/Piece.js';
+import { generateCommonComponents } from './_common.js';
+import Collides from '../../Components/Movement/Collides.js';
+import MovesOneSquareAnyDirection from '../../Components/Movement/MovesOneSquareAnyDirection.js';
+import Checkable from '../../Components/Combat/Checkable.js';
+import Move from '../../Abilities/Move.js';
 
 const King = (team: Team): Entity => {
   const name = `${team.name} King`;

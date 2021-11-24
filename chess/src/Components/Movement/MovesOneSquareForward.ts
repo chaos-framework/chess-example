@@ -1,9 +1,9 @@
 import { Action, Component, MoveAction } from '@chaos-framework/core';
 
-import * as Chess from'../..';
-import ChessMove from '../../Actions/ChessMove';
-import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
-import ChessTeam from '../../Enums/Teams';
+import * as Chess from'../../Chess.js';
+import ChessMove from '../../Actions/ChessMove.js';
+import MovementPermissionPriority from '../../Enums/MovementPermissionPriority.js';
+import ChessTeam from '../../Enums/Teams.js';
 
 export default class MovesOneSquareForward extends Component {
   name = "Moves One Square Forward"

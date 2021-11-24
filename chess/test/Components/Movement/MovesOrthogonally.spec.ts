@@ -1,11 +1,10 @@
 import { expect } from 'chai';
 import 'mocha';
-
 import { Entity, Vector } from '@chaos-framework/core';
 
-import Chessboard from '../../../src/Worlds/Chessboard';
-import MovesOrthogonally from '../../../src/Components/Movement/MovesOrthogonally';
-import ChessMove from '../../../src/Actions/ChessMove';
+import Chessboard from '../../../src/Worlds/Chessboard.js';
+import MovesOrthogonally from '../../../src/Components/Movement/MovesOrthogonally.js';
+import ChessMove from '../../../src/Actions/ChessMove.js';
 
 describe('Orthogonal Movement', () => {
   let board: Chessboard

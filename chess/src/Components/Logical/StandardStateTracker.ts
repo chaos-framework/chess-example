@@ -1,17 +1,17 @@
-import { Action, AttachComponentAction, ChangeTurnAction, Component, DetachComponentAction, LogicalAction, MoveAction, Team } from '@chaos-framework/core';
+import { Action, AttachComponentAction, ChangeTurnAction, Component, DetachComponentAction, Team } from '@chaos-framework/core';
 
-import * as Chess from'../..';
-import Capture from '../../Actions/Capture';
-import ChessMove from '../../Actions/ChessMove';
-import Piece from '../../Enums/Piece';
-import Chessboard from '../../Worlds/Chessboard';
-import Checked from '../Combat/Checked';
-import Checkmated from '../Combat/Checkmated';
-import EnPassant from '../Combat/EnPassant';
+import * as Chess from'../../Chess.js';
+import Capture from '../../Actions/Capture.js';
+import ChessMove from '../../Actions/ChessMove.js';
+import Piece from '../../Enums/Piece.js';
+import Chessboard from '../../Worlds/Chessboard.js';
+import Checked from '../Combat/Checked.js';
+import Checkmated from '../Combat/Checkmated.js';
+import EnPassant from '../Combat/EnPassant.js';
 
 // Stores some basic state for use with any third-party chess engines / AIs
 export default class StandardStateTracker extends Component {
-  name = 'Standard Chess State Tracker';
+  name = 'Standard Chess State Tracker.js';
 
   pawnMovementOrCaptureThisTurn = false;
 

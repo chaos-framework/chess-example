@@ -1,14 +1,13 @@
-import { Component, Action, MoveAction, Entity, AttachComponentAction, LogicalAction } from '@chaos-framework/core';
+import { Component, Action, Entity, AttachComponentAction } from '@chaos-framework/core';
 
-import { isInCheck, isInCheckmate, movementWillResultInCheck } from '../../Util/CheckQueries';
-import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
-import Chessboard from '../../Worlds/Chessboard';
-import Checkmated from './Checkmated';
-import ChessMove from '../../Actions/ChessMove';
+import { isInCheck, isInCheckmate, movementWillResultInCheck } from '../../Util/CheckQueries.js';
+import MovementPermissionPriority from '../../Enums/MovementPermissionPriority.js';
+import Checkmated from './Checkmated.js';
+import ChessMove from '../../Actions/ChessMove.js';
 
 export default class Checked extends Component {
   name = 'Checked';
-  description = 'Can be put in check by an enemy piece';
+  description = 'Can be put in check by an enemy piece.js';
 
   constructor(public by: Entity) {
     super();

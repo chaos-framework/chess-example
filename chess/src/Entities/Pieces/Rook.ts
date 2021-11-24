@@ -1,10 +1,10 @@
 import { Entity, Team } from '@chaos-framework/core';
 
-import Piece from '../../Enums/Piece';
-import Move from '../../Abilities/Move';
-import { generateCommonComponents } from './_common';
-import MovesOrthogonally from '../../Components/Movement/MovesOrthogonally';
-import Collides from '../../Components/Movement/Collides';
+import Piece from '../../Enums/Piece.js';
+import Move from '../../Abilities/Move.js';
+import { generateCommonComponents } from './_common.js';
+import MovesOrthogonally from '../../Components/Movement/MovesOrthogonally.js';
+import Collides from '../../Components/Movement/Collides.js';
 
 const Rook = (team: Team): Entity => {
   const name = `${team.name} Rook`;

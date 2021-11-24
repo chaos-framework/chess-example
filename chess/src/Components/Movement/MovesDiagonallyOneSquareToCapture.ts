@@ -1,10 +1,10 @@
-import { Action, Component, MoveAction } from '@chaos-framework/core';
+import { Action, Component } from '@chaos-framework/core';
 
-import * as Chess from'../..';
-import ChessMove from '../../Actions/ChessMove';
-import MovementPermissionPriority from '../../Enums/MovementPermissionPriority';
-import ChessTeam from '../../Enums/Teams';
-import EnPassant from '../Combat/EnPassant';
+import * as Chess from'../../Chess.js';
+import ChessMove from '../../Actions/ChessMove.js';
+import MovementPermissionPriority from '../../Enums/MovementPermissionPriority.js';
+import ChessTeam from '../../Enums/Teams.js';
+import EnPassant from '../Combat/EnPassant.js';
 
 export default class MovesDiagonallyOneSquareToCapture extends Component {
   name = "Moves Diagonally One Square To Capture"

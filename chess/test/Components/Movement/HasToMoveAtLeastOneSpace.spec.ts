@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import 'mocha';
 
 import { Entity, Vector } from '@chaos-framework/core';
-import Chessboard from '../../../src/Worlds/Chessboard';
-import HasToMoveAtLeastOneSpace from '../../../src/Components/Movement/HasToMoveAtLeastOneSpace';
-import ChessMove from '../../../src/Actions/ChessMove';
+import Chessboard from '../../../src/Worlds/Chessboard.js';
+import HasToMoveAtLeastOneSpace from '../../../src/Components/Movement/HasToMoveAtLeastOneSpace.js';
+import ChessMove from '../../../src/Actions/ChessMove.js';
 
 describe('Must move at least one space.', () => {
   let board: Chessboard

@@ -1,10 +1,9 @@
 import 'mocha';
 import { expect } from 'chai';
-
 import { Chaos, Entity, Team, Vector } from '@chaos-framework/core';
 
-import CanOnlyMoveOnTurn from '../../../src/Components/PlayOrder/CanOnlyMoveOnTurn';
-import ChessMove from '../../../src/Actions/ChessMove';
+import CanOnlyMoveOnTurn from '../../../src/Components/PlayOrder/CanOnlyMoveOnTurn.js';
+import ChessMove from '../../../src/Actions/ChessMove.js';
 
 describe('Can only move on turn', () => {
   let piece: Entity;
