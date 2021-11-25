@@ -15,7 +15,7 @@ describe('Can only move on turn', () => {
   it("Stops a piece from moving when it's not the piece's team's turn", () => {
     const movement = new ChessMove(piece, new Vector(0,0));
     new CanOnlyMoveOnTurn().permit(movement);
-    Chaos.currentTurn = undefined;
+    Chaos.setCurrentTurn(undefined);
     movement.decidePermission();
     expect(movement.permitted).to.be.false;
   });
@@ -23,7 +23,7 @@ describe('Can only move on turn', () => {
   it("Does not stop a piece from moving on it's turn", () => {
     const movement = new ChessMove(piece, new Vector(0,0));
     movement.permit({ priority: 1 });
-    Chaos.currentTurn = piece.team;
+    Chaos.setCurrentTurn(piece.team);
     new CanOnlyMoveOnTurn().permit(movement);
     movement.decidePermission();
     expect(movement.permitted).to.be.true;

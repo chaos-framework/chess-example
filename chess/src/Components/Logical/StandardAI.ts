@@ -1,5 +1,6 @@
+/// <reference types="./../../decs" />
+import jsChessEngine from 'js-chess-engine';
 import { Action, ChangeTurnAction, Chaos, Component, LogicalAction, Scope, Team } from '@chaos-framework/core';
-const jsChessEngine = require('js-chess-engine');
 
 const { aiMove } = jsChessEngine
 

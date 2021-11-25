@@ -15,7 +15,7 @@ describe('Each team gets one move per turn', () => {
   let component: OneMovePerTurn;
   beforeEach(() => {
     Chaos.reset();
-    Chaos.currentTurn = firstTeam;
+    Chaos.setCurrentTurn(firstTeam);
     component = new OneMovePerTurn([firstTeam, secondTeam]);
   });
 

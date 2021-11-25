@@ -1,6 +1,6 @@
 import { Component, Action } from '@chaos-framework/core';
 
-import * as Chess from"../..";
+import * as Chess from"../../Chess.js";
 import Capture from '../../Actions/Capture.js';
 import ChessMove from '../../Actions/ChessMove.js';
 import ChessTeam from '../../Enums/Teams.js';

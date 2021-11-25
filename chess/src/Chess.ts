@@ -1,4 +1,4 @@
-import { ChangeTurnAction, Chaos, Component, CONNECTION, CONNECTION_RESPONSE, Entity, LogicalAction, Player, Team, Vector } from '@chaos-framework/core.js.js.js';
+import { ChangeTurnAction, Chaos, Component, CONNECTION, CONNECTION_RESPONSE, Entity, LogicalAction, Player, Team, Vector } from '@chaos-framework/core';
 
 import Chessboard from './Worlds/Chessboard.js';
 import OneMovePerTurn from './Components/PlayOrder/OneMovePerTurn.js';
@@ -11,7 +11,7 @@ import Queen from './Entities/Pieces/Queen.js';
 import King from './Entities/Pieces/King.js';
 import StandardAI from './Components/Logical/StandardAI.js';
 
-Chaos.id = 'Chess';
+Chaos.setId('Chess');
 Chaos.setPhases(
   ['modify', 'permit'],
   ['capture', 'check', 'react', 'updateState', 'ai', 'output']
@@ -81,7 +81,7 @@ export let state: GameState = {
 }
 
 export function initialize(options: any = {}) {
-  board = new ChessBoard();
+  board = new Chessboard();
   teams['WHITE']._publish();
   teams['BLACK']._publish();
   turnOrderComponent = new OneMovePerTurn([teams.WHITE, teams.BLACK]);

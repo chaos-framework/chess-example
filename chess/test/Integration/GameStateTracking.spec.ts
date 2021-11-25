@@ -3,7 +3,6 @@ import 'mocha';
 import { Chaos } from '@chaos-framework/core';
 
 import * as Chess from'../../src/Chess.js';
-const { board } = Chess;
 
 describe('Chessboard position export', function() {
   beforeEach(() => {
@@ -42,7 +41,7 @@ describe('Standard Game State Tracking', function() {
   });
 
   it('Tracks half moves since last meaningful play (individual player moves since last pawn advance or capture)', () => {
-    const state = Chess.state;
+    const { board, state } = Chess;
     // Move the two knights back and forth
     for (let i = 0; i < 10; i += 1) {
       board.move('b1', 'a3')?.execute();
