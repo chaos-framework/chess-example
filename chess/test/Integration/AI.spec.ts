@@ -12,7 +12,7 @@ describe('AI', function() {
   beforeEach(() => {
     Chaos.reset();
     Chess.initialize();
-    Chaos.process();
+    Chaos.processor.process();
   });
 
   it('Can find the next move in a standard chess game', function() {
@@ -26,11 +26,11 @@ describe('AI', function() {
       let move = whiteAI.getAIMove();
       expect(move).to.not.be.undefined;
       Chess.board.move(move![0].toLowerCase(), move![1].toLowerCase())?.execute();
-      Chaos.process();
+      Chaos.processor.process();
       move = blackAI.getAIMove();
       expect(move).to.not.be.undefined;
       Chess.board.move(move![0].toLowerCase(), move![1].toLowerCase())?.execute();
-      Chaos.process();
+      Chaos.processor.process();
     }
   });
 
@@ -51,10 +51,10 @@ describe('AI', function() {
       e.team?.name === 'BLACK' && e.metadata.get('moveCount') === 1 );
     expect(moved).to.not.exist;
     await new Promise(resolve => setTimeout(resolve, 350));
-    Chaos.process();
+    Chaos.processor.process();
     moved = Array.from(Chess.board.entities.values()).find(e => 
       e.team?.name === 'BLACK' && e.metadata.get('moveCount') === 1 );
     expect(moved).to.exist;
-    Chaos.process();
+    Chaos.processor.process();
   });
 });

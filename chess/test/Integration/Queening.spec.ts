@@ -34,7 +34,7 @@ describe('Queening', () => {
     const king = King(new Team({ name: 'BLACK' }));
     king._publish(board, Chessboard.fromAlgebraic('e8')!);
     new ChessMove(pawn, queeningSquare).execute();
-    Chaos.process();
+    Chaos.processor.process();
     expect(king.has('Checked')).to.be.true;
   });
 });

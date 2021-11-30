@@ -53,7 +53,7 @@ export default class StandardAI extends Component {
       if(delay > 0) {
         setTimeout( () => {
             action.followup(moveAction);
-            Chaos.process(); 
+            Chaos.processor.process(); 
           }, delay)
       } else {
         action.followup(moveAction);

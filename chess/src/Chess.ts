@@ -10,6 +10,7 @@ import Knight from './Entities/Pieces/Knight.js';
 import Queen from './Entities/Pieces/Queen.js';
 import King from './Entities/Pieces/King.js';
 import StandardAI from './Components/Logical/StandardAI.js';
+import { entities } from '@chaos-framework/core/lib/Game/Chaos';
 
 Chaos.setId('Chess');
 Chaos.setPhases(
@@ -97,13 +98,19 @@ export function initialize(options: any = {}) {
   }
 }
 
+export function shutdown() { }
+
 export function play(): void {
   new LogicalAction('GAME_START', { firstTeam: teams['WHITE'] }).execute();
 }
 
 export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {
   const player = new Player({ username: msg.desiredUsername });
+  player._joinTeam(teams['WHITE']);
   player.publish().execute();
+  Chaos.entities.forEach(e => {
+    player.ownEntity({ entity: e }).execute();
+  });
   return {
     connectedPlayerId: player.id,
     gameState: Chaos.serializeForScope(player)
@@ -139,7 +146,7 @@ export function reset() {
   for(const [,component] of teams['BLACK'].components.all) {
     teams['BLACK'].components.removeComponent(component); // TODO won't broadcast
   }
-  Chaos.process();
+  Chaos.processor.process();
   stateTrackingComponent = new StandardStateTracker();
   Chaos.attach(stateTrackingComponent);
 }

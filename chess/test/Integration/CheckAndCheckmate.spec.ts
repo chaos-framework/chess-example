@@ -55,7 +55,7 @@ describe('Checking', function() {
       checkableKing._attach(new Checked(enemyQueen));
       // Move the king out of check
       new ChessMove(friendlyQueen, Chessboard.fromAlgebraic('b1')!).execute(true);
-      Chaos.process();
+      Chaos.processor.process();
       // Expect the king to no longer be checked
       expect(checkableKing.has('Checked')).to.be.false;
     });
@@ -107,12 +107,12 @@ describe('Pieces are put in checkmate properly', function() {
       ........
     `);
     board.move('b4', 'b3')?.execute(); // random movement
-    Chaos.process();
+    Chaos.processor.process();
     expect(board.pieceAt('a8')?.components.has('Checkmated')).to.be.false;
     board.move('h8', 'h7')?.execute();            // black movement that won't stop upcoming check
-    Chaos.process();
+    Chaos.processor.process();
     board.move('b3', 'a3')?.execute(); // king should not be able to leave
-    Chaos.process();
+    Chaos.processor.process();
     expect(board.pieceAt('a8')?.components.has('Checkmated')).to.be.true;
   });
 });

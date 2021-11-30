@@ -23,15 +23,15 @@ describe('Each team gets one move per turn', () => {
     const firstMovement = new ChessMove(firstPiece, new Vector(0,0));
     firstMovement.applied = true;
     component.react(firstMovement);
-    Chaos.process();
+    Chaos.processor.process();
     expect(Chaos.currentTurn).to.equal(secondTeam);
     const secondMovement = new ChessMove(secondPiece, new Vector(0,0));
     secondMovement.applied = true;
     component.react(secondMovement);
-    Chaos.process();
+    Chaos.processor.process();
     expect(Chaos.currentTurn).to.equal(firstTeam);
     component.react(firstMovement);
-    Chaos.process();
+    Chaos.processor.process();
     expect(Chaos.currentTurn).to.equal(secondTeam);
   });
 
@@ -39,12 +39,12 @@ describe('Each team gets one move per turn', () => {
     const firstMovement = new MoveAction({ to: new Vector(0,0), target: firstPiece });
     firstMovement.applied = true;
     component.react(firstMovement);
-    Chaos.process();
+    Chaos.processor.process();
     expect(Chaos.currentTurn).to.equal(firstTeam);
     const secondMovement = new MoveAction({ to: new Vector(0,0), target: secondPiece });
     secondMovement.applied = true;
     component.react(secondMovement);
-    Chaos.process();
+    Chaos.processor.process();
     expect(Chaos.currentTurn).to.equal(firstTeam);
   });
 
@@ -54,7 +54,7 @@ describe('Each team gets one move per turn', () => {
     const movement = new ChessMove(randomPiece, new Vector(0,0));
     movement.applied = true;
     component.react(movement);
-    Chaos.process();
+    Chaos.processor.process();
     expect(Chaos.currentTurn).to.equal(firstTeam);
   });
 
