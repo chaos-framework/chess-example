@@ -7,7 +7,7 @@ import ChessTeam from '../Enums/Teams.js';
 import Chessboard from '../Worlds/Chessboard.js';
 
 export default class Queens extends Component {
-  name = 'Queens.js';
+  name = 'Queens';
   description = 'Automatically turns into a Queen upon reaching the far end of the board..js';
   
   react(action: Action) {

@@ -4,7 +4,7 @@ import ChessMove from '../../Actions/ChessMove.js';
 
 // Forces a piece to move off its current tile if moving at all
 export default class CountsMovements extends Component {
-  name = "Has to Move At Least One Space";
+  name = "Counts Movements";
 
   react(action: Action) {
     if (action instanceof ChessMove && action.target === this.parent && action.applied) {

@@ -8,6 +8,7 @@ import ChessMove from '../../Actions/ChessMove.js';
 export default class Checked extends Component {
   name = 'Checked';
   description = 'Can be put in check by an enemy piece.js';
+  broadcast = true;
 
   constructor(public by: Entity) {
     super();

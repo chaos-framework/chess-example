@@ -11,7 +11,7 @@ import EnPassant from '../Combat/EnPassant.js';
 
 // Stores some basic state for use with any third-party chess engines / AIs
 export default class StandardStateTracker extends Component {
-  name = 'Standard Chess State Tracker.js';
+  name = 'Standard Chess State Tracker';
 
   pawnMovementOrCaptureThisTurn = false;
 

@@ -3,6 +3,7 @@ import { Action, ChangeTurnAction, Component, Entity, Scope, Vector } from '@cha
 export default class EnPassant extends Component {
   name = 'En Passant';
   description = 'Vulnerable to capture from another pawn landing immediately behind this piece.';
+  broadcast = true;
 
   scope = {
     'react': 'game' as Scope

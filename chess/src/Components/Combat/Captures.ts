@@ -7,7 +7,8 @@ import ChessTeam from '../../Enums/Teams.js';
 
 // Captures when landing on an enemy piece
 export default class Captures extends Component {
-  name = 'Captures.js';
+  name = 'Captures';
+  broadcast = true;
 
   capture(action: Action) {
     if (

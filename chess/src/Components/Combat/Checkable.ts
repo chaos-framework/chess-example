@@ -8,7 +8,8 @@ import ChessMove from '../../Actions/ChessMove.js';
 
 // Stops friendly pieces from moving in a way that would check this piece, and applies Checked when done so by enemy
 export default class Checkable extends Component {
-  name = 'Checkable.js';
+  name = 'Checkable';
+  broadcast = true;
 
   // Don't allow any friendly movement that would cause a check
   permit(action: Action) {
