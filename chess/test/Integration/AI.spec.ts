@@ -34,7 +34,7 @@ describe('AI', function() {
     }
   });
 
-  it("Can optionall react to its turn starting by moving a piece when a move is available", function() {
+  it("Can optionally react to its turn starting by moving a piece when a move is available", function() {
     this.timeout(4000);  // make sure test doesn't report warning for the AI taking some time to run
     Chess.teams['BLACK'].components.addComponent(new StandardAI(2, true));
     Chess.board.move('c2', 'c4')?.execute();

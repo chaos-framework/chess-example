@@ -83,6 +83,7 @@ export let state: GameState = {
 
 export function initialize(options: any = {}) {
   board = new Chessboard();
+  board.publish();
   teams['WHITE']._publish();
   teams['BLACK']._publish();
   turnOrderComponent = new OneMovePerTurn([teams.WHITE, teams.BLACK]);

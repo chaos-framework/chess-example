@@ -1,4 +1,4 @@
-import { Entity, Team } from '@chaos-framework/core';
+import { Entity, GlyphCode347, Team } from '@chaos-framework/core';
 
 import { generateCommonComponents } from './_common.js';
 import MovesOneSquareForward from '../../Components/Movement/MovesOneSquareForward.js';
@@ -11,14 +11,17 @@ import Piece from '../../Enums/Piece.js';
 
 const Pawn = (team: Team): Entity => {
   const name = `${team.name} Pawn`;
+  const notation = team.name === 'WHITE' ? 'P' : 'p';
   const pawn = new Entity({
     name,
     team,
+    active: true,
     metadata: {
       type: Piece.PAWN,
       moveCount: 0,
-      notation: team.name === 'WHITE' ? 'P' : 'p'
-    }
+      notation
+    },
+    glyph: GlyphCode347[notation]
   });
   pawn._attachAll([
     ...generateCommonComponents(),

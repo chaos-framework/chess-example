@@ -1,4 +1,4 @@
-import { Entity, Team } from '@chaos-framework/core';
+import { Entity, GlyphCode347, Team } from '@chaos-framework/core';
 
 import Piece from '../../Enums/Piece.js';
 import { generateCommonComponents } from './_common.js';
@@ -9,14 +9,17 @@ import Move from '../../Abilities/Move.js';
 
 const King = (team: Team): Entity => {
   const name = `${team.name} King`;
+  const notation = team.name === 'WHITE' ? 'K' : 'k';
   const king = new Entity({
     name,
-    team, 
+    team,
+    active: true,
     metadata: { 
       type: Piece.KING,
       moveCount: 0,
-      notation: team.name === 'WHITE' ? 'K' : 'k'
-    }
+      notation
+    },
+    glyph: GlyphCode347[notation]
   });
   king._attachAll([
     ...generateCommonComponents(),
