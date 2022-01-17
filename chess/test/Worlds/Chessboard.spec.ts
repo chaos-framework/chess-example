@@ -10,12 +10,12 @@ describe('Chessboard', () => {
   const board = new Chessboard();
   it('Initializes properly', () => {
     // Board is checkerboard
-    expect(board.getTile(0, 0)).to.equal(Tile.WHITE);
-    expect(board.getTile(0, 1)).to.equal(Tile.BLACK);
-    expect(board.getTile(0, 7)).to.equal(Tile.BLACK);
-    expect(board.getTile(7, 0)).to.equal(Tile.BLACK);
-    expect(board.getTile(7, 1)).to.equal(Tile.WHITE);
-    expect(board.getTile(7, 7)).to.equal(Tile.WHITE);
+    expect(board.baseLayer.get(0, 0)).to.equal(Tile.WHITE);
+    expect(board.baseLayer.get(0, 1)).to.equal(Tile.BLACK);
+    expect(board.baseLayer.get(0, 7)).to.equal(Tile.BLACK);
+    expect(board.baseLayer.get(7, 0)).to.equal(Tile.BLACK);
+    expect(board.baseLayer.get(7, 1)).to.equal(Tile.WHITE);
+    expect(board.baseLayer.get(7, 7)).to.equal(Tile.WHITE);
   });
 
   describe('Algebraic notation', () => {

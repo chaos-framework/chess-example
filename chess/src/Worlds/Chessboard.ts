@@ -1,4 +1,4 @@
-import {  World, Vector, Entity } from '@chaos-framework/core';
+import {  World, Vector, Entity, ByteLayer, ArrayChunk } from '@chaos-framework/core';
 
 import * as Chess from '../Chess.js';
 import Tiles from '../Enums/Tile.js';
@@ -8,15 +8,24 @@ const algebraicFiles = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
 export default class Chessboard extends World {
   constructor() {
-    super({ width: 8, height: 8, fill: Tiles.EMPTY });
-    
-    // Fill in white tiles
-    this.baseLayer.drawSquare(Tiles.WHITE, new Vector(0, 0), 8);
-    // Set every other tile inside the board to black
-    for(let x = 0; x < 8; x++) {
-      for(let y = 0; y < 8; y++) {
-        if ((x + y) % 2 === 1) {
-          this.baseLayer.setTile(x, y, Tiles.BLACK);
+    super({ 
+      size: new Vector(1, 1),
+      baseLayer: new ByteLayer(0),
+      streaming: false
+    });
+  }
+
+  initializeChunk(x: number, y: number, data?: { [key: string]: any; }): void {
+    this.baseLayer.setChunk(x, y, new ArrayChunk<number>(0, data?.['base']));
+    if(x === 0 && y === 0) {
+      // Fill in white tiles
+      this.baseLayer.drawSquare(Tiles.WHITE, new Vector(0, 0), 8);
+      // Set every other tile inside the board to black
+      for(let x = 0; x < 8; x++) {
+        for(let y = 0; y < 8; y++) {
+          if ((x + y) % 2 === 1) {
+            this.baseLayer.set(x, y, Tiles.BLACK);
+          }
         }
       }
     }
