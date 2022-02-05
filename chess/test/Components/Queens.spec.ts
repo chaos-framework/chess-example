@@ -17,11 +17,11 @@ describe('Queens', () => {
     component = new Queens();
     pawn._attach(component);
     board = new Chessboard();
-    pawn._publish(board, new Vector(0, 1));
+    pawn._publish(board, Chessboard.fromAlgebraic('a7')!);
   });
 
   it('Sends the "queen" logical message on reaching the proper edge of the board', () => {
-    const movement = new ChessMove(pawn, new Vector(0,0));
+    const movement = new ChessMove(pawn, Chessboard.fromAlgebraic('a8')!);
     movement.applied = true;
     component.react(movement);
     const followup = movement.followups[0];

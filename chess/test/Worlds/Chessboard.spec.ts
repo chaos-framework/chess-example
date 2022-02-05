@@ -29,14 +29,14 @@ describe('Chessboard', () => {
       });
 
       it('Translates correctly', () => {
-        expect((Chessboard.fromAlgebraic('a8') as Vector).equals(new Vector(0, 0))).to.be.true;
-        expect((Chessboard.fromAlgebraic('a7') as Vector).equals(new Vector(0, 1))).to.be.true;
-        expect((Chessboard.fromAlgebraic('a1') as Vector).equals(new Vector(0, 7))).to.be.true;
-        expect((Chessboard.fromAlgebraic('b8') as Vector).equals(new Vector(1, 0))).to.be.true;
-        expect((Chessboard.fromAlgebraic('b7') as Vector).equals(new Vector(1, 1))).to.be.true;
-        expect((Chessboard.fromAlgebraic('c1') as Vector).equals(new Vector(2, 7))).to.be.true;
-        expect((Chessboard.fromAlgebraic('h8') as Vector).equals(new Vector(7, 0))).to.be.true;
-        expect((Chessboard.fromAlgebraic('h1') as Vector).equals(new Vector(7, 7))).to.be.true;
+        expect((Chessboard.fromAlgebraic('a8') as Vector).equals(new Vector(0, 7))).to.be.true;
+        expect((Chessboard.fromAlgebraic('a7') as Vector).equals(new Vector(0, 6))).to.be.true;
+        expect((Chessboard.fromAlgebraic('a1') as Vector).equals(new Vector(0, 0))).to.be.true;
+        expect((Chessboard.fromAlgebraic('b8') as Vector).equals(new Vector(1, 7))).to.be.true;
+        expect((Chessboard.fromAlgebraic('b7') as Vector).equals(new Vector(1, 6))).to.be.true;
+        expect((Chessboard.fromAlgebraic('c1') as Vector).equals(new Vector(2, 0))).to.be.true;
+        expect((Chessboard.fromAlgebraic('h8') as Vector).equals(new Vector(7, 7))).to.be.true;
+        expect((Chessboard.fromAlgebraic('h1') as Vector).equals(new Vector(7, 0))).to.be.true;
       });
     });
 
@@ -50,10 +50,10 @@ describe('Chessboard', () => {
       });
 
       it('Translates correctly', () => {
-        expect(Chessboard.toAlgebraic(new Vector(0, 0))).to.equal('a8');
-        expect(Chessboard.toAlgebraic(new Vector(0, 1))).to.equal('a7');
-        expect(Chessboard.toAlgebraic(new Vector(1, 1))).to.equal('b7');
-        expect(Chessboard.toAlgebraic(new Vector(7, 7))).to.equal('h1');
+        expect(Chessboard.toAlgebraic(new Vector(0, 0))).to.equal('a1');
+        expect(Chessboard.toAlgebraic(new Vector(0, 1))).to.equal('a2');
+        expect(Chessboard.toAlgebraic(new Vector(1, 1))).to.equal('b2');
+        expect(Chessboard.toAlgebraic(new Vector(7, 7))).to.equal('h8');
       });
     });
   });

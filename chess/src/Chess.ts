@@ -32,12 +32,12 @@ export let teams = {
 };
 
 export const teamDirections = Object.freeze({
-  WHITE: new Vector(0, -1),
-  BLACK: new Vector(0, 1),
+  WHITE: new Vector(0, 1),
+  BLACK: new Vector(0, -1),
   RED: new Vector(1, 0),
   BLUE: new Vector(-1, 0),
-  GREEN: new Vector(0, -1),
-  YELLOW: new Vector(0, 1)
+  GREEN: new Vector(0, 1),
+  YELLOW: new Vector(0, -1)
 });
 
 export const totalCaptures = {

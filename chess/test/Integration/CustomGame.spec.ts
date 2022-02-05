@@ -21,10 +21,10 @@ describe('Chessboard custom game setup from string', function() {
       ........
       qqqqQBKR
     `);
-    expect(board.pieceAt('a1')?.name).to.equal('BLACK Queen');
-    expect(board.pieceAt('a8')?.name).to.equal('BLACK Pawn');
-    expect(board.pieceAt('h1')?.name).to.equal('WHITE Rook');
-    expect(board.pieceAt('h8')?.name).to.equal('WHITE Pawn');
+    expect(board.pieceAt('a8')?.name).to.equal('BLACK Queen');
+    expect(board.pieceAt('a1')?.name).to.equal('BLACK Pawn');
+    expect(board.pieceAt('h8')?.name).to.equal('WHITE Rook');
+    expect(board.pieceAt('h1')?.name).to.equal('WHITE Pawn');
     expect(board.pieceAt('e4')?.name).to.be.undefined;
   });
 });

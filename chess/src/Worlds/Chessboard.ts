@@ -77,14 +77,14 @@ export default class Chessboard extends World {
 
   setUpStandardGame() {
     this.setupCustomGame(`
-      rnbqkbnr
-      pppppppp
-      ........
-      ........
-      ........
-      ........
-      PPPPPPPP
       RNBQKBNR
+      PPPPPPPP
+      ........
+      ........
+      ........
+      ........
+      pppppppp
+      rnbqkbnr
     `);
   }
 
@@ -112,12 +112,12 @@ export default class Chessboard extends World {
     return undefined;
   }
 
-  // Convert vector to algebraic, ie { 0 ,0 } to 'a8'
+  // Convert vector to algebraic, ie { 0 ,0 } to 'a1'
   static toAlgebraic(vector: Vector): string | undefined {
     if (!Chessboard.isInBounds(vector)) {
       return undefined;
     }
-    const row = vector.y * -1 + 8;
+    const row = vector.y + 1;
     const column = algebraicFiles[vector.x];
     if (column === undefined) {
       return undefined;
@@ -125,7 +125,7 @@ export default class Chessboard extends World {
     return column + row.toString();
   }
 
-  // Convert algebraic into a vector, ie 'a8' to { 0, 0 }
+  // Convert algebraic into a vector, ie 'a1' to { 0, 0 }
   static fromAlgebraic(algebraic: string): Vector | undefined {
     if (algebraic.length !== 2) {
       return undefined;
@@ -135,8 +135,8 @@ export default class Chessboard extends World {
     if (column === -1) {
       return undefined;
     }
-    const row = (parseInt(algebraic[1], 10) -1) * -1 + 7;
-    if (!(typeof row === 'number')) {
+    const row = (parseInt(algebraic[1], 10) - 1);
+    if(!(typeof row === 'number') || row < 0 || row > 7)  {
       return undefined;
     }
     const vector = new Vector(column, row);
