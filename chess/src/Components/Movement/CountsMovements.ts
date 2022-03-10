@@ -1,5 +1,10 @@
-import { Action, Component } from "@chaos-framework/core";
-import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/stdlib";
+import { Component, EffectGenerator } from "@chaos-framework/core";
+import {
+  ForAction,
+  OnPhase,
+  Successful,
+  TargetsMe,
+} from "@chaos-framework/stdlib";
 
 import ChessMove from "../../Actions/ChessMove.js";
 
@@ -7,16 +12,13 @@ import ChessMove from "../../Actions/ChessMove.js";
 export default class CountsMovements extends Component {
   name = "Counts Movements";
 
-  react(action: Action) {
-    if (
-      action instanceof ChessMove &&
-      action.target === this.parent &&
-      action.applied
-    ) {
-      const current = action.target.metadata.get("moveCount");
-      if (current !== undefined && typeof current === "number") {
-        action.target.metadata.set("moveCount", current + 1);
-      }
-    }
+  @OnPhase("react")
+  @ForAction(ChessMove)
+  @TargetsMe
+  @Successful
+  *countMovement(action: ChessMove): EffectGenerator {
+    yield action.react(
+      action.target.getProperty("Move Count")!.current.adjust({ amount: 1 })
+    );
   }
 }

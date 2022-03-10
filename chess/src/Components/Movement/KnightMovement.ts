@@ -19,8 +19,7 @@ export default class KnightMovement extends Component {
         (delta.x === 1 && delta.y === 2) ||
         (delta.x === 2 && delta.y === 1)
       ) {
-        action.permit({
-          priority: MovementPermissionPriority.ALLOWED,
+        yield action.permit(MovementPermissionPriority.ALLOWED, {
           by: this,
         });
       }

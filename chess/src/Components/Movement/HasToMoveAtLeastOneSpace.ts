@@ -1,4 +1,8 @@
-import { Action, Component, EffectGenerator } from "@chaos-framework/core";
+import {
+  Component,
+  EffectGenerator,
+  TerminalMessage,
+} from "@chaos-framework/core";
 import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/stdlib";
 
 import ChessMove from "../../Actions/ChessMove.js";
@@ -15,9 +19,8 @@ export default class HasToMoveAtLeastOneSpace extends Component {
     if (action instanceof ChessMove && action.target === this.parent) {
       const { target, to } = action;
       if (target.position.equals(to)) {
-        action.deny({
-          priority: MovementPermissionPriority.DISALLOWED,
-          message: "A piece must move at least one space.",
+        yield action.deny(MovementPermissionPriority.DISALLOWED, {
+          message: new TerminalMessage("A piece must move at least one space."),
           by: this,
         });
       }

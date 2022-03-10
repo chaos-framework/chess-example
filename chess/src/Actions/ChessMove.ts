@@ -5,16 +5,17 @@ import {
   TerminalMessage,
   Vector,
 } from "@chaos-framework/core";
+import { ChessPiece } from "../Util/Types.js";
 
 import Chessboard from "../Worlds/Chessboard.js";
 
 export default class ChessMove extends MoveAction {
   enPassant = false;
-  attacking?: Entity;
-  captured?: Entity;
+  attacking?: ChessPiece;
+  captured?: ChessPiece;
 
   constructor(
-    public target: Entity,
+    public target: ChessPiece,
     to: string | Vector,
     public queryDepth = 0,
     options: ActionParameters = {}
