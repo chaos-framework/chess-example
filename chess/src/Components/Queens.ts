@@ -8,11 +8,16 @@ import Chessboard from '../Worlds/Chessboard.js';
 
 export default class Queens extends Component {
   name = 'Queens';
-  description = 'Automatically turns into a Queen upon reaching the far end of the board..js';
+  description = 'Automatically turns into a Queen upon reaching the far end of the board.';
   
   react(action: Action) {
-    // Send out queening message if appropirate
-    if (action instanceof ChessMove && action.target === this.parent && action.applied && action.target.world instanceof Chessboard) {
+    // Send out queening message if appropriate
+    if (
+      action instanceof ChessMove &&
+      action.target === this.parent &&
+      action.applied &&
+      action.target.world instanceof Chessboard &&
+      this.parent instanceof Entity) {
       const { target, to } = action;
       // Make sure the target has a team
       if (target.team === undefined) {
@@ -22,23 +27,15 @@ export default class Queens extends Component {
       const forward = Chess.teamDirections[teamName];
       // See if this pawn has reached the edge of the board
       if (action.target.world.isEdgeOfBoardForForwardDirection(to, forward)) {
-        action.followup(new LogicalAction('queen', { piece: target }, { caster: target }));
+        const check = new LogicalAction('queen', { piece: target }, { caster: target })
+        action.react(check);
+        if (check.permitted) {
+          const queen = Queen(this.parent.team!);
+          action.followup(this.parent.unpublish());
+          action.followup(queen.publish({ world: this.parent.world!, position: this.parent.position })
+            .withMessage(this.parent, 'has turned into', queen));
+        }
       }
-      return;
-    }
-    // Do the queening if message is sent successfully
-    if (
-      action instanceof LogicalAction &&
-      action.name === 'queen' &&
-      action.payload.piece === this.parent &&
-      this.parent instanceof Entity &&
-      action.permitted
-    ) {
-      // Queen the piece
-      const queen = Queen(this.parent.team!);
-      action.followup(this.parent.unpublish());
-      action.followup(queen.publish({ world: this.parent.world!, position: this.parent.position })
-        .withMessage(this.parent, 'has turned into', queen));
       return;
     }
   }

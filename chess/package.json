@@ -47,6 +47,8 @@
   "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
   "lint": "tslint -p tsconfig.json",
   "dependencies": {
+    "@chaos-framework/core": "file:../../core",
+    "@chaos-framework/stdlib": "file:../../stdlib",
     "js-chess-engine": "^1.0.2",
     "lodash": "^4.17.20"
   }

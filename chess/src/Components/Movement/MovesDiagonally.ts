@@ -1,17 +1,21 @@
-import { Action, Component } from '@chaos-framework/core';
+import { Action, Component, EffectGenerator } from "@chaos-framework/core";
+import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/stdlib";
 
-import ChessMove from '../../Actions/ChessMove.js';
-import MovementPermissionPriority from '../../Enums/MovementPermissionPriority.js';
+import ChessMove from "../../Actions/ChessMove.js";
+import MovementPermissionPriority from "../../Enums/MovementPermissionPriority.js";
 
 export default class MovesDiagonally extends Component {
-  name = 'Moves Diagonally';
+  name = "Moves Diagonally";
 
-  permit(action: Action) {
-    if (action instanceof ChessMove && action.target === this.parent) {
-      const { target, to } = action;
-      if (target.position.isDiagonalTo(to)) {
-        action.permit({ priority: MovementPermissionPriority.ALLOWED, by: this });
-      }
+  @OnPhase("permit")
+  @ForAction(ChessMove)
+  @TargetsMe
+  *permit(action: ChessMove): EffectGenerator {
+    const { target, to } = action;
+    if (target.position.isDiagonalTo(to)) {
+      yield action.permit(MovementPermissionPriority.ALLOWED, {
+        by: this,
+      });
     }
   }
 }

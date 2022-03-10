@@ -1,31 +1,16 @@
-import { Entity, GlyphCode347, Team } from '@chaos-framework/core';
+import { Entity, Team } from "@chaos-framework/core";
 
-import Move from '../../Abilities/Move.js';
-import { generateCommonComponents } from './_common.js';
-import Collides from '../../Components/Movement/Collides.js';
-import MovesDiagonally from '../../Components/Movement/MovesDiagonally.js';
+import { createBaseChessPiece } from "./_common.js";
+import Collides from "../../Components/Movement/Collides.js";
+import MovesDiagonally from "../../Components/Movement/MovesDiagonally.js";
 
-const Bishop = (team: Team): Entity => {
-  const name = `${team.name} Bishop`;
-  const notation = team.name === 'WHITE' ? 'B' : 'b';
-  const bishop = new Entity({
-    name,
+function Bishop(team: Team): Entity {
+  return createBaseChessPiece(
+    "Bishop",
     team,
-    active: true,
-    metadata: { 
-      team: team.id,
-      moveCount: 0,
-      notation
-    },
-    glyph: GlyphCode347[notation]
-  });
-  bishop._attachAll([
-    ...generateCommonComponents(),
-    new Collides,
-    new MovesDiagonally
-  ]);
-  bishop._learn(new Move());
-  return bishop;
+    ["B", "b"],
+    [new Collides(), new MovesDiagonally()]
+  );
 }
 
 export default Bishop;

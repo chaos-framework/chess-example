@@ -1,30 +1,15 @@
-import { Entity, GlyphCode347, Team } from '@chaos-framework/core';
+import { Entity, Team } from "@chaos-framework/core";
 
-import Piece from '../../Enums/Piece.js';
-import Move from '../../Abilities/Move.js';
-import { generateCommonComponents } from './_common.js';
-import KnightMovement from '../../Components/Movement/KnightMovement.js';
+import { createBaseChessPiece } from "./_common.js";
+import KnightMovement from "../../Components/Movement/KnightMovement.js";
 
-const Knight = (team: Team): Entity => {
-  const name = `${team.name} Knight`;
-  const notation = team.name === 'WHITE' ? 'N' : 'n';
-  const knight = new Entity({
-    name,
+function Knight(team: Team): Entity {
+  return createBaseChessPiece(
+    "Knight",
     team,
-    active: true,
-    metadata: { 
-      type: Piece.KNIGHT,
-      moveCount: 0,
-      notation
-    },
-    glyph: GlyphCode347[notation]
-  });
-  knight._attachAll([
-    ...generateCommonComponents(),
-    new KnightMovement
-  ]);
-  knight._learn(new Move());
-  return knight;
+    ["N", "n"],
+    [new KnightMovement()]
+  );
 }
 
 export default Knight;
