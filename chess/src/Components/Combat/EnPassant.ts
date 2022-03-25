@@ -1,22 +1,29 @@
-import { Action, ChangeTurnAction, Component, Entity, Scope, Vector } from '@chaos-framework/core'
+import {
+  ChangeTurnAction,
+  Component,
+  EffectGenerator,
+  Scope,
+  Vector,
+} from "@chaos-framework/core";
+import { ForAction, OnPhase } from "@chaos-framework/stdlib";
+import { ChessPiece } from "../../Util/Types";
 
-export default class EnPassant extends Component {
-  name = 'En Passant';
-  description = 'Vulnerable to capture from another pawn landing immediately behind this piece.';
+export default class EnPassant extends Component<ChessPiece> {
+  name = "En Passant";
+  description =
+    "Vulnerable to capture from another pawn landing immediately behind this piece, but only for this enemy turn.";
   broadcast = true;
-
-  scope = {
-    'react': 'game' as Scope
-  }
 
   constructor(public location: Vector) {
     super();
   }
 
   // Detach self when it's the parent's turn again
-  react(action: Action) {
-    if (action instanceof ChangeTurnAction && this.parent instanceof Entity && action.to === this.parent.team) {
-      action.react(this.detach({ target: this.parent }));
+  @OnPhase("react", "game")
+  @ForAction(ChangeTurnAction)
+  async *detachAfterEnemyTurnEnds(action: ChangeTurnAction): EffectGenerator {
+    if (action.target === this.parent!.team) {
+      action.react(this.detach({ target: this.parent! }));
     }
   }
 }

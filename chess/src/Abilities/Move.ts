@@ -1,11 +1,18 @@
-import { Entity, Ability, Event, OptionalCastParameters, Vector } from '@chaos-framework/core';
+import {
+  Entity,
+  Ability,
+  Event,
+  OptionalCastParameters,
+  Vector,
+} from "@chaos-framework/core";
 
-import Chessboard from '../Worlds/Chessboard.js';
-import { SimpleEvent } from '../Events/SimpleEvent.js';
-import ChessMove from '../Actions/ChessMove.js';
+import Chessboard from "../Worlds/Chessboard.js";
+import { SimpleEvent } from "../Events/SimpleEvent.js";
+import ChessMove from "../Actions/ChessMove.js";
+import { ChessPiece } from "../Util/Types.js";
 
 export interface MoveParams {
-  to: Vector
+  to: Vector;
 }
 
 function isMoveParams(o: any): o is MoveParams {
@@ -15,10 +22,13 @@ function isMoveParams(o: any): o is MoveParams {
 export default class Move extends Ability {
   name = "Move";
 
-  cast(caster: Entity, { using, target, params }: OptionalCastParameters): Event | string | undefined {
+  cast(
+    caster: Entity,
+    { using, target, params }: OptionalCastParameters
+  ): Event | string | undefined {
     // Check if the parameters contain the location we're moving to (this also casts to our interface)
     if (!isMoveParams(params)) {
-      return "Invalid parameters."
+      return "Invalid parameters.";
     }
     if (target === undefined) {
       return "No piece selected as a target.";
@@ -29,8 +39,7 @@ export default class Move extends Ability {
       return "Move would be out of bounds!";
     }
     return new SimpleEvent([
-      new ChessMove(target, to, 0, { caster })
+      new ChessMove(target as ChessPiece, to, { caster }, 0),
     ]);
   }
-
 }

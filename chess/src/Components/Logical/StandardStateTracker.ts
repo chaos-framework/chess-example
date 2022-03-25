@@ -24,9 +24,9 @@ export default class StandardStateTracker extends Component {
 
   pawnMovementOrCaptureThisTurn = false;
 
-  @OnPhase("updateState")
+  @OnPhase("updateState", "game")
   @Successful
-  *updateState(action: Action): EffectGenerator {
+  async *updateState(action: Action): EffectGenerator {
     // Track check being applied or removed
     if (
       action instanceof AttachComponentAction &&
@@ -61,8 +61,11 @@ export default class StandardStateTracker extends Component {
       Chess.state.enPassant = null;
     }
     // Cache current turn (white or black) and count full moves and half moves
-    else if (action instanceof ChangeTurnAction && action.to instanceof Team) {
-      if (action.to.name === "WHITE") {
+    else if (
+      action instanceof ChangeTurnAction &&
+      action.target instanceof Team
+    ) {
+      if (action.target.name === "WHITE") {
         Chess.state.fullMove += 1;
         Chess.state.turn = "white";
       } else {

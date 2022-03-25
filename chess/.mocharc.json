@@ -1,6 +1,7 @@
 {
   "extension": ["ts"],
-  "spec": "test/**/*.spec.ts",
+  "spec": ["src/**/*.spec.ts", "test/**/*.spec.ts"],
   "logVerbose": "true",
-  "loader": "ts-node/esm"
+  "loader": "ts-node/esm",
+  "require": ["test/plugins.js"]
 }

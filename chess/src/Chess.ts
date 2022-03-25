@@ -4,9 +4,11 @@ import {
   Component,
   CONNECTION,
   CONNECTION_RESPONSE,
+  EffectGenerator,
   Entity,
   LogicalAction,
   Player,
+  ProcessEffectGenerator,
   Team,
   Vector,
 } from "@chaos-framework/core";
@@ -92,7 +94,7 @@ export let state: GameState = {
   halfMove: 0,
 };
 
-export function initialize(options: any = {}) {
+export async function* initialize(options: any = {}): ProcessEffectGenerator {
   board = new Chessboard();
   board.publish();
   teams["WHITE"]._publish();
@@ -108,30 +110,33 @@ export function initialize(options: any = {}) {
     teams["WHITE"].components.addComponent(whiteAI);
     teams["BLACK"].components.addComponent(blackAI);
   }
+  return true;
 }
 
-export function shutdown() {}
+export async function shutdown() {}
 
-export function play(): void {
-  new LogicalAction("GAME_START", { firstTeam: teams["WHITE"] }).execute();
+export async function* play(): ProcessEffectGenerator {
+  yield new LogicalAction("GAME_START", {
+    firstTeam: teams["WHITE"],
+  }).asEffect();
+  return true;
 }
 
-export function onPlayerConnect(msg: CONNECTION): CONNECTION_RESPONSE {
+export async function* onPlayerConnect(
+  msg: CONNECTION
+): ProcessEffectGenerator<Player> {
   const player = new Player({ username: msg.desiredUsername });
-  player._joinTeam(teams["WHITE"]);
-  player.publish().execute();
-  Chaos.entities.forEach((e) => {
-    player.ownEntity({ entity: e }).execute();
-  });
-  return {
-    connectedPlayerId: player.id,
-    gameState: Chaos.serializeForScope(player),
-  };
+  player._joinTeam(teams["WHITE"]); // TODO make actions for this, test w/ visibility etc
+  yield player.publish().asEffect();
+  for (const [, entity] of Chaos.entities) {
+    yield player.ownEntity({ entity: entity }).asEffect();
+  }
+  return player;
 }
 
-export function onPlayerDisconnect() {}
+export async function* onPlayerDisconnect() {}
 
-export function reset() {
+export async function* reset(): ProcessEffectGenerator {
   state = {
     isFinished: false,
     turn: "white",
@@ -149,18 +154,18 @@ export function reset() {
   };
   totalCaptures.WHITE = 0;
   totalCaptures.BLACK = 0;
-  board.clear();
-  board.setUpStandardGame();
-  new ChangeTurnAction({ to: teams["WHITE"] }).execute();
+  yield* board.clear();
+  yield* board.setUpStandardGame();
+  yield new ChangeTurnAction({ target: teams["WHITE"] }).asEffect();
   for (const [, component] of teams["WHITE"].components.all) {
     teams["WHITE"].components.removeComponent(component); // TODO won't broadcast
   }
   for (const [, component] of teams["BLACK"].components.all) {
     teams["BLACK"].components.removeComponent(component); // TODO won't broadcast
   }
-  Chaos.processor.process();
   stateTrackingComponent = new StandardStateTracker();
   Chaos.attach(stateTrackingComponent);
+  return true;
 }
 
 export function exportToJSEngineStatelessFormat(): any {

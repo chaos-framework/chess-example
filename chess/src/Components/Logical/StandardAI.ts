@@ -1,9 +1,9 @@
-/// <reference types="./../../decs" />
 import jsChessEngine from "js-chess-engine";
 import {
   Action,
   ChangeTurnAction,
   Component,
+  EffectGenerator,
   LogicalAction,
   Scope,
   Team,
@@ -12,7 +12,7 @@ import {
 const { aiMove } = jsChessEngine;
 
 import * as Chess from "../../Chess.js";
-import { OnPhase } from "@chaos-framework/stdlib";
+import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/stdlib";
 
 const difficultyNames = [
   "Dumb",
@@ -24,7 +24,7 @@ const difficultyNames = [
 
 // When attached to a team will play moves in a standard chess game
 // Relies on js-chess-engine
-export default class StandardAI extends Component {
+export default class StandardAI extends Component<Team> {
   name = "Standard AI";
 
   scope: { [key: string]: Scope } = {
@@ -45,32 +45,24 @@ export default class StandardAI extends Component {
 
   // Play moves for the attached team
   @OnPhase("ai")
-  *playTurn(action: Action) {
-    const { automaticMovement, delay } = this;
-    if (
-      (automaticMovement &&
-        this.parent instanceof Team &&
-        action instanceof ChangeTurnAction &&
-        action.to === this.parent) ||
-      (action instanceof LogicalAction &&
-        action.name === "GAME_START" &&
-        action.payload.firstTeam === this.parent)
-    ) {
-      const aiMove = this.getAIMove();
-      if (aiMove === undefined) {
-        console.error("AI could not find a move for this board.");
-        return;
-      }
-      const moveAction = Chess.board.move(aiMove[0], aiMove[1]);
-      if (moveAction === undefined) {
-        console.error("AI could not find a move for this board.");
-        return;
-      }
-      if (delay > 0) {
-        yield action.delay(delay);
-      }
-      yield action.followup(moveAction);
+  @ForAction(ChangeTurnAction)
+  @TargetsMe
+  async *playTurn(action: Action): EffectGenerator {
+    const { delay } = this;
+    const aiMove = this.getAIMove();
+    if (aiMove === undefined) {
+      console.error("AI could not find a move for this board.");
+      return;
     }
+    const moveAction = Chess.board.move(aiMove[0], aiMove[1]);
+    if (moveAction === undefined) {
+      console.error("AI gave an invalid move for this board.");
+      return;
+    }
+    if (delay > 0) {
+      yield action.delay(delay);
+    }
+    yield action.followup(moveAction);
   }
 
   getAIMove(): [string, string] | undefined {

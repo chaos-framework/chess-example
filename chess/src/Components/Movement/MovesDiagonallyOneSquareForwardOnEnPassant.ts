@@ -8,8 +8,8 @@ import ChessTeam from "../../Enums/Teams.js";
 import EnPassant from "../Combat/EnPassant.js";
 import { ChessPiece } from "../../Util/Types.js";
 
-export default class MovesDiagonallyOneSquareForwardToCapture extends Component<ChessPiece> {
-  name = "Moves Diagonally One Square To Capture";
+export default class MovesDiagonallyOneSquareForwardToEnPassant extends Component<ChessPiece> {
+  name = "Moves Diagonally One Square To En Passant";
 
   @OnPhase("permit")
   @ForAction(ChessMove)
@@ -19,7 +19,7 @@ export default class MovesDiagonallyOneSquareForwardToCapture extends Component<
     const teamName = target.team.name as ChessTeam;
     // Make sure the movement is "forward"
     const delta = to.subtract(target.position);
-    const forward = Chess.teamDirections[teamName]; // TODO make a component / property on team that indicates this?
+    const forward = Chess.teamDirections[teamName]; // TODO make a child class of Team that has this info handy?
     // Check that the movement is only one square on the two forward diagonals
     if (
       delta.dot(forward) >= 0 &&
@@ -27,12 +27,15 @@ export default class MovesDiagonallyOneSquareForwardToCapture extends Component<
       Math.abs(delta.y) === 1
     ) {
       for (const [, entity] of target.world.entities) {
-        if (entity.team !== target.team) {
-          // Check if enemy is in that location or has an active en passant in the spot we're moving to
-          if (entity.position.equals(action.to))
-            yield action.permit(MovementPermissionPriority.ALLOWED, {
-              by: this,
-            });
+        if (
+          entity.team !== target.team &&
+          (entity.components.get("En Passant") as EnPassant)?.location.equals(
+            action.to
+          )
+        ) {
+          yield action.permit(MovementPermissionPriority.ALLOWED, {
+            by: this,
+          });
           break;
         }
       }

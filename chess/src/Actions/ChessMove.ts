@@ -1,5 +1,6 @@
 import {
   ActionParameters,
+  ComponentContainer,
   Entity,
   MoveAction,
   TerminalMessage,
@@ -17,10 +18,11 @@ export default class ChessMove extends MoveAction {
   constructor(
     public target: ChessPiece,
     to: string | Vector,
-    public queryDepth = 0,
-    options: ActionParameters = {}
+    options: Omit<ActionParameters, "target"> = {},
+    public queryDepth = 0
   ) {
     super({
+      caster: target,
       target,
       to:
         to instanceof Vector

@@ -1,5 +1,5 @@
 import {
-  Action,
+  Entity,
   Component,
   EffectGenerator,
   TerminalMessage,
@@ -10,17 +10,14 @@ import ChessMove from "../../Actions/ChessMove.js";
 import MovementPermissionPriority from "../../Enums/MovementPermissionPriority.js";
 
 // Disallows movement if a piece is BETWEEN the target and its destination
-export default class Collides extends Component {
+export default class Collides extends Component<Entity> {
   name = "Collides";
 
   @OnPhase("permit")
   @ForAction(ChessMove)
   @TargetsMe
-  *permit(action: ChessMove): EffectGenerator {
+  async *collideWithTeam(action: ChessMove): EffectGenerator {
     const { target, to } = action;
-    if (target.world === undefined) {
-      return;
-    }
     const lineIterator = target.position.getLineToIterable(to);
     // Pop the first space off (occupied by parent piece)
     lineIterator.next();
@@ -35,7 +32,7 @@ export default class Collides extends Component {
           message: new TerminalMessage("Another piece is in the way!"),
           by: this,
         });
-        return;
+        break;
       }
     }
   }

@@ -6,56 +6,45 @@ import MovementPermissionPriority from "../../Enums/MovementPermissionPriority.j
 import ChessTeam from "../../Enums/Teams.js";
 import Chessboard from "../../Worlds/Chessboard.js";
 import EnPassant from "../Combat/EnPassant.js";
-import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/stdlib";
+import {
+  ForAction,
+  OnPhase,
+  Successful,
+  TargetsMe,
+} from "@chaos-framework/stdlib";
+import { ChessPiece } from "../../Util/Types.js";
 
 // Allows a pawn to move two spaces forward on it's first move, also applying the en passant component if successful
-export default class MovesTwoSpacesForwardOnFirstMovement extends Component {
+export default class CanMoveTwoSpacesForwardOnFirstMovement extends Component<ChessPiece> {
   name = "Can Move Two Spaces Forward On First Movement";
 
   @OnPhase("permit")
   @ForAction(ChessMove)
   @TargetsMe
-  *permit(action: ChessMove): EffectGenerator {
-    // TODO refactor -- convert to property
-    if (action.target.metadata.get("moveCount") === 0) {
-      const { target, to } = action;
+  async *permitMovement(action: ChessMove): EffectGenerator {
+    const { target, to } = action;
+    const moveCount = action.target.getProperty("Move Count")!.current
+      .calculated;
+    if (moveCount === 0) {
       // Make sure the target has a team
       if (target.team === undefined) {
         return;
       }
       // Make sure the movement is "forward"
       const teamName = target.team.name as ChessTeam;
-      const forward = Chess.teamDirections[teamName];
-      const forwardTwoSquares = forward.multiply(2);
+      const forwardOneSquare = Chess.teamDirections[teamName];
+      const forwardTwoSquares = forwardOneSquare.multiply(2);
       const delta = to.subtract(target.position);
       // Check that the movement is only two squares directly forward
       if (delta.equals(forwardTwoSquares)) {
         yield action.permit(MovementPermissionPriority.ALLOWED, {
           by: this,
         });
-        // Tag the location that en passant can happen
+        // Add en passant metadata
         action.metadata.set(
-          "en_passant",
-          Chessboard.toAlgebraic(action.target.position.add(forward))
+          "enPassantSpot",
+          Chessboard.toAlgebraic(forwardOneSquare)
         );
-        return;
-      }
-    }
-  }
-
-  react(action: Action) {
-    const parent = this.getParentEntity();
-    if (
-      parent !== undefined &&
-      action.target == parent &&
-      action.tagged("en_passant") &&
-      action.applied
-    ) {
-      const location = Chessboard.fromAlgebraic(
-        (action.metadata.get("en_passant") as string) || ""
-      );
-      if (location !== undefined) {
-        action.react(parent.attach({ component: new EnPassant(location) }));
       }
     }
   }

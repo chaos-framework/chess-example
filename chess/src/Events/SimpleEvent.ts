@@ -1,16 +1,15 @@
-import { Action, Event} from '@chaos-framework/core';
+import { Action, Event, ProcessEffectGenerator } from "@chaos-framework/core";
 
 // Returns all events from array passed into constructor
 export class SimpleEvent implements Event {
   index = 0;
 
-  constructor(private actions: Action[]) { };
+  constructor(private actions: Action[]) {}
 
-  getNextAction(previousAction?: Action): Action | undefined {
-    if (this.actions.length > this.index) {
-      return this.actions[this.index++];
-    } else {
-      return undefined;
+  async *run(): ProcessEffectGenerator {
+    for (const action of this.actions) {
+      yield action.asEffect();
     }
+    return true;
   }
 }

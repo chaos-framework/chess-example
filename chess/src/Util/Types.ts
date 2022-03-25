@@ -1,9 +1,10 @@
-import { Entity } from "@chaos-framework/core";
+import { Entity, PublishedEntity, Team } from "@chaos-framework/core";
 import Chessboard from "../Worlds/Chessboard";
 
 export type ChessPiece = {
-  world?: Chessboard;
-} & Entity;
+  world: Chessboard;
+  team: Team;
+} & PublishedEntity;
 
 export type PieceName =
   | "PAWN"

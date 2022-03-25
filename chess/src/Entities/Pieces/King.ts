@@ -3,8 +3,9 @@ import { createBaseChessPiece } from "./_common.js";
 import Collides from "../../Components/Movement/Collides.js";
 import MovesOneSquareAnyDirection from "../../Components/Movement/MovesOneSquareAnyDirection.js";
 import Checkable from "../../Components/Combat/Checkable.js";
+import { ChessPiece } from "../../Util/Types.js";
 
-function King(team: Team): Entity {
+function King(team: Team): ChessPiece {
   return createBaseChessPiece(
     "King",
     team,
