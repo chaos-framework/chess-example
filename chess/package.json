@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project tsconfig.app.json",
     "test": "mocha"
   },
   "files": [
@@ -34,7 +34,7 @@
     "assert": "^2.0.0",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
-    "chai-generator": "^2.1.0",
+    "chai-iterator": "^3.0.2",
     "i": "^0.3.6",
     "jest": "^26.6.3",
     "mocha": "^8.4.0",
@@ -52,6 +52,7 @@
   "dependencies": {
     "@chaos-framework/core": "file:../../core",
     "@chaos-framework/stdlib": "file:../../stdlib",
+    "chai-generator": "^2.1.0",
     "js-chess-engine": "^1.0.2",
     "lodash": "^4.17.20"
   }

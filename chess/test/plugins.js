@@ -1,13 +1,9 @@
-console.log('Registering test tsconfig.json with ts-node');
-import { register } from 'ts-node';
-register({
-  project: './tsconfig.test.json',
-});
-
-import { use } from "chai";
-import generator from "chai-generator";
-export async function mochaGlobalSetup() {
-  console.log("Adding default chai plugins.");
-  chai.should();
-  use(generator);
-}
+// import { use, should } from "chai";
+// import asPromised from "chai-as-promised";
+// import iterator from "chai-iterator";
+// export function mochaGlobalSetup() {
+//   console.log("Adding default chai plugins.");
+//   should();
+//   use(iterator);
+//   use(asPromised);
+// }

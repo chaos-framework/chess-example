@@ -1,3 +1,4 @@
+import { should, use, expect } from "chai";
 import "mocha";
 
 import { Entity, Team, Vector } from "@chaos-framework/core";
@@ -6,6 +7,13 @@ import Chessboard from "../../Worlds/Chessboard.js";
 import CannotLandOnTeam from "./CannotLandOnTeam.js";
 import ChessMove from "../../Actions/ChessMove.js";
 import { ChessPiece } from "../../Util/Types.js";
+
+import asPromised from "chai-as-promised";
+import generator from "chai-generator";
+import { type } from "os";
+should();
+use(generator);
+use(asPromised);
 
 describe("Cannot land on friendly piece", () => {
   let piece: ChessPiece;
@@ -30,9 +38,9 @@ describe("Cannot land on friendly piece", () => {
 
   it("Disallows landing on friendly piece", async function () {
     const movement = new ChessMove(piece, friendly.position);
-    await movementComponent
-      .dontLandOnTeam(movement)
-      .should.eventually.yield(undefined);
+    const gen = movementComponent.dontLandOnTeam(movement);
+    const next = await gen.next();
+    expect(next.value[0]).to.equal("DENY");
   });
 
   // it("Does not disallow landing on enemy piece", async function () {
