@@ -1,17 +1,10 @@
-import { Action, Component, EffectGenerator } from "@chaos-framework/core";
+import { Component, EffectGenerator } from "@chaos-framework/core";
 
 import * as Chess from "../../Chess.js";
 import ChessMove from "../../Actions/ChessMove.js";
 import MovementPermissionPriority from "../../Enums/MovementPermissionPriority.js";
 import ChessTeam from "../../Enums/Teams.js";
-import Chessboard from "../../Worlds/Chessboard.js";
-import EnPassant from "../Combat/EnPassant.js";
-import {
-  ForAction,
-  OnPhase,
-  Successful,
-  TargetsMe,
-} from "@chaos-framework/stdlib";
+import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/stdlib";
 import { ChessPiece } from "../../Util/Types.js";
 
 // Allows a pawn to move two spaces forward on it's first move, also applying the en passant component if successful
@@ -23,8 +16,8 @@ export default class CanMoveTwoSpacesForwardOnFirstMovement extends Component<Ch
   @TargetsMe
   async *permitMovement(action: ChessMove): EffectGenerator {
     const { target, to } = action;
-    const moveCount = action.target.getProperty("Move Count")!.current
-      .calculated;
+    const moveCount =
+      action.target.getProperty("Move Count")!.current.calculated;
     if (moveCount === 0) {
       // Make sure the target has a team
       if (target.team === undefined) {
@@ -40,11 +33,6 @@ export default class CanMoveTwoSpacesForwardOnFirstMovement extends Component<Ch
         yield action.permit(MovementPermissionPriority.ALLOWED, {
           by: this,
         });
-        // Add en passant metadata
-        action.metadata.set(
-          "enPassantSpot",
-          Chessboard.toAlgebraic(forwardOneSquare)
-        );
       }
     }
   }

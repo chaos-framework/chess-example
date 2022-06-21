@@ -39,23 +39,18 @@ describe("Cannot land on friendly piece", () => {
   it("Disallows landing on friendly piece", async function () {
     const movement = new ChessMove(piece, friendly.position);
     const gen = movementComponent.dontLandOnTeam(movement);
-    const next = await gen.next();
-    expect(next.value[0]).to.equal("DENY");
+    expect((await gen.next()).value?.[0]).to.equal("DENY");
   });
 
-  // it("Does not disallow landing on enemy piece", async function () {
-  //   let movement = new ChessMove(piece, enemy.position);
-  //   movement.permit({ priority: 1 });
-  //   movementComponent.permit(movement);
-  //   movement.decidePermission();
-  //   expect(movement.permitted).to.be.true;
-  // });
+  it("Does not disallow landing on enemy piece", async function () {
+    const movement = new ChessMove(piece, enemy.position);
+    const gen = movementComponent.dontLandOnTeam(movement);
+    expect((await gen.next()).value).to.be.undefined;
+  });
 
-  // it("Does not disallow landing on empty space", async function () {
-  //   let movement = new ChessMove(piece, Chessboard.fromAlgebraic("b1")!);
-  //   movement.permit({ priority: 1 });
-  //   movementComponent.permit(movement);
-  //   movement.decidePermission();
-  //   expect(movement.permitted).to.be.true;
-  // });
+  it("Does not disallow landing on empty space", async function () {
+    const movement = new ChessMove(piece, Chessboard.fromAlgebraic("b1")!);
+    const gen = movementComponent.dontLandOnTeam(movement);
+    expect((await gen.next()).value).to.be.undefined;
+  });
 });

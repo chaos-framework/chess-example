@@ -17,7 +17,7 @@ export default class VulnerableToEnPassant extends Component<ChessPiece> {
   description =
     "Moving two spaces on the first turn will leave this piece vulnerable to en passant.";
 
-  @OnPhase("permit")
+  @OnPhase("react")
   @ForAction(ChessMove)
   @TargetsMe
   @Successful
