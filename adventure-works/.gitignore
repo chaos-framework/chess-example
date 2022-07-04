@@ -1,0 +1,5 @@
+node_modules
+lib
+scratchpad.ts
+/coverage
+.DS_Store

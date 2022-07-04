@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "ES2020",
+    "declaration": true,
+    "outDir": "./lib",
+    "sourceMap": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "types" : [
+      "node"
+    ],
+  },
+  "include": ["src", "test"],
+  "exclude": ["node_modules", "**/test/*", "**/*.spec.ts"]
+}
