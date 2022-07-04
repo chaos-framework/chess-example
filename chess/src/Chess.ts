@@ -101,7 +101,7 @@ export async function* initialize(options: any = {}): ProcessEffectGenerator {
   teams["BLACK"]._publish();
   turnOrderComponent = new OneMovePerTurn([teams.WHITE, teams.BLACK]);
   Chaos.components.addComponent(turnOrderComponent);
-  reset();
+  yield* reset();
   // Make it an AI match, if specified in the options
   if (options.aiOnly === true) {
     console.log("Initializing chess with AI players");
@@ -116,6 +116,7 @@ export async function* initialize(options: any = {}): ProcessEffectGenerator {
 export async function shutdown() {}
 
 export async function* play(): ProcessEffectGenerator {
+  console.log("Starting game!")
   yield new LogicalAction("GAME_START", {
     firstTeam: teams["WHITE"],
   }).asEffect();
