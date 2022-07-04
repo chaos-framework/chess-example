@@ -8,7 +8,7 @@ import {
   OnPhase,
   Successful,
   TargetsMe,
-} from "@chaos-framework/stdlib";
+} from "@chaos-framework/std-lib";
 import { ChessPiece } from "../../Util/Types.js";
 
 // Allows a pawn to move two spaces forward on it's first move, also applying the en passant component if successful

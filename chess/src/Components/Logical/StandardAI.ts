@@ -12,7 +12,7 @@ import {
 const { aiMove } = jsChessEngine;
 
 import * as Chess from "../../Chess.js";
-import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/stdlib";
+import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/std-lib";
 
 const difficultyNames = [
   "Dumb",

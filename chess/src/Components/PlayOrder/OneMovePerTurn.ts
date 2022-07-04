@@ -5,7 +5,7 @@ import {
   ChangeTurnAction,
   EffectGenerator,
 } from "@chaos-framework/core";
-import { ForAction, OnPhase, Successful } from "@chaos-framework/stdlib";
+import { ForAction, OnPhase, Successful } from "@chaos-framework/std-lib";
 
 import ChessMove from "../../Actions/ChessMove.js";
 

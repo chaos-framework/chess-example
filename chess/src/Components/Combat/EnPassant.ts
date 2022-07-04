@@ -5,7 +5,7 @@ import {
   Scope,
   Vector,
 } from "@chaos-framework/core";
-import { ForAction, OnPhase } from "@chaos-framework/stdlib";
+import { ForAction, OnPhase } from "@chaos-framework/std-lib";
 import { ChessPiece } from "../../Util/Types";
 
 export default class EnPassant extends Component<ChessPiece> {

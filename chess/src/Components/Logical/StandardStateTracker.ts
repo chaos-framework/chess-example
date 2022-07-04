@@ -16,7 +16,7 @@ import Chessboard from "../../Worlds/Chessboard.js";
 import Checked from "../Combat/Checked.js";
 import Checkmated from "../Combat/Checkmated.js";
 import EnPassant from "../Combat/EnPassant.js";
-import { OnPhase, Successful } from "@chaos-framework/stdlib";
+import { OnPhase, Successful } from "@chaos-framework/std-lib";
 
 // Stores some basic state for use with any third-party chess engines / AIs
 export default class StandardStateTracker extends Component {

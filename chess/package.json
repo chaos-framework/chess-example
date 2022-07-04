@@ -2,7 +2,7 @@
   "name": "@chaos/chess-example",
   "version": "0.0.1",
   "description": "",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "type": "module",
   "scripts": {
     "build": "tsc --project tsconfig.app.json",
@@ -50,8 +50,6 @@
   "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
   "lint": "tslint -p tsconfig.json",
   "dependencies": {
-    "@chaos-framework/core": "file:../../core",
-    "@chaos-framework/stdlib": "file:../../stdlib",
     "chai-generator": "^2.1.0",
     "js-chess-engine": "^1.0.2",
     "lodash": "^4.17.20",

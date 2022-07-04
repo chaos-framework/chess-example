@@ -1,5 +1,5 @@
 import { Component, EffectGenerator, Entity } from "@chaos-framework/core";
-import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/stdlib";
+import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/std-lib";
 
 import Capture from "../../Actions/Capture.js";
 import ChessMove from "../../Actions/ChessMove.js";

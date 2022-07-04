@@ -5,7 +5,7 @@ import {
   TerminalMessage,
   Team,
 } from "@chaos-framework/core";
-import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/stdlib";
+import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/std-lib";
 
 import ChessMove from "../../Actions/ChessMove.js";
 import MovementPermissionPriority from "../../Enums/MovementPermissionPriority.js";

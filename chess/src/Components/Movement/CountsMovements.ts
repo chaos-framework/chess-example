@@ -4,7 +4,7 @@ import {
   OnPhase,
   Successful,
   TargetsMe,
-} from "@chaos-framework/stdlib";
+} from "@chaos-framework/std-lib";
 
 import ChessMove from "../../Actions/ChessMove.js";
 

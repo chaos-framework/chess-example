@@ -4,7 +4,7 @@ import * as Chess from "../../Chess.js";
 import ChessMove from "../../Actions/ChessMove.js";
 import MovementPermissionPriority from "../../Enums/MovementPermissionPriority.js";
 import ChessTeam from "../../Enums/Teams.js";
-import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/stdlib";
+import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/std-lib";
 import { ChessPiece } from "../../Util/Types.js";
 
 // Allows a pawn to move two spaces forward on it's first move, also applying the en passant component if successful

@@ -20,7 +20,7 @@ import {
   OnPhase,
   Successful,
   TargetsMyTeam,
-} from "@chaos-framework/stdlib";
+} from "@chaos-framework/std-lib";
 import { ChessPiece } from "../../Util/Types.js";
 
 // Stops friendly pieces from moving in a way that would check this piece, and applies Checked when done so by enemy

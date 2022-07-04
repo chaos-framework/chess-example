@@ -9,7 +9,7 @@ import {
   OnPhase,
   TargetsMe,
   TargetsMyTeam,
-} from "@chaos-framework/stdlib";
+} from "@chaos-framework/std-lib";
 
 import {
   isInCheck,
