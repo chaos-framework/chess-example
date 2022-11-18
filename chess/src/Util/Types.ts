@@ -1,10 +1,12 @@
-import { Entity, PublishedEntity, Team } from "@chaos-framework/core";
+import { Entity, PublishedEntity, Team, Vector } from "@chaos-framework/core";
 import Chessboard from "../Worlds/Chessboard";
 
 export type ChessPiece = {
   world: Chessboard;
   team: Team;
-} & PublishedEntity;
+  published: true;
+  position: Vector;
+} & Entity<['Move Count', 'Captures']>;
 
 export type PieceName =
   | "PAWN"

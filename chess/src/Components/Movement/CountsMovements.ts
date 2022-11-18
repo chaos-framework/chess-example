@@ -18,7 +18,7 @@ export default class CountsMovements extends Component<Entity> {
   @Successful
   async *count(action: ChessMove): EffectGenerator {
     yield action.react(
-      action.target.getProperty("Move Count")!.current.adjust({ amount: 1 })
+      action.target.getProperty("Move Count").current.adjust({ amount: 1 })
     );
   }
 }

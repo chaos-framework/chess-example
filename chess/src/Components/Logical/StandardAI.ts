@@ -12,7 +12,7 @@ import {
 const { aiMove } = jsChessEngine;
 
 import * as Chess from "../../Chess.js";
-import { ForAction, OnPhase, TargetsMe } from "@chaos-framework/std-lib";
+import { ForAction, OnPhase, TargetsMyParent } from "@chaos-framework/std-lib";
 
 const difficultyNames = [
   "Dumb",
@@ -27,10 +27,6 @@ const difficultyNames = [
 export default class StandardAI extends Component<Team> {
   name = "Standard AI";
 
-  scope: { [key: string]: Scope } = {
-    ai: "game",
-  };
-
   constructor(
     private difficulty = 2,
     public automaticMovement = false,
@@ -44,9 +40,9 @@ export default class StandardAI extends Component<Team> {
   }
 
   // Play moves for the attached team
-  @OnPhase("ai")
+  @OnPhase("after", "game")
   @ForAction(ChangeTurnAction)
-  @TargetsMe
+  @TargetsMyParent
   async *playTurn(action: Action): EffectGenerator {
     const { delay } = this;
     const aiMove = this.getAIMove();
@@ -67,7 +63,7 @@ export default class StandardAI extends Component<Team> {
 
   getAIMove(): [string, string] | undefined {
     try {
-      const boardConfiguration = Chess.exportToJSEngineStatelessFormat();
+      const boardConfiguration = Chess.exportToJSEngineStatelessFormat(this.parent);
       if (boardConfiguration.checkMate === true) {
         return undefined;
       }

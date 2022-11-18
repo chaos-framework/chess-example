@@ -37,13 +37,13 @@ export function createBaseChessPiece(
     active: true,
     metadata: {
       type: Piece.PAWN,
-      moveCount: 0,
-      notation,
+      notation
     },
     glyph: GlyphCode347[notation],
+    permanentComponents: [...generateCommonComponents(), ...additionalComponents]
   }) as ChessPiece;
-  piece.addProperty({ name: "Move Count" });
-  piece.addProperty({ name: "Captures" });
+  piece._addProperty("Move Count");
+  piece._addProperty("Captures");
   piece._attachAll([...generateCommonComponents(), ...additionalComponents]);
   piece._learn(new Move());
   return piece;

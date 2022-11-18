@@ -3,8 +3,6 @@ import {
   Chaos,
   Component,
   CONNECTION,
-  CONNECTION_RESPONSE,
-  EffectGenerator,
   Entity,
   LogicalAction,
   Player,
@@ -15,7 +13,7 @@ import {
 
 import Chessboard from "./Worlds/Chessboard.js";
 import OneMovePerTurn from "./Components/PlayOrder/OneMovePerTurn.js";
-import StandardStateTracker from "./Components/Logical/StandardStateTracker.js";
+import MoveCounter from "./Components/Logical/MoveCounter.js";
 import Pawn from "./Entities/Pieces/Pawn.js";
 import Bishop from "./Entities/Pieces/Bishop.js";
 import Rook from "./Entities/Pieces/Rook.js";
@@ -23,16 +21,19 @@ import Knight from "./Entities/Pieces/Knight.js";
 import Queen from "./Entities/Pieces/Queen.js";
 import King from "./Entities/Pieces/King.js";
 import StandardAI from "./Components/Logical/StandardAI.js";
+import EnPassant from "./Components/Combat/EnPassant.js";
+import Checked from "./Components/Combat/Checked.js";
+import Checkmated from "./Components/Combat/Checkmated.js";
 
 Chaos.setId("Chess");
-Chaos.setPhases(
-  ["modify", "permit"],
-  ["capture", "check", "react", "updateState", "ai", "output"]
-);
+// Chaos.setPhases(
+//   ["modify", "permit"],
+//   ["capture", "check", "react", "updateState", "ai", "output"]
+// );
 
 export let board: Chessboard;
 export let turnOrderComponent: Component;
-export let stateTrackingComponent: StandardStateTracker;
+export let stateTrackingComponent: MoveCounter;
 
 export let teams = {
   WHITE: new Team({ name: "WHITE" }),
@@ -52,48 +53,6 @@ export const teamDirections = Object.freeze({
   YELLOW: new Vector(0, -1),
 });
 
-export const totalCaptures = {
-  WHITE: 0,
-  BLACK: 0,
-  RED: 0,
-  BLUE: 0,
-  GREEN: 0,
-  YELLOW: 0,
-};
-
-interface GameState {
-  // redundant?
-  isFinished: boolean;
-  turn: "white" | "black";
-  check: boolean;
-  checkMate: boolean;
-  castling: {
-    whiteLong: boolean;
-    whiteShort: boolean;
-    blackLong: boolean;
-    blackShort: boolean;
-  };
-  enPassant: string | null;
-  fullMove: number;
-  halfMove: number;
-}
-
-export let state: GameState = {
-  isFinished: false,
-  turn: "white",
-  check: false,
-  checkMate: false,
-  castling: {
-    whiteLong: false,
-    whiteShort: false,
-    blackLong: false,
-    blackShort: false,
-  },
-  enPassant: null,
-  fullMove: 1,
-  halfMove: 0,
-};
-
 export async function* initialize(options: any = {}): ProcessEffectGenerator {
   board = new Chessboard();
   board.publish();
@@ -107,8 +66,8 @@ export async function* initialize(options: any = {}): ProcessEffectGenerator {
     console.log("Initializing chess with AI players");
     const whiteAI = new StandardAI(2, true, 300);
     const blackAI = new StandardAI(2, true, 300);
-    teams["WHITE"].components.addComponent(whiteAI);
-    teams["BLACK"].components.addComponent(blackAI);
+    teams.WHITE.components.addComponent(whiteAI);
+    teams.BLACK.components.addComponent(blackAI);
   }
   return true;
 }
@@ -116,10 +75,11 @@ export async function* initialize(options: any = {}): ProcessEffectGenerator {
 export async function shutdown() {}
 
 export async function* play(): ProcessEffectGenerator {
-  console.log("Starting game!")
+  console.log("Starting game!");
   yield new LogicalAction("GAME_START", {
     firstTeam: teams["WHITE"],
   }).asEffect();
+  yield new ChangeTurnAction({ target: teams.WHITE }).asEffect();
   return true;
 }
 
@@ -138,46 +98,58 @@ export async function* onPlayerConnect(
 export async function* onPlayerDisconnect() {}
 
 export async function* reset(): ProcessEffectGenerator {
-  state = {
-    isFinished: false,
-    turn: "white",
-    check: false,
-    checkMate: false,
-    castling: {
-      whiteLong: false,
-      whiteShort: false,
-      blackLong: false,
-      blackShort: false,
-    },
-    enPassant: null,
-    fullMove: 1,
-    halfMove: 0,
-  };
-  totalCaptures.WHITE = 0;
-  totalCaptures.BLACK = 0;
   yield* board.clear();
   yield* board.setUpStandardGame();
-  yield new ChangeTurnAction({ target: teams["WHITE"] }).asEffect();
   for (const [, component] of teams["WHITE"].components.all) {
     teams["WHITE"].components.removeComponent(component); // TODO won't broadcast
   }
   for (const [, component] of teams["BLACK"].components.all) {
     teams["BLACK"].components.removeComponent(component); // TODO won't broadcast
   }
-  stateTrackingComponent = new StandardStateTracker();
+  yield new ChangeTurnAction({ target: teams["WHITE"] }).asEffect();
+  stateTrackingComponent = new MoveCounter();
   Chaos.attach(stateTrackingComponent);
   return true;
 }
 
-export function exportToJSEngineStatelessFormat(): any {
-  // this should not get called if not using standard white&black teams
-  const currentTurn =
-    (Chaos.currentTurn as Team).name === "WHITE" ? "white" : "black";
+export function exportToJSEngineStatelessFormat(newTeamTurn?: Team): any {
+  // this should only get called using standard white&black teams
+  const currentTurn = newTeamTurn ?? Chaos.currentTurn as Team;
+  const turn = currentTurn.name === "WHITE" ? "white" : "black";
   const pieces = board.exportToJSON();
+  let enPassant: string | null = null;
+  let check: boolean = false;
+  let checkMate: boolean = false;
+  for (const [, piece] of Chaos.entities) {
+    const enPassantComponent = piece.components.get(EnPassant);
+    if (enPassantComponent !== undefined) {
+      enPassant = Chessboard.toAlgebraic(enPassantComponent.location)!;
+    }
+    const checkComponent = piece.components.get(Checked);
+    if (checkComponent !== undefined) {
+      check = true;
+    }
+    const checkMateComponent = piece.components.get(Checkmated);
+    if (checkMateComponent !== undefined) {
+      checkMate = true;
+    }
+  }
+  const castling = {
+    whiteLong: false,
+    whiteShort: false,
+    blackLong: false,
+    blackShort: false,
+  };
   return {
-    currentTurn,
+    turn,
+    enPassant,
+    castling,
+    fullMove: Chaos.components.get(MoveCounter)!.fullMoves,
+    halfMove: Chaos.components.get(MoveCounter)!.halfMoves,
     pieces,
-    ...state,
+    check,
+    checkMate,
+    isFinished: checkMate,
   };
 }
 
