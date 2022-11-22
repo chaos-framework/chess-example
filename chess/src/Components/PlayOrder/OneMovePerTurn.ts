@@ -17,7 +17,7 @@ export default class OneMovePerTurn extends Component<Team> {
     super();
   }
 
-  @OnPhase("react")
+  @OnPhase("after")
   @ForAction(ChessMove)
   @Successful
   async *endTurnAfterMovement(action: ChessMove): EffectGenerator {

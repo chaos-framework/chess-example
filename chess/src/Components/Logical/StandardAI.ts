@@ -45,7 +45,9 @@ export default class StandardAI extends Component<Team> {
   @TargetsMyParent
   async *playTurn(action: Action): EffectGenerator {
     const { delay } = this;
+    console.log(`Getting AI move for team ${this.parent?.name}`);
     const aiMove = this.getAIMove();
+    console.log(`Got AI move ${aiMove?.[0], aiMove?.[1]}`);
     if (aiMove === undefined) {
       console.error("AI could not find a move for this board.");
       return;

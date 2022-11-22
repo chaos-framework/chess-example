@@ -18,7 +18,7 @@ export default class Captures extends Component<ChessPiece> {
     // Loop over all pieces in that location (note that this now includes the parent itself)
     for (const entity of target.world!.getEntitiesAtCoordinates(to.x, to.y)) {
       if (entity.team !== target.team && entity.team !== undefined) {
-        yield action.react(new Capture(this.parent as ChessPiece, target));
+        yield action.react(new Capture(entity as ChessPiece, this.parent as ChessPiece));
       }
     }
   }
